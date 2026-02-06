@@ -1,1 +1,27 @@
+{
+  "cases": [
+    {
+      "id": "new_hire",
+      "name": "New Hire",
+      "price": 2.49,
+      "image": "images/cases/elite_case.png",
+      "items": [
+        {
+          "name": "Strange Syringe Gun",
+          "rarity": "Strange",
+          "price": 0.30,
+          "weight": 600,
+          "image": "images/items/fedora.png"
+        },
+        {
+          "name": "★ Aurora Polaris Unusual Taunt: Kazotsky Kick",
+          "rarity": "Unusual",
+          "price": 130.00,
+          "weight": 3,
+          "image": "images/items/team_captain.png"
+        }
+      ]
+    }
+  ]
+}
 
