@@ -1,24 +1,24 @@
 {
   "cases": [
     {
-      "id": "elite_case",
-      "name": "Elite Mann Co. Case",
+      "id": "new_hire",
+      "name": "New Hire",
       "price": 2.49,
-      "image": "images/cases/elite_case.png",
+      "image": "images/cases/new_hire.png",
       "items": [
         {
           "name": "Strange Fedora",
           "rarity": "Strange",
           "price": 1.25,
           "weight": 600,
-          "image": "images/items/fedora.png"
+          "image": "images/items/s.png"
         },
         {
-          "name": "Unusual Team Captain",
+          "name": "Aurora Polaris Taunt: Kaotsky Kick",
           "rarity": "Unusual",
-          "price": 85.50,
+          "price": 130.00,
           "weight": 5,
-          "image": "images/items/team_captain.png"
+          "image": "images/items/polariskazot.png"
         }
       ]
     }
