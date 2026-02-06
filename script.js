@@ -55,4 +55,11 @@ document.getElementById("open-btn").addEventListener("click", () => {
   addToInventory(item);
   showResult(item);
 });
+let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+
+function addToInventory(item) {
+  inventory.push(item);
+  localStorage.setItem("inventory", JSON.stringify(inventory));
+  renderInventory();
+}
 
