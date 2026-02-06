@@ -82,3 +82,28 @@ document.getElementById("open-btn").addEventListener("click", () => {
   showResult(item);
 });
 
+#spinner-container {
+  width: 600px; /* visible area */
+  height: 150px;
+  margin: 20px auto;
+  overflow: hidden;
+  border: 2px solid #555;
+  border-radius: 10px;
+  background: #111;
+  position: relative;
+}
+
+#spinner-strip {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  left: 0;
+  transition: left 4s cubic-bezier(.1,.6,0,1);
+}
+
+#spinner-strip img {
+  width: 150px;
+  height: 150px;
+  margin-right: 10px;
+  border-radius: 8px;
+}
