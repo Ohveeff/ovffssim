@@ -1,5 +1,5 @@
 // -------------------- Coins --------------------
-let coins = parseInt(localStorage.getItem("coins")) || 1000; // starting coins
+let coins = parseInt(localStorage.getItem("coins")) || 1000;
 localStorage.setItem("coins", coins);
 
 function updateCoins() {
@@ -56,6 +56,58 @@ function openCase(items) {
   }
 }
 
+// -------------------- Spinner --------------------
+function populateSpinner(items) {
+  const strip = document.getElementById("spinner-strip");
+  strip.innerHTML = "";
+
+  const repeatedItems = [...items, ...items, ...items];
+  repeatedItems.forEach(item => {
+    const img = document.createElement("img");
+    img.src = item.image;
+    img.className = item.rarity;
+    strip.appendChild(img);
+  });
+}
+
+function spinToItem(item) {
+  const strip = document.getElementById("spinner-strip");
+  const imgs = strip.querySelectorAll("img");
+  const itemIndices = [];
+
+  imgs.forEach((img, i) => {
+    if (img.src.includes(item.image)) itemIndices.push(i);
+  });
+
+  const targetIndex = itemIndices[Math.floor(Math.random() * itemIndices.length)];
+  const imgWidth = 160;
+  const containerWidth = document.getElementById("spinner-container").offsetWidth;
+  const left = -(targetIndex * imgWidth - containerWidth / 2 + imgWidth / 2);
+
+  strip.style.transition = "left 4s cubic-bezier(.1,.6,0,1)";
+  strip.style.left = `${left}px`;
+}
+
+// -------------------- Open Button --------------------
+document.getElementById("open-btn").addEventListener("click", () => {
+  if (!caseData) return alert("Case not loaded yet!");
+  if (coins < caseData.price) return alert("Not enough coins!");
+
+  coins -= caseData.price;
+  localStorage.setItem("coins", coins);
+  updateCoins();
+
+  const item = openCase(caseData.items);
+  addToInventory(item);
+
+  populateSpinner(caseData.items);
+  spinToItem(item);
+
+  setTimeout(() => {
+    showResult(item);
+  }, 4000);
+});
+
 // Show the opening result
 function showResult(item) {
   document.getElementById("result").innerHTML = `
@@ -65,82 +117,3 @@ function showResult(item) {
   `;
 }
 
-// -------------------- Open Button --------------------
-document.getElementById("open-btn").addEventListener("click", () => {
-  if (!caseData) return alert("Case not loaded yet!");
-  
-  if (coins < caseData.price) {
-    return alert("Not enough coins!");
-  }
-
-  coins -= caseData.price;
-  localStorage.setItem("coins", coins);
-  updateCoins();
-
-  const item = openCase(caseData.items);
-  addToInventory(item);
-  showResult(item);
-});
-
-#spinner-container {
-  width: 600px; /* visible area */
-  height: 150px;
-  margin: 20px auto;
-  overflow: hidden;
-  border: 2px solid #555;
-  border-radius: 10px;
-  background: #111;
-  position: relative;
-}
-
-#spinner-strip {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  left: 0;
-  transition: left 4s cubic-bezier(.1,.6,0,1);
-}
-
-#spinner-strip img {
-  width: 150px;
-  height: 150px;
-  margin-right: 10px;
-  border-radius: 8px;
-}
-
-function populateSpinner(items) {
-  const strip = document.getElementById("spinner-strip");
-  strip.innerHTML = "";
-
-  // Repeat items to make it look continuous
-  const repeatedItems = [...items, ...items, ...items];
-
-  repeatedItems.forEach(item => {
-    const img = document.createElement("img");
-    img.src = item.image;
-    strip.appendChild(img);
-  });
-}
-
-function spinToItem(item) {
-  const strip = document.getElementById("spinner-strip");
-  const imgs = strip.querySelectorAll("img");
-  
-  // Find all indices of the winning item
-  const itemIndices = [];
-  imgs.forEach((img, i) => {
-    if (img.src.includes(item.image)) itemIndices.push(i);
-  });
-
-  // Pick a random occurrence
-  const targetIndex = itemIndices[Math.floor(Math.random() * itemIndices.length)];
-
-  // Calculate new left position
-  const imgWidth = 160; // 150px + 10px margin
-  const containerWidth = document.getElementById("spinner-container").offsetWidth;
-  const left = -(targetIndex * imgWidth - containerWidth / 2 + imgWidth / 2);
-
-  // Animate
-  strip.style.transition = "left 4s cubic-bezier(.1,.6,0,1)";
-  strip.style.left = `${left}px`;
-}
