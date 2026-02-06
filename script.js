@@ -1,7 +1,7 @@
 let coins = localStorage.getItem("coins");
 
 if (coins === null) {
-  coins = 1000; // starting coins
+  coins = 10; // starting coins
   localStorage.setItem("coins", coins);
 } else {
   coins = parseInt(coins);
@@ -41,4 +41,18 @@ function updateCoins() {
 }
 
 updateCoins();
+document.getElementById("open-btn").addEventListener("click", () => {
+  if (coins < caseData.price * 100) {
+    alert("Not enough coins!");
+    return;
+  }
+
+  coins -= caseData.price * 100;
+  localStorage.setItem("coins", coins);
+  updateCoins();
+
+  const item = openCase(caseData.items);
+  addToInventory(item);
+  showResult(item);
+});
 
