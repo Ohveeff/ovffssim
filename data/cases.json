@@ -4,7 +4,7 @@
       "id": "new_hire",
       "name": "New Hire",
       "price": 2.49,
-      "image": "images/cases/newhire.png",
+      "image": "images/cases/newhires.png",
       "items": [
 
         {
@@ -34,7 +34,7 @@
           "rarity": "Strange",
           "price": 8.99,
           "weight": 350,
-          "image": "images/items/billshat.png"
+          "image": "images/items/billhat.png"
         },
         {
           "name": "Ghost Town Claidheamh Mor",
