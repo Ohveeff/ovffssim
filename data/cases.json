@@ -6,94 +6,33 @@
       "price": 2.49,
       "image": "images/cases/newhires.png",
       "items": [
+        { "name": "Syringe Gun", "rarity": "common", "price": 0.07, "weight": 900, "image": "images/items/syringe_gun.png" },
+        { "name": "Stock Shotgun", "rarity": "common", "price": 0.10, "weight": 800, "image": "images/items/shotgun.png" },
+        { "name": "Stock Scattergun", "rarity": "common", "price": 0.06, "weight": 700, "image": "images/items/stockscatt.png" },
+        { "name": "Diamondback", "rarity": "common", "price": 0.01, "weight": 1000, "image": "images/items/diaback.png" },
+        { "name": "Strange Frontier Justice", "rarity": "strange", "price": 3.27, "weight": 450, "image": "images/items/frontjust.png" },
+        { "name": "Übersaw", "rarity": "common", "price": 0.01, "weight": 700, "image": "images/items/ubersaw.png" },
+        { "name": "Bill's Hat", "rarity": "strange", "price": 8.99, "weight": 350, "image": "images/items/billhat.png" },
+        { "name": "Ghost Town Claidheamh Mor", "rarity": "rare", "price": 5.75, "weight": 320, "image": "images/items/spooky.png" },
+        { "name": "Helldiver Black Box", "rarity": "rare", "price": 20.19, "weight": 220, "image": "images/items/hellblackbox.png" },
+        { "name": "Strange Pistol", "rarity": "strange", "price": 0.89, "weight": 450, "image": "images/items/pistol.png" },
+        { "name": "Unusual Circling Peace Sign Head Warmer", "rarity": "unusual", "price": 27.99, "weight": 100, "image": "images/items/unusual1.png" },
+        { "name": "Unusual Aurora Polaris Taunt: Kazotsky Kick", "rarity": "unusual", "price": 130.00, "weight": 5, "image": "images/items/kazopolaris.png" }
+      ]
+    },
 
-        {
-          "name": "Syringe Gun",
-          "rarity": "Common",
-          "price": 0.07,
-          "weight": 900,
-          "image": "images/items/syringe_gun.png"
-        },
-        {
-          "name": "Stock Shotgun",
-          "rarity": "Common",
-          "price": 0.10,
-          "weight": 800,
-          "image": "images/items/shotgun.png"
-        },
-        {
-          "name": "Stock Scattergun",
-          "rarity": "Common",
-          "price": 0.06,
-          "weight": 700,
-          "image": "images/items/stockscatt.png"
-        },
-{
-          "name": "Diamondback",
-          "rarity": "Common",
-          "price": 0.01,
-          "weight": 1000,
-          "image": "images/items/diaback.png"
-        },
-        {
-          "name": "Strange Frontier Justice",
-          "rarity": "Strange",
-          "price": 3.27,
-          "weight": 450,
-          "image": "images/items/frontjust.png"
-        },
-        {
-          "name": "Übersaw",
-          "rarity": "Common",
-          "price": 0.01,
-          "weight": 700,
-          "image": "images/items/ubersaw.png"
-        },
-        {
-          "name": "Bill's Hat",
-          "rarity": "Strange",
-          "price": 8.99,
-          "weight": 350,
-          "image": "images/items/billhat.png"
-        },
-        {
-          "name": "Ghost Town Claidheamh Mor",
-          "rarity": "rare",
-          "price": 5.75,
-          "weight": 320,
-          "image": "images/items/spooky.png"
-        },
-        {
-          "name": "Helldiver Black Box",
-          "rarity": "rare",
-          "price": 20.19,
-          "weight": 220,
-          "image": "images/items/hellblackbox.png"
-        },
-        {
-          "name": "Strange Pistol",
-          "rarity": "Strange",
-          "price": 0.89,
-          "weight": 450,
-          "image": "images/items/pistol.png"
-        },
-        {
-          "name": "Unusual Circling Peace Sign Head Warmer",
-          "rarity": "Unusual",
-          "price": 27.99,
-          "weight": 100,
-          "image": "images/items/unusual1.png"
-        },
-        
-        {
-          "name": "Unusual Aurora Polaris Taunt: Kazotsky Kick",
-          "rarity": "Unusual",
-          "price": 130.00,
-          "weight": 5,
-          "image": "images/items/kazopolaris.png"
-        }
+    {
+      "id": "veteran_case",
+      "name": "Veteran Case",
+      "price": 4.99,
+      "image": "images/cases/veteran.png",
+      "items": [
+        { "name": "Rocket Launcher", "rarity": "Rare", "price": 15.50, "weight": 300, "image": "images/items/rocket_launcher.png" },
+        { "name": "Golden Minigun", "rarity": "Legendary", "price": 250.00, "weight": 5, "image": "images/items/golden_minigun.png" },
+        { "name": "Rainbow Knife", "rarity": "Mythical", "price": 500.00, "weight": 2, "image": "images/items/rainbow_knife.png" },
+        { "name": "Stock Scattergun", "rarity": "Common", "price": 0.06, "weight": 700, "image": "images/items/stockscatt.png" },
+        { "name": "Strange Pistol", "rarity": "Strange", "price": 0.89, "weight": 450, "image": "images/items/pistol.png" }
       ]
     }
   ]
 }
-
