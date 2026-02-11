@@ -7,7 +7,6 @@ body {
   margin: 0;
   padding: 20px;
 
-  /* Flex for perfect vertical centering */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,11 +47,12 @@ h1, h2 {
   transform: scale(1.05);
 }
 
-/* ---------- Spinner Wrapper (for perfect centering) ---------- */
+/* ---------- Spinner Wrapper (for arrows & centering) ---------- */
 #spinner-wrapper {
   width: 100%;
   display: flex;
-  justify-content: center; /* horizontal centering */
+  justify-content: center;
+  position: relative;
   margin: 20px 0;
 }
 
@@ -65,14 +65,13 @@ h1, h2 {
   border-radius: 10px;
   background: #111;
   position: relative;
-
   display: flex;
-  align-items: center; /* vertical centering */
+  align-items: center;
 }
 
 #spinner-strip {
   display: flex;
-  position: absolute; /* absolute for smooth left animation */
+  position: absolute;
   left: 0;
   transition: left 6s cubic-bezier(.1,.7,0,1);
 }
@@ -83,6 +82,54 @@ h1, h2 {
   margin-right: 10px;
   border-radius: 8px;
   object-fit: cover;
+}
+
+/* ---------- Winning Arrows ---------- */
+#winner-left, #winner-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#winner-left {
+  left: calc(50% - 70px);
+}
+
+#winner-right {
+  right: calc(50% - 70px);
+}
+
+#winner-left::before, #winner-right::before {
+  content: '';
+  display: block;
+  width: 0; 
+  height: 0; 
+  border-style: solid;
+}
+
+#winner-left::before {
+  border-width: 20px 20px 20px 0;
+  border-color: transparent white transparent transparent;
+}
+
+#winner-right::before {
+  border-width: 20px 0 20px 20px;
+  border-color: transparent transparent transparent white;
+}
+
+/* ---------- Glowing Won Item ---------- */
+#spinner-strip img.winning {
+  animation: glow-win 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow-win {
+  0%   { box-shadow: 0 0 10px gold; transform: scale(1); }
+  50%  { box-shadow: 0 0 20px gold; transform: scale(1.05); }
+  100% { box-shadow: 0 0 10px gold; transform: scale(1); }
 }
 
 /* ---------- Rarity Glows ---------- */
@@ -110,58 +157,3 @@ h1, h2 {
   border-radius: 10px;
   padding: 10px;
   width: 140px;
-  display: inline-block;
-  margin: 10px;
-  transition: transform 0.15s ease;
-}
-
-.inv-item:hover {
-  transform: translateY(-4px);
-}
-
-.inv-item img {
-  width: 100px;
-  height: auto;
-  object-fit: cover;
-}
-
-/* ---------- Sell Button ---------- */
-.sell-btn {
-  margin-top: 6px;
-  background: #c0392b;
-  border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-
-.sell-btn:hover {
-  transform: scale(1.05);
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 500px) {
-  #spinner-container {
-    width: 90%;
-  }
-  #spinner-strip img {
-    width: 80px;
-    height: 80px;
-  }
-  .inv-item {
-    width: 100px;
-    padding: 6px;
-  }
-  .inv-item img {
-    width: 70px;
-  }
-  #case-container img {
-    width: 120px;
-  }
-  #open-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-  }
-}
