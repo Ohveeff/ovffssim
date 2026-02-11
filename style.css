@@ -1,48 +1,4 @@
-/* ---------- Global ---------- */
-body {
-  background: radial-gradient(circle at top, #1e1e1e, #0b0b0b);
-  color: #f2f2f2;
-  font-family: "Segoe UI", Arial, sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 20px;
-}
-
-h1, h2 {
-  margin-bottom: 10px;
-}
-
-/* ---------- Coins ---------- */
-#coins {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-/* ---------- Case ---------- */
-#case-container img {
-  width: 180px;
-  margin-bottom: 10px;
-}
-
-#open-btn {
-  display: block;
-  margin: 20px auto;
-  background: linear-gradient(135deg, #ff9f1a, #ff6a00);
-  color: black;
-  border: none;
-  padding: 14px 30px;
-  font-size: 18px;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(255,150,0,0.4);
-  transition: transform 0.1s ease;
-}
-
-#open-btn:hover {
-  transform: scale(1.05);
-}
-
-/* ---------- Spinner ---------- */
+/* ---------- Spinner wrapper ---------- */
 #spinner-wrapper {
   position: relative;
   width: 600px;
@@ -56,13 +12,9 @@ h1, h2 {
   font-size: 40px;
   transform: translateY(-50%);
   z-index: 2;
-  color: white;
   pointer-events: none;
   text-shadow: 0 0 5px #fff;
 }
-
-#winner-left { left: 0; }
-#winner-right { right: 0; }
 
 #winner-left.glow, #winner-right.glow {
   text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
@@ -90,7 +42,7 @@ h1, h2 {
   margin-right: 10px;
   border-radius: 8px;
   object-fit: cover;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 /* ---------- Rarity Glows ---------- */
@@ -115,46 +67,4 @@ h1, h2 {
 @keyframes pulse {
   from { box-shadow: 0 0 20px currentColor; }
   to { box-shadow: 0 0 35px currentColor; }
-}
-
-/* ---------- Inventory ---------- */
-.inv-item {
-  background: #111;
-  border-radius: 10px;
-  padding: 10px;
-  width: 140px;
-  display: inline-block;
-  margin: 10px;
-  transition: transform 0.15s ease;
-}
-
-.inv-item:hover { transform: translateY(-4px); }
-
-.inv-item img {
-  width: 100px;
-  height: auto;
-  object-fit: cover;
-}
-
-/* ---------- Sell Button ---------- */
-.sell-btn {
-  margin-top: 6px;
-  background: #c0392b;
-  border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-
-.sell-btn:hover { transform: scale(1.05); }
-
-/* ---------- Responsive ---------- */
-@media (max-width: 500px) {
-  #spinner-strip img { width: 80px; height: 80px; }
-  .inv-item { width: 100px; padding: 6px; }
-  .inv-item img { width: 70px; }
-  #case-container img { width: 120px; }
-  #open-btn { padding: 10px 20px; font-size: 16px; }
 }
