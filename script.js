@@ -1,16 +1,10 @@
 // ==================== COINS ====================
-let coins = parseInt(localStorage.getItem("coins"));
-if (isNaN(coins)) coins = 1000;
-
-function saveCoins() {
-  localStorage.setItem("coins", coins);
-}
+let coins = parseInt(localStorage.getItem("coins")) || 1000;
+localStorage.setItem("coins", coins);
 
 function updateCoins() {
   document.getElementById("coins").textContent = `Coins: ${coins}`;
 }
-
-saveCoins();
 updateCoins();
 
 // ==================== INVENTORY ====================
@@ -27,14 +21,11 @@ function addToInventory(item) {
 }
 
 function sellItem(index) {
-  const item = inventory[index];
-  coins = Math.floor(coins + item.price);
-
+  coins += inventory[index].price;
   inventory.splice(index, 1);
-  saveInventory();
-  saveCoins();
-
+  localStorage.setItem("coins", coins);
   updateCoins();
+  saveInventory();
   renderInventory();
 }
 
@@ -45,19 +36,16 @@ function renderInventory() {
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity}`;
-
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
       <small>${item.price} coins</small>
       <button class="sell-btn">Sell</button>
     `;
-
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
     inv.appendChild(div);
   });
 }
-
 renderInventory();
 
 // ==================== CASE DATA ====================
@@ -76,15 +64,16 @@ fetch("data/cases.json")
     populateSpinner(caseData.items);
   })
   .catch(err => {
-    console.error("Failed to load case data:", err);
+    console.error("Failed to load case data", err);
+    alert("Failed to load cases.json");
   });
 
 // ==================== RNG ====================
-function openCase(items) {
-  const totalWeight = items.reduce((sum, i) => sum + i.weight, 0);
-  let roll = Math.random() * totalWeight;
+function rollItem(items) {
+  const total = items.reduce((s, i) => s + i.weight, 0);
+  let roll = Math.random() * total;
 
-  for (const item of items) {
+  for (let item of items) {
     if (roll < item.weight) return item;
     roll -= item.weight;
   }
@@ -95,9 +84,15 @@ function populateSpinner(items) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
 
-  const repeated = [...items, ...items, ...items];
+  // Build BIG randomized wheel
+  let wheel = [];
+  for (let i = 0; i < 10; i++) {
+    wheel.push(...items);
+  }
 
-  repeated.forEach(item => {
+  wheel = wheel.sort(() => Math.random() - 0.5);
+
+  wheel.forEach(item => {
     const img = document.createElement("img");
     img.src = item.image;
     img.className = item.rarity;
@@ -108,60 +103,48 @@ function populateSpinner(items) {
 function spinToItem(item) {
   const strip = document.getElementById("spinner-strip");
   const imgs = strip.querySelectorAll("img");
-  if (!imgs.length) return;
 
   const matches = [];
   imgs.forEach((img, i) => {
     if (img.src.includes(item.image)) matches.push(i);
   });
 
-  const targetIndex =
-    matches[Math.floor(Math.random() * matches.length)];
-
+  const target = matches[Math.floor(Math.random() * matches.length)];
   const imgWidth = imgs[0].offsetWidth + 10;
   const containerWidth =
     document.getElementById("spinner-container").offsetWidth;
 
-  const left =
-    -(targetIndex * imgWidth - containerWidth / 2 + imgWidth / 2);
+  const offset =
+    -(target * imgWidth - containerWidth / 2 + imgWidth / 2);
 
   strip.style.transition = "none";
   strip.style.left = "0px";
-  strip.offsetHeight; // force reflow
+  strip.offsetHeight;
 
-  strip.style.transition = "left 4s cubic-bezier(.1,.6,0,1)";
-  strip.style.left = `${left}px`;
+  // LONGER SPIN
+  strip.style.transition = "left 6s cubic-bezier(.1,.7,0,1)";
+  strip.style.left = `${offset}px`;
 }
 
 // ==================== OPEN BUTTON ====================
-const openBtn = document.getElementById("open-btn");
-
-openBtn.addEventListener("click", () => {
-  if (!caseData) {
-    alert("Case not loaded yet!");
-    return;
-  }
-
-  if (coins < caseData.price) {
-    alert("Not enough coins!");
-    return;
-  }
-
-  openBtn.disabled = true;
+document.getElementById("open-btn").onclick = () => {
+  if (!caseData) return alert("Case not loaded yet!");
+  if (coins < caseData.price) return alert("Not enough coins!");
 
   coins -= caseData.price;
-  saveCoins();
+  localStorage.setItem("coins", coins);
   updateCoins();
 
-  const item = openCase(caseData.items);
-  addToInventory(item);
+  populateSpinner(caseData.items);
+
+  const item = rollItem(caseData.items);
   spinToItem(item);
 
   setTimeout(() => {
+    addToInventory(item);
     showResult(item);
-    openBtn.disabled = false;
-  }, 4000);
-});
+  }, 6000);
+};
 
 // ==================== RESULT ====================
 function showResult(item) {
@@ -171,73 +154,3 @@ function showResult(item) {
     <p>Value: ${item.price} coins</p>
   `;
 }
-
-function populateSpinner(items, winningItem) {
-  const strip = document.getElementById("spinner-strip");
-  strip.innerHTML = "";
-
-  const SPIN_ITEM_COUNT = 60; // 👈 MORE ITEMS = longer spin
-  const resultIndex = SPIN_ITEM_COUNT - 8; // where winner lands
-
-  for (let i = 0; i < SPIN_ITEM_COUNT; i++) {
-    const item =
-      i === resultIndex
-        ? winningItem
-        : getWeightedRandomItem(items);
-
-    const img = document.createElement("img");
-    img.src = item.image;
-    img.className = item.rarity;
-
-    strip.appendChild(img);
-  }
-
-  return resultIndex;
-}
-function getWeightedRandomItem(items) {
-  const totalWeight = items.reduce((sum, i) => sum + i.weight, 0);
-  let roll = Math.random() * totalWeight;
-
-  for (const item of items) {
-    if (roll < item.weight) return item;
-    roll -= item.weight;
-  }
-}
-function spinSpinnerToIndex(targetIndex) {
-  const strip = document.getElementById("spinner-strip");
-  const imgs = strip.querySelectorAll("img");
-
-  const imgWidth = imgs[0].offsetWidth + 10;
-  const containerWidth = document.getElementById("spinner-container").offsetWidth;
-
-  const left =
-    -(targetIndex * imgWidth - containerWidth / 2 + imgWidth / 2);
-
-  strip.style.transition = "none";
-  strip.style.left = "0px";
-  strip.offsetHeight;
-
-  strip.style.transition = "left 6.5s cubic-bezier(.08,.6,0,1)";
-  strip.style.left = `${left}px`;
-}
-openBtn.addEventListener("click", () => {
-  if (!caseData) return alert("Case not loaded yet!");
-  if (coins < caseData.price) return alert("Not enough coins!");
-
-  openBtn.disabled = true;
-
-  coins -= caseData.price;
-  localStorage.setItem("coins", coins);
-  updateCoins();
-
-  const winningItem = openCase(caseData.items);
-
-  const targetIndex = populateSpinner(caseData.items, winningItem);
-  spinSpinnerToIndex(targetIndex);
-
-  setTimeout(() => {
-    addToInventory(winningItem);
-    showResult(winningItem);
-    openBtn.disabled = false;
-  }, 6500);
-});
