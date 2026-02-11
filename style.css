@@ -62,5 +62,71 @@
 #case-container,
 #open-btn {
   text-align: center;
+  body {
+  background: radial-gradient(circle at top, #1e1e1e, #0b0b0b);
+  color: #f2f2f2;
+  font-family: "Segoe UI", Arial, sans-serif;
+  text-align: center;
+}
+
+h1, h2 {
+  margin-bottom: 10px;
+}
+
+/* Coins */
+#coins {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Case image */
+#case-container img {
+  width: 180px;
+  margin-bottom: 10px;
+}
+
+/* Open button */
+#open-btn {
+  background: linear-gradient(135deg, #ff9f1a, #ff6a00);
+  color: black;
+  border: none;
+  padding: 14px 30px;
+  font-size: 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,150,0,0.4);
+  transition: transform 0.1s ease;
+}
+
+#open-btn:hover {
+  transform: scale(1.05);
+}
+#open-btn {
+  display: block;
+  margin: 20px auto;
+}
+.inv-item {
+  background: #111;
+  border-radius: 10px;
+  padding: 10px;
+  width: 140px;
+  display: inline-block;
+  margin: 10px;
+  transition: transform 0.15s ease;
+}
+
+.inv-item:hover {
+  transform: translateY(-4px);
+}
+.sell-btn {
+  margin-top: 6px;
+  background: #c0392b;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
   margin: 10px auto;
 }
