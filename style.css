@@ -30,13 +30,12 @@ h1,h2 { margin-bottom: 10px; }
   box-shadow: 0 0 20px rgba(255,150,0,0.4);
   transition: transform 0.1s ease;
 }
-
 #open-btn:hover { transform: scale(1.05); }
 
-/* ---------- Spinner Wrapper ---------- */
+/* Spinner Wrapper */
 #spinner-wrapper { width: 100%; display: flex; justify-content: center; margin: 20px 0; }
 
-/* ---------- Spinner Container ---------- */
+/* Spinner Container */
 #spinner-container {
   width: 600px;
   height: 150px;
@@ -49,7 +48,7 @@ h1,h2 { margin-bottom: 10px; }
   align-items: center;
 }
 
-/* ---------- Spinner Strip ---------- */
+/* Spinner Strip */
 #spinner-strip {
   display: flex;
   position: absolute;
@@ -65,31 +64,27 @@ h1,h2 { margin-bottom: 10px; }
   object-fit: cover;
 }
 
-/* ---------- Spinner Item Glow ---------- */
-#spinner-strip img.common {
-  box-shadow: 0 0 10px gray, 0 0 20px rgba(128,128,128,0.2);
-}
+/* Item Glow By Rarity */
+#spinner-strip img.common       { box-shadow: 0 0 10px gray, 0 0 20px rgba(128,128,128,0.2); }
+#spinner-strip img.uncommon     { box-shadow: 0 0 10px green, 0 0 20px rgba(0,255,0,0.2); }
+#spinner-strip img.rare         { box-shadow: 0 0 12px blue, 0 0 25px rgba(0,0,255,0.2); }
+#spinner-strip img.strange      { box-shadow: 0 0 12px orange, 0 0 25px rgba(255,165,0,0.2); }
+#spinner-strip img.verystrange  { box-shadow: 0 0 15px darkorange, 0 0 30px rgba(255,140,0,0.3); }
+#spinner-strip img.unusual      { box-shadow: 0 0 15px purple, 0 0 30px rgba(128,0,128,0.3); }
+#spinner-strip img.legendary    { box-shadow: 0 0 15px gold, 0 0 35px rgba(255,215,0,0.4); }
+#spinner-strip img.mythical     { box-shadow: 0 0 20px violet, 0 0 40px rgba(255,0,255,0.5); }
 
-#spinner-strip img.strange {
-  box-shadow: 0 0 12px orange, 0 0 25px rgba(255,165,0,0.2);
-}
-
-#spinner-strip img.unusual {
-  box-shadow: 0 0 15px purple, 0 0 30px rgba(128,0,128,0.3);
-}
-
-/* ---------- Winning Glow ---------- */
+/* Winning Item Glow */
 #spinner-strip img.winning {
   animation: glow-win 1s ease-in-out infinite alternate;
 }
-
 @keyframes glow-win {
   0%   { box-shadow: 0 0 10px gold; transform: scale(1); }
   50%  { box-shadow: 0 0 25px gold; transform: scale(1.05); }
   100% { box-shadow: 0 0 10px gold; transform: scale(1); }
 }
 
-/* ---------- Arrows ---------- */
+/* Winner Arrows */
 .winner-arrow {
   position: absolute;
   top: 50%;
@@ -101,20 +96,19 @@ h1,h2 { margin-bottom: 10px; }
   transform: translateY(-50%);
 }
 
-#winner-left { left: 50%; transform: translate(-150%, -50%); }
+#winner-left  { left: 50%; transform: translate(-150%, -50%); }
 #winner-right { left: 50%; transform: translate(50%, -50%) rotate(180deg); }
 
 .winner-arrow.glow {
   animation: arrow-glow 1s ease-in-out infinite alternate;
 }
-
 @keyframes arrow-glow {
   0%   { text-shadow: 0 0 5px currentColor; transform: translateY(-50%) scale(1); }
   50%  { text-shadow: 0 0 15px currentColor; transform: translateY(-50%) scale(1.2); }
   100% { text-shadow: 0 0 5px currentColor; transform: translateY(-50%) scale(1); }
 }
 
-/* ---------- Inventory ---------- */
+/* Inventory */
 .inv-item {
   background: #111;
   border-radius: 10px;
@@ -139,7 +133,7 @@ h1,h2 { margin-bottom: 10px; }
 }
 .sell-btn:hover { transform: scale(1.05); }
 
-/* ---------- Responsive ---------- */
+/* Responsive */
 @media(max-width:500px){
   #spinner-container { width: 90%; }
   #spinner-strip img { width: 80px; height: 80px; }
