@@ -154,3 +154,4 @@ function showResult(item) {
     <p>Value: ${item.price} coins</p>
   `;
 }
+
