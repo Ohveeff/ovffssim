@@ -1,61 +1,33 @@
-// ==================== COINS ====================
-let coins = parseInt(localStorage.getItem("coins")) || 1000;
-localStorage.setItem("coins", coins);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TF2 Case Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-function updateCoins() {
-  document.getElementById("coins").textContent = `Coins: ${coins}`;
-}
+  <h1>TF2 Case Opening Simulator</h1>
 
-updateCoins();
+  <!-- Coins Display -->
+  <div id="coins"></div>
 
-// ==================== INVENTORY ====================
-let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+  <!-- Case -->
+  <div id="case-container"></div>
+  <button id="open-btn">Open Case</button>
+  
+  <!-- Spinning strip -->
+  <div id="spinner-container">
+    <div id="spinner-strip"></div>
+  </div>
 
-function saveInventory() {
-  localStorage.setItem("inventory", JSON.stringify(inventory));
-}
+  <!-- Result of the case opening -->
+  <div id="result"></div>
 
-function addToInventory(item) {
-  inventory.push(item);
-  saveInventory();
-  renderInventory();
-}
+  <!-- Inventory -->
+  <h2>Inventory</h2>
+  <div id="inventory"></div>
 
-function sellItem(index) {
-  coins += inventory[index].price;
-  inventory.splice(index, 1);
-
-  localStorage.setItem("coins", coins);
-  saveInventory();
-
-  updateCoins();
-  renderInventory();
-}
-
-function renderInventory() {
-  const inv = document.getElementById("inventory");
-  inv.innerHTML = "";
-
-  inventory.forEach((item, index) => {
-    const div = document.createElement("div");
-    div.className = `inv-item ${item.rarity}`;
-
-    div.innerHTML = `
-      <img src="${item.image}">
-      <p>${item.name}</p>
-      <small>${item.price} coins</small>
-      <button class="sell-btn">Sell</button>
-    `;
-
-    div.querySelector(".sell-btn").onclick = () => sellItem(index);
-    inv.appendChild(div);
-  });
-}
-
-renderInventory();
-
-// ==================== CASE DATA ====================
-let caseData = null;
-
-fetch("data/cases.json")
-  .then(
+  <script src="script.js"></script>
+</body>
+</html>
