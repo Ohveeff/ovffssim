@@ -1,8 +1,8 @@
 let coins = parseFloat(localStorage.getItem("coins")) || 1000;
 localStorage.setItem("coins", coins);
 
-function updateCoins() {
-  document.getElementById("coins").textContent = `Coins: ${coins.toFixed(2)}`;
+function updateCoins(){
+  document.getElementById("coins").textContent=`Coins: ${coins.toFixed(2)}`;
 }
 updateCoins();
 
@@ -12,8 +12,8 @@ function addToInventory(item){ inventory.push(item); saveInventory(); renderInve
 function sellItem(index){ coins += inventory[index].price; coins=parseFloat(coins.toFixed(2)); inventory.splice(index,1); updateCoins(); saveInventory(); renderInventory(); }
 
 function renderInventory(){
-  const inv = document.getElementById("inventory");
-  inv.innerHTML = "";
+  const inv=document.getElementById("inventory");
+  inv.innerHTML="";
   inventory.forEach((item,index)=>{
     const div=document.createElement("div");
     div.className=`inv-item ${item.rarity.toLowerCase()}`;
@@ -24,6 +24,7 @@ function renderInventory(){
 }
 renderInventory();
 
+// ----------------- Cases -----------------
 let caseData=null;
 let allCases=[];
 
@@ -32,7 +33,7 @@ fetch("data/cases.json")
 .then(data=>{
   allCases=data.cases;
   populateCaseMenu(allCases);
-  loadCase(allCases[0].id); // Load first case by default
+  loadCase(allCases[0].id);
 })
 .catch(err=>{ console.error(err); alert("Failed to load cases.json"); });
 
@@ -57,6 +58,7 @@ function loadCase(caseId){
   populateSpinner(caseData.items);
 }
 
+// ----------------- Spinner -----------------
 function rollItem(items){
   const total=items.reduce((s,i)=>s+i.weight,0);
   let roll=Math.random()*total;
@@ -97,6 +99,7 @@ function spinToItem(item){
   strip.style.transition="left 6s cubic-bezier(.1,.7,0,1)";
   strip.style.left=`${offset}px`;
 
+  // Highlight winning arrows
   const leftArrow=document.getElementById("winner-left");
   const rightArrow=document.getElementById("winner-right");
 
@@ -106,17 +109,21 @@ function spinToItem(item){
     case "uncommon": color="green"; break;
     case "rare": color="blue"; break;
     case "strange": color="orange"; break;
-    case "verystrange": color="darkorange"; break;
     case "unusual": color="purple"; break;
     case "legendary": color="gold"; break;
     case "mythical": color="violet"; break;
   }
-  leftArrow.style.color=color; rightArrow.style.color=color;
-  leftArrow.classList.add("glow"); rightArrow.classList.add("glow");
 
+  leftArrow.style.color=color;
+  rightArrow.style.color=color;
+  leftArrow.classList.add("glow");
+  rightArrow.classList.add("glow");
+
+  // Glow winning item after spin
   setTimeout(()=>{ imgs[targetIndex].classList.add("winning"); },6000);
 }
 
+// ----------------- Open Case Button -----------------
 document.getElementById("open-btn").onclick=()=>{
   if(!caseData) return alert("Case not loaded yet!");
   if(coins<caseData.price) return alert("Not enough coins!");
@@ -135,11 +142,5 @@ document.getElementById("open-btn").onclick=()=>{
   setTimeout(()=>{
     addToInventory(item);
     showResult(item);
-    btn.disabled=false;
-  },6000);
-};
-
-function showResult(item){
-  document.getElementById("result").innerHTML=`<h2 class="${item.rarity}">${item.name}</h2><img src="${item.image}" alt="${item.name}"><p>Value: ${item.price} coins</p>`;
-}
+    btn.disab
 
