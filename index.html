@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TF2 Case Simulator</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -11,24 +10,29 @@
   <h1>TF2 Case Opening Simulator</h1>
 
   <!-- Coins Display -->
-  <div id="coins" aria-live="polite"></div>
+  <div id="coins"></div>
+
+  <!-- Case Selection Menu -->
+  <div id="case-menu">
+    <label for="case-select">Select Case:</label>
+    <select id="case-select"></select>
+  </div>
 
   <!-- Case -->
   <div id="case-container"></div>
   <button id="open-btn">Open Case</button>
   
-  <!-- Spinner with arrows -->
+  <!-- Spinner Wrapper -->
   <div id="spinner-wrapper">
+    <div class="winner-arrow" id="winner-left">&#10094;</div>
+    <div class="winner-arrow" id="winner-right">&#10095;</div>
     <div id="spinner-container">
       <div id="spinner-strip"></div>
-      <!-- arrows inside spinner container -->
-      <div class="winner-arrow" id="winner-left">&#9650;</div>
-      <div class="winner-arrow" id="winner-right">&#9650;</div>
     </div>
   </div>
 
   <!-- Result of the case opening -->
-  <div id="result" aria-live="polite"></div>
+  <div id="result"></div>
 
   <!-- Inventory -->
   <h2>Inventory</h2>
@@ -37,3 +41,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
