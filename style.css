@@ -1,8 +1,50 @@
-/* Spinner container */
+/* ---------- Global ---------- */
+body {
+  background: radial-gradient(circle at top, #1e1e1e, #0b0b0b);
+  color: #f2f2f2;
+  font-family: "Segoe UI", Arial, sans-serif;
+  text-align: center;
+}
+
+h1, h2 {
+  margin-bottom: 10px;
+}
+
+/* ---------- Coins ---------- */
+#coins {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* ---------- Case ---------- */
+#case-container img {
+  width: 180px;
+  margin-bottom: 10px;
+}
+
+#open-btn {
+  display: block;
+  margin: 20px auto;
+  background: linear-gradient(135deg, #ff9f1a, #ff6a00);
+  color: black;
+  border: none;
+  padding: 14px 30px;
+  font-size: 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,150,0,0.4);
+  transition: transform 0.1s ease;
+}
+
+#open-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ---------- Spinner ---------- */
 #spinner-container {
   width: 600px;
   height: 150px;
-  margin: 20px auto 20px;
+  margin: 20px auto;
   overflow: hidden;
   border: 2px solid #555;
   border-radius: 10px;
@@ -25,7 +67,7 @@
   border-radius: 8px;
 }
 
-/* Rarity glows */
+/* ---------- Rarity Glows ---------- */
 #spinner-strip img.Common {
   box-shadow: 0 0 8px gray;
 }
@@ -44,67 +86,7 @@
   to   { box-shadow: 0 0 25px magenta; }
 }
 
-/* Inventory styling */
-.inv-item {
-  display: inline-block;
-  margin: 8px;
-  padding: 6px;
-  border-radius: 8px;
-  background: #111;
-  width: 120px;
-}
-
-.inv-item img {
-  width: 100px;
-}
-
-/* Case layout */
-#case-container,
-#open-btn {
-  text-align: center;
-  body {
-  background: radial-gradient(circle at top, #1e1e1e, #0b0b0b);
-  color: #f2f2f2;
-  font-family: "Segoe UI", Arial, sans-serif;
-  text-align: center;
-}
-
-h1, h2 {
-  margin-bottom: 10px;
-}
-
-/* Coins */
-#coins {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-/* Case image */
-#case-container img {
-  width: 180px;
-  margin-bottom: 10px;
-}
-
-/* Open button */
-#open-btn {
-  background: linear-gradient(135deg, #ff9f1a, #ff6a00);
-  color: black;
-  border: none;
-  padding: 14px 30px;
-  font-size: 18px;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(255,150,0,0.4);
-  transition: transform 0.1s ease;
-}
-
-#open-btn:hover {
-  transform: scale(1.05);
-}
-#open-btn {
-  display: block;
-  margin: 20px auto;
-}
+/* ---------- Inventory ---------- */
 .inv-item {
   background: #111;
   border-radius: 10px;
@@ -118,6 +100,12 @@ h1, h2 {
 .inv-item:hover {
   transform: translateY(-4px);
 }
+
+.inv-item img {
+  width: 100px;
+}
+
+/* ---------- Sell Button ---------- */
 .sell-btn {
   margin-top: 6px;
   background: #c0392b;
@@ -126,7 +114,4 @@ h1, h2 {
   padding: 6px 10px;
   border-radius: 6px;
   cursor: pointer;
-}
-
-  margin: 10px auto;
 }
