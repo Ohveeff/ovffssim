@@ -13,21 +13,13 @@ body {
   min-height: 100vh;
 }
 
-h1, h2 {
-  margin-bottom: 10px;
-}
+h1, h2 { margin-bottom: 10px; }
 
 /* ---------- Coins ---------- */
-#coins {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
+#coins { font-size: 18px; margin-bottom: 20px; }
 
 /* ---------- Case ---------- */
-#case-container img {
-  width: 180px;
-  margin-bottom: 10px;
-}
+#case-container img { width: 180px; margin-bottom: 10px; }
 
 #open-btn {
   display: block;
@@ -43,11 +35,9 @@ h1, h2 {
   transition: transform 0.1s ease;
 }
 
-#open-btn:hover {
-  transform: scale(1.05);
-}
+#open-btn:hover { transform: scale(1.05); }
 
-/* ---------- Spinner Wrapper (for arrows & centering) ---------- */
+/* ---------- Spinner Wrapper ---------- */
 #spinner-wrapper {
   width: 100%;
   display: flex;
@@ -84,7 +74,7 @@ h1, h2 {
   object-fit: cover;
 }
 
-/* ---------- Winning Arrows Pointing to Center ---------- */
+/* ---------- Winning Arrows ---------- */
 #winner-left, #winner-right {
   position: absolute;
   top: 50%;
@@ -93,33 +83,22 @@ h1, h2 {
   height: 50px;
   pointer-events: none;
   z-index: 10;
+  filter: drop-shadow(0 0 5px white);
 }
 
-#winner-left {
-  left: 0; /* left edge of spinner wrapper */
-}
-
-#winner-right {
-  right: 0; /* right edge of spinner wrapper */
-}
+#winner-left { left: 0; }
+#winner-right { right: 0; }
 
 #winner-left::before, #winner-right::before {
   content: '';
   display: block;
-  width: 0; 
-  height: 0; 
+  width: 0; height: 0;
   border-style: solid;
+  transition: border-color 0.3s, filter 0.3s;
 }
 
-#winner-left::before {
-  border-width: 25px 25px 25px 0;
-  border-color: transparent white transparent transparent;
-}
-
-#winner-right::before {
-  border-width: 25px 0 25px 25px;
-  border-color: transparent transparent transparent white;
-}
+#winner-left::before { border-width: 25px 25px 25px 0; border-color: transparent white transparent transparent; }
+#winner-right::before { border-width: 25px 0 25px 25px; border-color: transparent transparent transparent white; }
 
 /* ---------- Glowing Won Item ---------- */
 #spinner-strip img.winning {
@@ -133,15 +112,47 @@ h1, h2 {
 }
 
 /* ---------- Rarity Glows ---------- */
-#spinner-strip img.common {
-  box-shadow: 0 0 8px gray;
+#spinner-strip img.common { box-shadow: 0 0 8px gray; }
+#spinner-strip img.strange { box-shadow: 0 0 10px orange; }
+#spinner-strip img.unusual { box-shadow: 0 0 15px purple; animation: glow 1.5s infinite alternate; }
+
+@keyframes glow { from { box-shadow: 0 0 10px purple; } to { box-shadow: 0 0 25px magenta; } }
+
+/* ---------- Inventory ---------- */
+.inv-item {
+  background: #111;
+  border-radius: 10px;
+  padding: 10px;
+  width: 140px;
+  display: inline-block;
+  margin: 10px;
+  transition: transform 0.15s ease;
 }
 
-#spinner-strip img.strange {
-  box-shadow: 0 0 10px orange;
+.inv-item:hover { transform: translateY(-4px); }
+
+.inv-item img { width: 100px; height: auto; object-fit: cover; }
+
+/* ---------- Sell Button ---------- */
+.sell-btn {
+  margin-top: 6px;
+  background: #c0392b;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
 }
 
-#spinner-strip img.unusual {
-  box-shadow: 0 0 15px purple;
-  animation: glow 1.5s in
+.sell-btn:hover { transform: scale(1.05); }
 
+/* ---------- Responsive ---------- */
+@media (max-width: 500px) {
+  #spinner-container { width: 90%; }
+  #spinner-strip img { width: 80px; height: 80px; }
+  .inv-item { width: 100px; padding: 6px; }
+  .inv-item img { width: 70px; }
+  #case-container img { width: 120px; }
+  #open-btn { padding: 10px 20px; font-size: 16px; }
+}
