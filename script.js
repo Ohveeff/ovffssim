@@ -78,12 +78,23 @@ function spinToItem(item){
 
   const leftArrow=document.getElementById("winner-left");
   const rightArrow=document.getElementById("winner-right");
+
+  // Set arrow glow by rarity
   let color="white";
-  if(item.rarity.toLowerCase()=="common") color="gray";
-  else if(item.rarity.toLowerCase()=="strange") color="orange";
-  else if(item.rarity.toLowerCase()=="unusual") color="purple";
-  leftArrow.style.color=color; rightArrow.style.color=color;
-  leftArrow.classList.add("glow"); rightArrow.classList.add("glow");
+  switch(item.rarity.toLowerCase()){
+    case "common": color="gray"; break;
+    case "uncommon": color="green"; break;
+    case "rare": color="blue"; break;
+    case "strange": color="orange"; break;
+    case "verystrange": color="darkorange"; break;
+    case "unusual": color="purple"; break;
+    case "legendary": color="gold"; break;
+    case "mythical": color="violet"; break;
+  }
+  leftArrow.style.color=color; 
+  rightArrow.style.color=color;
+  leftArrow.classList.add("glow"); 
+  rightArrow.classList.add("glow");
 
   setTimeout(()=>{ imgs[targetIndex].classList.add("winning"); },6000);
 }
@@ -113,3 +124,4 @@ document.getElementById("open-btn").onclick=()=>{
 function showResult(item){
   document.getElementById("result").innerHTML=`<h2 class="${item.rarity}">${item.name}</h2><img src="${item.image}" alt="${item.name}"><p>Value: ${item.price} coins</p>`;
 }
+
