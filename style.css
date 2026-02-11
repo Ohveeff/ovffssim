@@ -1,3 +1,4 @@
+/* ---------- Global ---------- */
 body {
   background: radial-gradient(circle at top, #1e1e1e, #0b0b0b);
   color: #f2f2f2;
@@ -5,17 +6,23 @@ body {
   text-align: center;
   margin: 0;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
 }
 
-h1,h2 { margin-bottom: 10px; }
+h1, h2 {
+  margin-bottom: 10px;
+}
 
-#coins { font-size: 18px; margin-bottom: 20px; }
+/* ---------- Coins ---------- */
+#coins {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 
-#case-container img { width: 180px; margin-bottom: 10px; }
+/* ---------- Case ---------- */
+#case-container img {
+  width: 180px;
+  margin-bottom: 10px;
+}
 
 #open-btn {
   display: block;
@@ -30,30 +37,51 @@ h1,h2 { margin-bottom: 10px; }
   box-shadow: 0 0 20px rgba(255,150,0,0.4);
   transition: transform 0.1s ease;
 }
-#open-btn:hover { transform: scale(1.05); }
 
-/* Spinner Wrapper */
-#spinner-wrapper { width: 100%; display: flex; justify-content: center; margin: 20px 0; }
+#open-btn:hover {
+  transform: scale(1.05);
+}
 
-/* Spinner Container */
-#spinner-container {
+/* ---------- Spinner ---------- */
+#spinner-wrapper {
+  position: relative;
   width: 600px;
+  margin: 20px auto;
+  max-width: 90%;
+}
+
+#winner-left, #winner-right {
+  position: absolute;
+  top: 50%;
+  font-size: 40px;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: white;
+  pointer-events: none;
+  text-shadow: 0 0 5px #fff;
+}
+
+#winner-left { left: 0; }
+#winner-right { right: 0; }
+
+#winner-left.glow, #winner-right.glow {
+  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+}
+
+#spinner-container {
+  width: 100%;
   height: 150px;
   overflow: hidden;
   border: 2px solid #555;
   border-radius: 10px;
   background: #111;
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
-/* Spinner Strip */
 #spinner-strip {
   display: flex;
-  position: absolute;
+  position: relative;
   left: 0;
-  transition: left 6s cubic-bezier(.1,.7,0,1);
 }
 
 #spinner-strip img {
@@ -62,53 +90,34 @@ h1,h2 { margin-bottom: 10px; }
   margin-right: 10px;
   border-radius: 8px;
   object-fit: cover;
+  transition: box-shadow 0.3s ease;
 }
 
-/* Item Glow By Rarity */
-#spinner-strip img.common       { box-shadow: 0 0 10px gray, 0 0 20px rgba(128,128,128,0.2); }
-#spinner-strip img.uncommon     { box-shadow: 0 0 10px green, 0 0 20px rgba(0,255,0,0.2); }
-#spinner-strip img.rare         { box-shadow: 0 0 12px blue, 0 0 25px rgba(0,0,255,0.2); }
-#spinner-strip img.strange      { box-shadow: 0 0 12px orange, 0 0 25px rgba(255,165,0,0.2); }
-#spinner-strip img.verystrange  { box-shadow: 0 0 15px darkorange, 0 0 30px rgba(255,140,0,0.3); }
-#spinner-strip img.unusual      { box-shadow: 0 0 15px purple, 0 0 30px rgba(128,0,128,0.3); }
-#spinner-strip img.legendary    { box-shadow: 0 0 15px gold, 0 0 35px rgba(255,215,0,0.4); }
-#spinner-strip img.mythical     { box-shadow: 0 0 20px violet, 0 0 40px rgba(255,0,255,0.5); }
+/* ---------- Rarity Glows ---------- */
+#spinner-strip img.common { box-shadow: 0 0 5px gray; }
+#spinner-strip img.uncommon { box-shadow: 0 0 8px green; }
+#spinner-strip img.rare { box-shadow: 0 0 10px blue; }
+#spinner-strip img.strange { box-shadow: 0 0 12px orange; }
+#spinner-strip img.unusual { box-shadow: 0 0 15px purple; animation: glow 1.5s infinite alternate; }
+#spinner-strip img.legendary { box-shadow: 0 0 18px gold; animation: glow 1.5s infinite alternate; }
+#spinner-strip img.mythical { box-shadow: 0 0 20px violet; animation: glow 1.5s infinite alternate; }
 
-/* Winning Item Glow */
 #spinner-strip img.winning {
-  animation: glow-win 1s ease-in-out infinite alternate;
-}
-@keyframes glow-win {
-  0%   { box-shadow: 0 0 10px gold; transform: scale(1); }
-  50%  { box-shadow: 0 0 25px gold; transform: scale(1.05); }
-  100% { box-shadow: 0 0 10px gold; transform: scale(1); }
+  transform: scale(1.3);
+  animation: pulse 1s infinite alternate;
 }
 
-/* Winner Arrows */
-.winner-arrow {
-  position: absolute;
-  top: 50%;
-  font-size: 50px;
-  color: white;
-  pointer-events: none;
-  z-index: 10;
-  text-shadow: 0 0 10px white;
-  transform: translateY(-50%);
+@keyframes glow {
+  from { box-shadow: 0 0 10px currentColor; }
+  to { box-shadow: 0 0 25px currentColor; }
 }
 
-#winner-left  { left: 50%; transform: translate(-150%, -50%); }
-#winner-right { left: 50%; transform: translate(50%, -50%) rotate(180deg); }
-
-.winner-arrow.glow {
-  animation: arrow-glow 1s ease-in-out infinite alternate;
-}
-@keyframes arrow-glow {
-  0%   { text-shadow: 0 0 5px currentColor; transform: translateY(-50%) scale(1); }
-  50%  { text-shadow: 0 0 15px currentColor; transform: translateY(-50%) scale(1.2); }
-  100% { text-shadow: 0 0 5px currentColor; transform: translateY(-50%) scale(1); }
+@keyframes pulse {
+  from { box-shadow: 0 0 20px currentColor; }
+  to { box-shadow: 0 0 35px currentColor; }
 }
 
-/* Inventory */
+/* ---------- Inventory ---------- */
 .inv-item {
   background: #111;
   border-radius: 10px;
@@ -118,9 +127,16 @@ h1,h2 { margin-bottom: 10px; }
   margin: 10px;
   transition: transform 0.15s ease;
 }
-.inv-item:hover { transform: translateY(-4px); }
-.inv-item img { width: 100px; height: auto; object-fit: cover; }
 
+.inv-item:hover { transform: translateY(-4px); }
+
+.inv-item img {
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ---------- Sell Button ---------- */
 .sell-btn {
   margin-top: 6px;
   background: #c0392b;
@@ -131,11 +147,11 @@ h1,h2 { margin-bottom: 10px; }
   cursor: pointer;
   transition: transform 0.1s ease;
 }
+
 .sell-btn:hover { transform: scale(1.05); }
 
-/* Responsive */
-@media(max-width:500px){
-  #spinner-container { width: 90%; }
+/* ---------- Responsive ---------- */
+@media (max-width: 500px) {
   #spinner-strip img { width: 80px; height: 80px; }
   .inv-item { width: 100px; padding: 6px; }
   .inv-item img { width: 70px; }
