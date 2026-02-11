@@ -104,7 +104,9 @@ function spinToItem(item) {
   const imgs = strip.querySelectorAll("img");
   if (!imgs.length) return;
 
-  // match images by filename
+  // Remove previous winning glow
+  imgs.forEach(img => img.classList.remove('winning'));
+
   const matches = [...imgs].map((img, i) => img.src.endsWith(item.image) ? i : -1).filter(i => i >= 0);
   let targetIndex = matches.length ? matches[Math.floor(Math.random() * matches.length)] : 0;
 
@@ -119,6 +121,10 @@ function spinToItem(item) {
 
   strip.style.transition = "left 6s cubic-bezier(.1,.7,0,1)";
   strip.style.left = `${offset}px`;
+
+  setTimeout(() => {
+    imgs[targetIndex].classList.add('winning');
+  }, 6000);
 }
 
 // ==================== OPEN BUTTON ====================
@@ -153,4 +159,3 @@ function showResult(item) {
     <p>Value: ${item.price} coins</p>
   `;
 }
-
