@@ -172,3 +172,72 @@ function showResult(item) {
   `;
 }
 
+function populateSpinner(items, winningItem) {
+  const strip = document.getElementById("spinner-strip");
+  strip.innerHTML = "";
+
+  const SPIN_ITEM_COUNT = 60; // 👈 MORE ITEMS = longer spin
+  const resultIndex = SPIN_ITEM_COUNT - 8; // where winner lands
+
+  for (let i = 0; i < SPIN_ITEM_COUNT; i++) {
+    const item =
+      i === resultIndex
+        ? winningItem
+        : getWeightedRandomItem(items);
+
+    const img = document.createElement("img");
+    img.src = item.image;
+    img.className = item.rarity;
+
+    strip.appendChild(img);
+  }
+
+  return resultIndex;
+}
+function getWeightedRandomItem(items) {
+  const totalWeight = items.reduce((sum, i) => sum + i.weight, 0);
+  let roll = Math.random() * totalWeight;
+
+  for (const item of items) {
+    if (roll < item.weight) return item;
+    roll -= item.weight;
+  }
+}
+function spinSpinnerToIndex(targetIndex) {
+  const strip = document.getElementById("spinner-strip");
+  const imgs = strip.querySelectorAll("img");
+
+  const imgWidth = imgs[0].offsetWidth + 10;
+  const containerWidth = document.getElementById("spinner-container").offsetWidth;
+
+  const left =
+    -(targetIndex * imgWidth - containerWidth / 2 + imgWidth / 2);
+
+  strip.style.transition = "none";
+  strip.style.left = "0px";
+  strip.offsetHeight;
+
+  strip.style.transition = "left 6.5s cubic-bezier(.08,.6,0,1)";
+  strip.style.left = `${left}px`;
+}
+openBtn.addEventListener("click", () => {
+  if (!caseData) return alert("Case not loaded yet!");
+  if (coins < caseData.price) return alert("Not enough coins!");
+
+  openBtn.disabled = true;
+
+  coins -= caseData.price;
+  localStorage.setItem("coins", coins);
+  updateCoins();
+
+  const winningItem = openCase(caseData.items);
+
+  const targetIndex = populateSpinner(caseData.items, winningItem);
+  spinSpinnerToIndex(targetIndex);
+
+  setTimeout(() => {
+    addToInventory(winningItem);
+    showResult(winningItem);
+    openBtn.disabled = false;
+  }, 6500);
+});
