@@ -88,7 +88,6 @@ function populateCaseSelect() {
   });
   select.addEventListener("change", () => selectCase(select.value));
 
-  // Button to toggle dropdown
   document.getElementById("show-select-btn").addEventListener("click", () => {
     select.classList.toggle("hidden");
   });
@@ -115,23 +114,55 @@ function buildSpinner(winItem) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
   const randomItems = [];
-  const totalItems = 60; const winIndex = Math.floor(totalItems/2);
-  for(let i=0;i<totalItems;i++) randomItems.push(caseData.items[Math.floor(Math.random()*caseData.items.length)]);
+  const totalItems = 60;
+  const winIndex = Math.floor(totalItems / 2);
+
+  for (let i = 0; i < totalItems; i++) {
+    const random = caseData.items[Math.floor(Math.random() * caseData.items.length)];
+    randomItems.push(random);
+  }
   randomItems[winIndex] = winItem;
 
-  // preload images
-  const images = randomItems.map(item => new Promise(res => { const img=new Image(); img.src=item.image; img.onload=res; img.onerror=res; return img; }));
-  Promise.all(images).then(() => {
+  // Preload images
+  const imagePromises = randomItems.map(item => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.src = item.image;
+      img.onload = resolve;
+      img.onerror = resolve;
+    });
+  });
+
+  Promise.all(imagePromises).then(() => {
     randomItems.forEach(item => {
       const div = document.createElement("div");
       div.className = `spinner-item ${item.rarity.toLowerCase()}`;
       div.innerHTML = `<img src="${item.image}">`;
       strip.appendChild(div);
     });
+
     const itemWidth = strip.querySelector(".spinner-item").offsetWidth + 20;
-    const distance = winIndex * itemWidth * -1 + strip.parentElement.offsetWidth/2 - itemWidth/2;
-    strip.style.transition="none"; strip.style.left="0px"; strip.offsetHeight;
-    strip.style.transition="left 8s cubic-bezier(.1,.7,0,1)"; strip.style.left=`${distance}px`;
+
+    // Faster spin with extra loops
+    const extraSpins = 3;
+    const distance = winIndex * itemWidth * -1 - extraSpins * itemWidth * totalItems + strip.parentElement.offsetWidth / 2 - itemWidth / 2;
+
+    strip.style.transition = "none";
+    strip.style.left = "0px";
+    strip.offsetHeight;
+
+    // 11s spin duration
+    strip.style.transition = "left 11s cubic-bezier(.1,.7,0,1)";
+    strip.style.left = `${distance}px`;
+
+    // Highlight the winning item
+    setTimeout(() => {
+      const wonItemDiv = strip.children[winIndex];
+      if (wonItemDiv) {
+        wonItemDiv.classList.add("highlight-won");
+        setTimeout(() => wonItemDiv.classList.remove("highlight-won"), 3000);
+      }
+    }, 11000);
   });
 }
 
@@ -148,7 +179,7 @@ document.getElementById("open-btn").addEventListener("click", () => {
   setTimeout(()=>{
     document.getElementById("winner-name").textContent = `You won: ${winItem.name}`;
     addToInventory(winItem); addRecentDrop(winItem);
-  },8000);
+  },11000);
 });
 
 // ================= TOP DROPS =================
@@ -160,4 +191,9 @@ function renderTopDrops(){
   const sorted=[...recentDrops].sort((a,b)=>b.price-a.price).slice(0,8);
   sorted.forEach(item=>{
     const div=document.createElement("div"); div.className=`top-drop ${item.rarity.toLowerCase()}`;
-    div.i
+    div.innerHTML=`<img src="${item.image}"><p>${item.name}</p><strong>${item.price} coins</strong>`;
+    container.appendChild(div);
+  });
+}
+renderTopDrops();
+
