@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>TF2 Case Simulator</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>TF2 Case Simulator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>TF2 Case Opening Simulator</h1>
+  <h1>TF2 Case Opening Simulator</h1>
 
-<div id="coins"></div>
+  <!-- Coins Display -->
+  <div id="coins"></div>
 
-<div id="case-container"></div>
-<button id="open-btn">Open Case</button>
+  <!-- Case -->
+  <div id="case-container"></div>
+  <button id="open-btn">Open Case</button>
 
-<div id="spinner-wrapper">
-  <div id="winner-left">⮜</div>
-  <div id="winner-right">⮞</div>
-
-  <div id="spinner-container">
-    <div id="spinner-strip"></div>
+  <!-- Spinner wrapper with arrows -->
+  <div id="spinner-wrapper">
+    <div id="winner-left">⮜</div>
+    <div id="winner-right">⮞</div>
+    <div id="spinner-container">
+      <div id="spinner-strip"></div>
+    </div>
   </div>
-</div>
 
-<div id="winner-name"></div>
+  <!-- Result of the case opening -->
+  <div id="result"></div>
 
-<h2>Inventory</h2>
-<div id="inventory"></div>
+  <!-- Inventory -->
+  <h2>Inventory</h2>
+  <div id="inventory"></div>
 
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
