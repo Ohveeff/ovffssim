@@ -7,6 +7,15 @@ function updateCoins() {
 }
 updateCoins();
 
+// =========// ================= COINS =================
+let coins = parseInt(localStorage.getItem("coins")) || 1000;
+localStorage.setItem("coins", coins);
+
+function updateCoins() {
+  document.getElementById("coins").textContent = `Coins: ${coins}`;
+}
+updateCoins();
+
 // ================= INVENTORY =================
 let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
@@ -47,7 +56,6 @@ function renderInventory() {
     `;
 
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
-
     inv.appendChild(div);
   });
 }
@@ -55,8 +63,7 @@ renderInventory();
 
 // ================= INVENTORY TOGGLE =================
 document.getElementById("toggle-inv-btn").addEventListener("click", () => {
-  const inv = document.getElementById("inventory");
-  inv.classList.toggle("hidden");
+  document.getElementById("inventory").classList.toggle("hidden");
 });
 
 // ================= COIN ADJUST =================
@@ -75,7 +82,6 @@ document.getElementById("remove-coins-btn").addEventListener("click", () => {
 
 // ================= CASE DATA =================
 let caseData;
-
 fetch("data/cases.json")
   .then(res => res.json())
   .then(data => {
@@ -107,7 +113,7 @@ function buildSpinner(winItem) {
     const random = caseData.items[Math.floor(Math.random() * caseData.items.length)];
     randomItems.push(random);
   }
-  randomItems[55] = winItem; // force winning item near center
+  randomItems[55] = winItem; // center winner
 
   randomItems.forEach(item => {
     const div = document.createElement("div");
@@ -124,6 +130,53 @@ function buildSpinner(winItem) {
   strip.style.left = "-5500px";
 }
 
-// ================= OPEN BUTTON =================
+// ================= OPEN CASE =================
 document.getElementById("open-btn").addEventListener("click", () => {
-  if (!caseData) return
+  if (!caseData) return;
+  if (coins < caseData.price) return alert("Not enough coins!");
+
+  coins -= caseData.price;
+  updateCoins();
+  saveData();
+
+  const winItem = weightedRandom(caseData.items);
+  buildSpinner(winItem);
+
+  setTimeout(() => {
+    document.getElementById("winner-name").textContent =
+      `You won: ${winItem.name}`;
+    addToInventory(winItem);
+    addRecentDrop(winItem);
+  }, 8000);
+});
+
+// ================= TOP DROPS =================
+function addRecentDrop(item) {
+  recentDrops.push(item);
+  if (recentDrops.length > 20) recentDrops.shift();
+  saveData();
+  renderTopDrops();
+}
+
+function renderTopDrops() {
+  const container = document.getElementById("top-drops");
+  container.innerHTML = "";
+
+  const sorted = [...recentDrops]
+    .sort((a, b) => b.price - a.price)
+    .slice(0, 8);
+
+  sorted.forEach(item => {
+    const div = document.createElement("div");
+    div.className = `top-drop ${item.rarity.toLowerCase()}`;
+    div.innerHTML = `
+      <img src="${item.image}">
+      <p>${item.name}</p>
+      <strong>${item.price} coins</strong>
+    `;
+    container.appendChild(div);
+  });
+}
+
+renderTopDrops();
+
