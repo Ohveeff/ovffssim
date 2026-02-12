@@ -1,62 +1,80 @@
 // ================= COINS =================
 let coins = parseInt(localStorage.getItem("coins")) || 1000;
-localStorage.setItem("coins", coins);
-function updateCoins(){ document.getElementById("coins").textContent = `Coins: ${coins}`; }
 updateCoins();
+function updateCoins(){ document.getElementById("coins").textContent = `Coins: ${coins}`; localStorage.setItem("coins", coins); }
 
 // ================= INVENTORY =================
 let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
-function saveData(){ localStorage.setItem("inventory", JSON.stringify(inventory)); localStorage.setItem("coins", coins); localStorage.setItem("recentDrops", JSON.stringify(recentDrops)); }
+function saveData(){ localStorage.setItem("inventory",JSON.stringify(inventory)); localStorage.setItem("recentDrops",JSON.stringify(recentDrops)); }
+
 function addToInventory(item){ inventory.push(item); saveData(); renderInventory(); }
-function sellItem(index){ coins += inventory[index].price; inventory.splice(index,1); saveData(); updateCoins(); document.getElementById("coins").style.color="lime"; setTimeout(()=>document.getElementById("coins").style.color="white",500); renderInventory(); }
-function renderInventory(){ const inv=document.getElementById("inventory"); inv.innerHTML=""; inventory.forEach((item,index)=>{ const div=document.createElement("div"); div.className=`inv-item ${item.rarity.toLowerCase()}`; div.innerHTML=`<img src="${item.image}"><p>${item.name}</p><small>${item.price} coins</small><br><button class="sell-btn">Sell</button>`; div.querySelector(".sell-btn").onclick=()=>sellItem(index); inv.appendChild(div); }); }
+function renderInventory(){ const inv=document.getElementById("inventory"); inv.innerHTML=""; inventory.forEach((i,index)=>{ const div=document.createElement("div"); div.className=`inv-item ${i.rarity.toLowerCase()}`; div.innerHTML=`<img src="${i.image}"><p>${i.name}</p><small>${i.price} coins</small><br><button class="sell-btn">Sell</button>`; div.querySelector(".sell-btn").onclick=()=>{ coins+=i.price; inventory.splice(index,1); updateCoins(); saveData(); renderInventory(); }; inv.appendChild(div); }); }
 renderInventory();
 
-// ================= TOGGLE / COINS =================
-document.getElementById("toggle-inv-btn").addEventListener("click",()=>document.getElementById("inventory").classList.toggle("hidden"));
-document.getElementById("add-coins-btn").addEventListener("click",()=>{ coins+=50; updateCoins(); saveData(); });
-document.getElementById("remove-coins-btn").addEventListener("click",()=>{ coins=Math.max(0,coins-50); updateCoins(); saveData(); });
+// Toggle inventory
+document.getElementById("toggle-inv-btn").onclick=()=>document.getElementById("inventory").classList.toggle("hidden");
+
+// Coins buttons
+document.getElementById("add-coins-btn").onclick=()=>{ coins+=50; updateCoins(); };
+document.getElementById("remove-coins-btn").onclick=()=>{ coins=Math.max(0,coins-50); updateCoins(); };
 
 // ================= CASE DATA =================
-let caseData, caseDataList=[];
-fetch("data/cases.json").then(res=>res.json()).then(data=>{ caseDataList=data.cases; populateCaseSelect(); selectCase(caseDataList[0].id); });
+let caseDataList=[];
+let caseData;
+fetch("data/cases.json").then(r=>r.json()).then(d=>{ caseDataList=d.cases; populateCaseSelect(); selectCase(caseDataList[0].id); });
 
-function populateCaseSelect(){ const select=document.getElementById("case-select"); select.innerHTML=""; caseDataList.forEach(c=>{ const option=document.createElement("option"); option.value=c.id; option.textContent=c.name; select.appendChild(option); }); select.addEventListener("change",()=>selectCase(select.value)); document.getElementById("show-select-btn").addEventListener("click",()=>{ select.classList.toggle("hidden"); }); }
-function selectCase(caseId){ caseData=caseDataList.find(c=>c.id===caseId); document.getElementById("case-image").src=caseData.image; document.getElementById("case-name").textContent=caseData.name; document.getElementById("open-btn").textContent=`Open for ${caseData.price} coins`; caseData.items.forEach(item=>new Image().src=item.image); }
+function populateCaseSelect(){
+  const select=document.getElementById("case-select"); select.innerHTML="";
+  caseDataList.forEach(c=>{ const o=document.createElement("option"); o.value=c.id; o.textContent=c.name; select.appendChild(o); });
+  select.addEventListener("change",()=>selectCase(select.value));
+  document.getElementById("show-select-btn").onclick=()=>select.classList.toggle("hidden");
+}
+
+function selectCase(id){
+  caseData=caseDataList.find(c=>c.id===id);
+  document.getElementById("case-name").textContent=caseData.name;
+  document.getElementById("case-image").src=caseData.image;
+  document.getElementById("open-btn").textContent=`Open for ${caseData.price} coins`;
+  caseData.items.forEach(i=>new Image().src=i.image); // preload
+}
 
 // ================= RNG =================
-function weightedRandom(items){ const total=items.reduce((sum,i)=>sum+i.weight,0); let roll=Math.random()*total; for(let item of items){ if(roll<item.weight) return item; roll-=item.weight; } }
+function weightedRandom(items){ let t=items.reduce((s,i)=>s+i.weight,0); let r=Math.random()*t; for(let i of items){ if(r<i.weight) return i; r-=i.weight; } }
 
 // ================= SPINNER =================
-let lastWonItemDiv=null;
-function buildSpinner(winItem){
+let lastWonDiv=null;
+function buildSpinner(win){
   const strip=document.getElementById("spinner-strip"); strip.innerHTML="";
-  const items=caseData.items; const repeatCount=12; const spinnerItems=[];
-  for(let i=0;i<repeatCount;i++) items.forEach(it=>spinnerItems.push(it));
-  const winIndex=spinnerItems.length-Math.floor(items.length/2)-1; spinnerItems[winIndex]=winItem;
+  const arr=[]; const repeats=12;
+  for(let i=0;i<repeats;i++) caseData.items.forEach(it=>arr.push(it));
+  const winIndex=arr.length-Math.floor(caseData.items.length/2)-1; arr[winIndex]=win;
 
-  const preload=spinnerItems.map(item=>new Promise(r=>{ const img=new Image(); img.src=item.image; img.onload=r; img.onerror=r; }));
-  Promise.all(preload).then(()=>{
-    spinnerItems.forEach(item=>{ const div=document.createElement("div"); div.className=`spinner-item ${item.rarity.toLowerCase()}`; div.innerHTML=`<img src="${item.image}" style="width:100%;height:100%;object-fit:contain;">`; strip.appendChild(div); });
-    const itemWidth=strip.querySelector(".spinner-item").offsetWidth+20; const totalDistance=itemWidth*(spinnerItems.length-15);
-    if(lastWonItemDiv) lastWonItemDiv.classList.remove("highlight-won");
-    strip.style.transition="none"; strip.style.transform="translateX(0px)"; strip.offsetHeight;
-    requestAnimationFrame(()=>{ strip.style.transition="transform 11s cubic-bezier(.25,.1,.25,1)"; strip.style.transform=`translateX(-${totalDistance}px)`; });
-    setTimeout(()=>{ const wonDiv=strip.children[winIndex]; if(wonDiv){ wonDiv.classList.add("highlight-won"); wonDiv.classList.add(winItem.rarity.toLowerCase()); lastWonItemDiv=wonDiv; } },11000);
+  // preload images first
+  const preloads=arr.map(i=>new Promise(r=>{ const img=new Image(); img.src=i.image; img.onload=r; img.onerror=r; }));
+  Promise.all(preloads).then(()=>{
+    arr.forEach(i=>{ const div=document.createElement("div"); div.className=`spinner-item ${i.rarity.toLowerCase()}`; div.innerHTML=`<img src="${i.image}">`; strip.appendChild(div); });
+    const w=strip.querySelector(".spinner-item").offsetWidth+20;
+    const dist=w*(arr.length-15);
+    if(lastWonDiv) lastWonDiv.classList.remove("highlight-won");
+    strip.style.transition="none"; strip.style.transform="translateX(0px)";
+    strip.offsetHeight;
+    requestAnimationFrame(()=>{ strip.style.transition="transform 11s cubic-bezier(.25,.1,.25,1)"; strip.style.transform=`translateX(-${dist}px)`; });
+    setTimeout(()=>{ const d=strip.children[winIndex]; if(d){ d.classList.add("highlight-won"); d.classList.add(win.rarity.toLowerCase()); lastWonDiv=d; } },11000);
   });
 }
 
 // ================= OPEN BUTTON =================
-document.getElementById("open-btn").addEventListener("click",()=>{
+document.getElementById("open-btn").onclick=()=>{
   if(!caseData) return;
-  if(coins<caseData.price){ const coinsEl=document.getElementById("coins"); coinsEl.style.color="red"; setTimeout(()=>coinsEl.style.color="white",1000); return; }
-  coins-=caseData.price; updateCoins(); saveData();
-  const winItem=weightedRandom(caseData.items); buildSpinner(winItem);
-  setTimeout(()=>{ document.getElementById("winner-name").textContent=`You won: ${winItem.name}`; addToInventory(winItem); addRecentDrop(winItem); },11000);
-});
+  if(coins<caseData.price){ const c=document.getElementById("coins"); c.style.color="red"; setTimeout(()=>c.style.color="white",1000); return; }
+  coins-=caseData.price; updateCoins();
+  const won=weightedRandom(caseData.items);
+  buildSpinner(won);
+  setTimeout(()=>{ document.getElementById("winner-name").textContent=`You won: ${won.name}`; addToInventory(won); addRecentDrop(won); },11000);
+};
 
 // ================= TOP DROPS =================
-function addRecentDrop(item){ recentDrops.push(item); if(recentDrops.length>20) recentDrops.shift(); saveData(); renderTopDrops(); }
-function renderTopDrops(){ const container=document.getElementById("top-drops"); container.innerHTML=""; const sorted=[...recentDrops].sort((a,b)=>b.price-a.price).slice(0,8); sorted.forEach(item=>{ const div=document.createElement("div"); div.className=`top-drop ${item.rarity.toLowerCase()}`; div.innerHTML=`<img src="${item.image}"><p>${item.name}</p><strong>${item.price} coins</strong>`; container.appendChild(div); }); }
+function addRecentDrop(i){ recentDrops.push(i); if(recentDrops.length>20) recentDrops.shift(); saveData(); renderTopDrops(); }
+function renderTopDrops(){ const c=document.getElementById("top-drops"); c.innerHTML=""; [...recentDrops].sort((a,b)=>b.price-a.price).slice(0,8).forEach(i=>{ const d=document.createElement("div"); d.className=`top-drop ${i.rarity.toLowerCase()}`; d.innerHTML=`<img src="${i.image}"><p>${i.name}</p><strong>${i.price} coins</strong>`; c.appendChild(d); }); }
 renderTopDrops();
