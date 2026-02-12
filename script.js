@@ -55,7 +55,7 @@ document.getElementById("toggle-inv-btn").onclick =
   () => document.getElementById("inventory").classList.toggle("hidden");
 
 document.getElementById("add-coins-btn").onclick = () => {
-  coins = +(coins + 1000).toFixed(2);
+  coins = +(coins + 100.00).toFixed(2);
   updateCoins();
 };
 
