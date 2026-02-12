@@ -71,3 +71,4 @@ function spinToItem(item){
     updateArrowPositions(targetIndex);
   },6000);
 }
+
