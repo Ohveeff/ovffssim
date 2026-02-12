@@ -47,7 +47,7 @@ function renderInventory() {
 }
 renderInventory();
 
-// ===================== COIN ADJUST BUTTONS =====================
+// ===================== COIN CONTROL & TOGGLE =====================
 const coinControls = document.createElement("div");
 coinControls.style.margin = "15px";
 coinControls.innerHTML = `
@@ -86,7 +86,7 @@ fetch("data/cases.json")
     `;
   });
 
-// ===================== RNG =====================
+// ===================== WEIGHTED RANDOM =====================
 function weightedRandom(items) {
   const total = items.reduce((sum, i) => sum + i.weight, 0);
   let roll = Math.random() * total;
@@ -110,12 +110,10 @@ function updateArrowPositions(targetIndex) {
   const offset = -(targetIndex * imgWidth - containerWidth / 2 + imgWidth / 2);
   strip.style.left = `${offset}px`;
 
-  // center arrows
   leftArrow.style.left = `${containerWidth/2 - 50}px`;
   rightArrow.style.left = `${containerWidth/2 + 50}px`;
 }
 
-// Reposition arrows on resize
 window.addEventListener("resize", () => {
   const winningImg = document.querySelector("#spinner-strip img.winning");
   if (winningImg) {
@@ -125,15 +123,14 @@ window.addEventListener("resize", () => {
   }
 });
 
-// Build the full spinner strip with winning item
 function buildSpinner(items, winItem) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
   const stripItems = [];
   for (let i = 0; i < 60; i++) {
-    if (i === 45) stripItems.push(winItem); // winning item ~75%
-    else stripItems.push(items[Math.floor(Math.random() * items.length)]);
+    stripItems.push(items[Math.floor(Math.random() * items.length)]);
   }
+  stripItems[45] = winItem; // winning item ~75%
   stripItems.forEach(item => {
     const img = document.createElement("img");
     img.src = item.image;
@@ -151,7 +148,6 @@ function spinToItem(winItem) {
 
   const targetIndex = stripItems.indexOf(winItem);
 
-  // arrow color by rarity
   let color="white";
   switch(winItem.rarity.toLowerCase()){
     case "common": color="gray"; break;
