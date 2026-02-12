@@ -1,9 +1,9 @@
 // ===================== GLOBAL STATE =====================
 let coins = parseFloat(localStorage.getItem("coins")) || 100;
 let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
-let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 let cases = [];
 let currentCase = null;
+let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,8 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("toggle-inv-btn").onclick = () =>
     document.getElementById("inventory").classList.toggle("hidden");
 
-  document.getElementById("add-coins-btn").onclick = () => { coins += 0.05; updateCoins(); };
-  document.getElementById("remove-coins-btn").onclick = () => { coins = Math.max(0, coins - 0.05); updateCoins(); };
+  document.getElementById("add-coins-btn").onclick = () => {
+    coins += 0.05;
+    updateCoins();
+  };
+  document.getElementById("remove-coins-btn").onclick = () => {
+    coins = Math.max(0, coins - 0.05);
+    updateCoins();
+  };
 });
 
 // ===================== COINS =====================
@@ -51,9 +57,11 @@ function sellItem(index) {
 function renderInventory() {
   const inv = document.getElementById("inventory");
   inv.innerHTML = "";
+
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
+
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
@@ -67,18 +75,16 @@ function renderInventory() {
 
 // ===================== TOP DROPS =====================
 function renderTopDrops() {
-  const top = document.getElementById("top-drops");
-  top.innerHTML = "";
-  [...recentDrops].sort((a,b)=>b.price-a.price).slice(0,8).forEach(item=>{
-    const div = document.createElement("div");
-    div.className = `top-drop ${item.rarity.toLowerCase()}`;
-    div.innerHTML = `
-      <img src="${item.image}">
-      <p>${item.name}</p>
-      <strong>${item.price} coins</strong>
-    `;
-    top.appendChild(div);
-  });
+  const c = document.getElementById("top-drops");
+  c.innerHTML = "";
+  [...recentDrops].sort((a, b) => b.price - a.price)
+    .slice(0, 8)
+    .forEach(i => {
+      const d = document.createElement("div");
+      d.className = `top-drop ${i.rarity.toLowerCase()}`;
+      d.innerHTML = `<img src="${i.image}"><p>${i.name}</p><strong>${i.price} coins</strong>`;
+      c.appendChild(d);
+    });
 }
 
 // ===================== LOAD CASES =====================
@@ -98,35 +104,30 @@ function populateCaseSelect() {
   cases.forEach(c => {
     const option = document.createElement("option");
     option.value = c.id;
-    option.textContent = `${c.name} (${c.price} Coins)`;
+    option.textContent = `${c.name} (${c.price} coins)`;
     select.appendChild(option);
   });
 
+  select.onchange = () => selectCase(select.value);
   document.getElementById("show-select-btn").onclick = () =>
     select.classList.toggle("hidden");
-
-  select.onchange = () => selectCase(select.value);
 }
 
 function selectCase(id) {
   currentCase = cases.find(c => c.id === id);
   if (!currentCase) return;
 
-  const caseImg = document.getElementById("case-image");
-  const caseName = document.getElementById("case-name");
-  const openBtn = document.getElementById("open-btn");
+  document.getElementById("case-image").src = currentCase.image;
+  document.getElementById("case-name").textContent = currentCase.name;
+  document.getElementById("open-btn").textContent = `Open for ${currentCase.price} Coins`;
 
-  if (caseImg) caseImg.src = currentCase.image;
-  if (caseName) caseName.textContent = currentCase.name;
-  if (openBtn) openBtn.textContent = `Open for ${currentCase.price} Coins`;
-
-  // Preload item images
-  currentCase.items.forEach(i => { const img = new Image(); img.src = i.image; });
+  // preload images
+  currentCase.items.forEach(i => new Image().src = i.image);
 }
 
-// ===================== RNG =====================
+// ===================== WEIGHTED RNG =====================
 function getRandomItem(items) {
-  const totalWeight = items.reduce((sum,i)=>sum+i.weight,0);
+  const totalWeight = items.reduce((sum, i) => sum + i.weight, 0);
   let roll = Math.random() * totalWeight;
   for (let item of items) {
     if (roll < item.weight) return item;
@@ -139,11 +140,12 @@ function getRandomItem(items) {
 function spinToItem(winningItem) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
+
   const totalSlots = 50;
-  const winnerIndex = totalSlots - 5; // stops near right
+  const winnerIndex = 38;
   const items = currentCase.items;
 
-  for (let i=0;i<totalSlots;i++) {
+  for (let i = 0; i < totalSlots; i++) {
     let item = items[Math.floor(Math.random() * items.length)];
     if (i === winnerIndex) item = winningItem;
     const div = document.createElement("div");
@@ -153,9 +155,10 @@ function spinToItem(winningItem) {
   }
 
   const spinnerItems = strip.querySelectorAll(".spinner-item");
-  const itemWidth = spinnerItems[0].offsetWidth + 30;
+  const itemWidth = spinnerItems[0].offsetWidth + 30; 
   const containerWidth = document.getElementById("spinner-container").offsetWidth;
-  const offset = -(winnerIndex * itemWidth - containerWidth + itemWidth/2);
+
+  const offset = -(winnerIndex * itemWidth - containerWidth / 2 + itemWidth / 2);
 
   strip.style.transition = "none";
   strip.style.transform = "translateX(0px)";
@@ -173,8 +176,11 @@ function spinToItem(winningItem) {
 // ===================== SHOW WINNER =====================
 function showWinner(item) {
   const nameBox = document.getElementById("winner-name");
-  nameBox.textContent = `You won: ${item.name}`;
-  nameBox.className = item.rarity.toLowerCase();
+  if (nameBox) {
+    nameBox.textContent = `You won: ${item.name}`;
+    nameBox.className = item.rarity.toLowerCase();
+  }
+
   addToInventory(item);
 }
 
@@ -188,6 +194,7 @@ document.getElementById("open-btn").addEventListener("click", () => {
 
   coins -= currentCase.price;
   updateCoins();
+
   const winningItem = getRandomItem(currentCase.items);
   spinToItem(winningItem);
 });
