@@ -110,7 +110,7 @@ function weightedRandom(items) {
 }
 
 // ================= SPINNER =================
-let lastWonItemDiv = null; // store reference to the last highlighted item
+let lastWonItemDiv = null;
 
 function buildSpinner(winItem) {
   const strip = document.getElementById("spinner-strip");
@@ -120,44 +120,54 @@ function buildSpinner(winItem) {
   const winIndex = Math.floor(totalItems / 2);
   const randomItems = [];
 
+  // Fill spinner with random items
   for (let i = 0; i < totalItems; i++) {
     const random = caseData.items[Math.floor(Math.random() * caseData.items.length)];
     randomItems.push(random);
   }
-  randomItems[winIndex] = winItem;
+  randomItems[winIndex] = winItem; // Force winning item in middle
 
-  const imagePromises = randomItems.map(item => new Promise(resolve => {
-    const img = new Image();
-    img.src = item.image;
-    img.onload = resolve; img.onerror = resolve;
-  }));
+  // Preload all images
+  const preloadPromises = randomItems.map(item => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.src = item.image;
+      img.onload = resolve;
+      img.onerror = resolve;
+    });
+  });
 
-  Promise.all(imagePromises).then(() => {
+  Promise.all(preloadPromises).then(() => {
+    // Build spinner after all images are loaded
     randomItems.forEach(item => {
       const div = document.createElement("div");
       div.className = `spinner-item ${item.rarity.toLowerCase()}`;
-      div.innerHTML = `<img src="${item.image}">`;
+      div.innerHTML = `<img src="${item.image}" style="display:block; width:70px; height:70px;">`;
       strip.appendChild(div);
     });
 
-    const itemWidth = strip.querySelector(".spinner-item").offsetWidth + 20;
-    const extraSpins = 3;
+    const itemWidth = strip.querySelector(".spinner-item").offsetWidth + 20; // include margin
+    const extraSpins = 3; // extra loops
     const distance = -(winIndex * itemWidth + totalItems * itemWidth * extraSpins);
 
+    // Remove glow from previous won item
+    if (lastWonItemDiv) lastWonItemDiv.classList.remove("highlight-won");
+
+    // Reset position and force reflow
     strip.style.transition = "none";
     strip.style.left = "0px";
     strip.offsetHeight;
 
+    // Start transition
     strip.style.transition = "left 11s cubic-bezier(.25,.1,.25,1)";
     strip.style.left = `${distance}px`;
 
-    if (lastWonItemDiv) lastWonItemDiv.classList.remove("highlight-won");
-
+    // Highlight winning item after spin
     setTimeout(() => {
       const wonItemDiv = strip.children[winIndex];
       if (wonItemDiv) {
         wonItemDiv.classList.add("highlight-won");
-        lastWonItemDiv = wonItemDiv;
+        lastWonItemDiv = wonItemDiv; // store reference for next spin
       }
     }, 11000);
   });
@@ -189,13 +199,19 @@ document.getElementById("open-btn").addEventListener("click", () => {
 
 // ================= TOP DROPS =================
 function addRecentDrop(item){
-  recentDrops.push(item); if(recentDrops.length>20) recentDrops.shift(); saveData(); renderTopDrops();
+  recentDrops.push(item);
+  if(recentDrops.length>20) recentDrops.shift();
+  saveData();
+  renderTopDrops();
 }
+
 function renderTopDrops(){
-  const container=document.getElementById("top-drops"); container.innerHTML="";
+  const container=document.getElementById("top-drops");
+  container.innerHTML="";
   const sorted=[...recentDrops].sort((a,b)=>b.price-a.price).slice(0,8);
   sorted.forEach(item=>{
-    const div=document.createElement("div"); div.className=`top-drop ${item.rarity.toLowerCase()}`;
+    const div=document.createElement("div");
+    div.className=`top-drop ${item.rarity.toLowerCase()}`;
     div.innerHTML=`<img src="${item.image}"><p>${item.name}</p><strong>${item.price} coins</strong>`;
     container.appendChild(div);
   });
