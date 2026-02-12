@@ -28,6 +28,12 @@ function sellItem(index) {
   inventory.splice(index, 1);
   saveData();
   updateCoins();
+
+  // flash coins green
+  const coinsEl = document.getElementById("coins");
+  coinsEl.style.color = "lime";
+  setTimeout(() => coinsEl.style.color = "white", 500);
+
   renderInventory();
 }
 
@@ -103,11 +109,14 @@ function buildSpinner(winItem) {
   strip.innerHTML = "";
 
   const randomItems = [];
-  for (let i = 0; i < 60; i++) {
+  const totalItems = 60;
+  const winIndex = Math.floor(totalItems / 2); // center item
+
+  for (let i = 0; i < totalItems; i++) {
     const random = caseData.items[Math.floor(Math.random() * caseData.items.length)];
     randomItems.push(random);
   }
-  randomItems[55] = winItem; // force winning item near center
+  randomItems[winIndex] = winItem; // place winner in center
 
   randomItems.forEach(item => {
     const div = document.createElement("div");
@@ -116,31 +125,42 @@ function buildSpinner(winItem) {
     strip.appendChild(div);
   });
 
+  // dynamically calculate scroll distance
+  const itemWidth = strip.querySelector(".spinner-item").offsetWidth + 20; // includes margin
+  const distance = winIndex * itemWidth * -1 + strip.parentElement.offsetWidth / 2 - itemWidth / 2;
+
+  // reset position
   strip.style.transition = "none";
   strip.style.left = "0px";
-  strip.offsetHeight;
+  strip.offsetHeight; // force reflow
 
+  // animate with easing
   strip.style.transition = "left 8s cubic-bezier(.1,.7,0,1)";
-  strip.style.left = "-5500px";
+  strip.style.left = `${distance}px`;
 }
 
 // ================= OPEN BUTTON =================
 document.getElementById("open-btn").addEventListener("click", () => {
   if (!caseData) return;
-  if (coins < caseData.price) return alert("Not enough coins!");
+
+  if (coins < caseData.price) {
+    // flash coins red
+    const coinsEl = document.getElementById("coins");
+    coinsEl.style.color = "red";
+    setTimeout(() => coinsEl.style.color = "white", 1000);
+    return;
+  }
 
   coins -= caseData.price;
   updateCoins();
   saveData();
 
   const winItem = weightedRandom(caseData.items);
-
   buildSpinner(winItem);
 
   setTimeout(() => {
     document.getElementById("winner-name").textContent =
       `You won: ${winItem.name}`;
-
     addToInventory(winItem);
     addRecentDrop(winItem);
   }, 8000);
@@ -175,4 +195,5 @@ function renderTopDrops() {
 }
 
 renderTopDrops();
+
 
