@@ -144,7 +144,7 @@ function buildSpinner(winItem) {
     });
 
     const itemWidth = strip.querySelector(".spinner-item").offsetWidth + 20;
-    const extraSpins = 5; // more spins to prevent cut-off
+    const extraSpins = 5;
     const distance = -(winIndex * itemWidth + totalItems * itemWidth * extraSpins);
 
     if (lastWonItemDiv) lastWonItemDiv.classList.remove("highlight-won");
@@ -162,6 +162,7 @@ function buildSpinner(winItem) {
       const wonItemDiv = strip.children[winIndex];
       if (wonItemDiv) {
         wonItemDiv.classList.add("highlight-won");
+        wonItemDiv.classList.add(winItem.rarity.toLowerCase());
         lastWonItemDiv = wonItemDiv;
       }
     }, 11000);
