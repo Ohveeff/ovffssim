@@ -12,11 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTopDrops();
   loadCases();
 
-  // Inventory toggle
   document.getElementById("toggle-inv-btn").onclick = () =>
     document.getElementById("inventory").classList.toggle("hidden");
 
-  // Coin buttons
   document.getElementById("add-coins-btn").onclick = () => { coins += 0.05; updateCoins(); };
   document.getElementById("remove-coins-btn").onclick = () => { coins = Math.max(0, coins - 0.05); updateCoins(); };
 });
@@ -114,12 +112,15 @@ function selectCase(id) {
   currentCase = cases.find(c => c.id === id);
   if (!currentCase) return;
 
-  // Update case section
-  document.getElementById("case-image").src = currentCase.image;
-  document.getElementById("case-name").textContent = currentCase.name;
-  document.getElementById("open-btn").textContent = `Open for ${currentCase.price} Coins`;
+  const caseImg = document.getElementById("case-image");
+  const caseName = document.getElementById("case-name");
+  const openBtn = document.getElementById("open-btn");
 
-  // Preload images
+  if (caseImg) caseImg.src = currentCase.image;
+  if (caseName) caseName.textContent = currentCase.name;
+  if (openBtn) openBtn.textContent = `Open for ${currentCase.price} Coins`;
+
+  // Preload item images
   currentCase.items.forEach(i => { const img = new Image(); img.src = i.image; });
 }
 
@@ -139,7 +140,7 @@ function spinToItem(winningItem) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
   const totalSlots = 50;
-  const winnerIndex = 38; // stops near end
+  const winnerIndex = totalSlots - 5; // stops near right
   const items = currentCase.items;
 
   for (let i=0;i<totalSlots;i++) {
@@ -154,7 +155,7 @@ function spinToItem(winningItem) {
   const spinnerItems = strip.querySelectorAll(".spinner-item");
   const itemWidth = spinnerItems[0].offsetWidth + 30;
   const containerWidth = document.getElementById("spinner-container").offsetWidth;
-  const offset = -(winnerIndex * itemWidth - containerWidth/2 + itemWidth/2);
+  const offset = -(winnerIndex * itemWidth - containerWidth + itemWidth/2);
 
   strip.style.transition = "none";
   strip.style.transform = "translateX(0px)";
