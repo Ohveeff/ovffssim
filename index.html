@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>TF2 Case Simulator</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>TF2 Case Simulator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>TF2 Case Opening Simulator</h1>
+  <h1>TF2 Case Simulator</h1>
 
-<div id="coins"></div>
+  <div id="coins"></div>
 
-<div id="case-container"></div>
-<button id="open-btn">Open Case</button>
+  <!-- CASE SECTION -->
+  <div id="case-section">
+    <div class="case-left">
+      <img id="case-image" src="">
+    </div>
 
-<div id="winner-name"></div>
-
-<div id="spinner-wrapper">
-  <div id="winner-left">⮜</div>
-  <div id="winner-right">⮞</div>
-
-  <div id="spinner-container">
-    <div id="spinner-strip"></div>
+    <div class="case-right">
+      <h2 id="case-name"></h2>
+      <button id="open-btn"></button>
+    </div>
   </div>
-</div>
 
-<div id="winner-name"></div>
+  <!-- WINNER NAME -->
+  <div id="winner-name"></div>
 
-<h2>Inventory</h2>
-<div id="inventory"></div>
+  <!-- SPINNER -->
+  <div id="spinner-wrapper">
+    <div id="spinner-container">
+      <div id="spinner-strip"></div>
+    </div>
+  </div>
 
-<script src="script.js"></script>
+  <!-- INVENTORY -->
+  <h2>Inventory</h2>
+  <div id="inventory"></div>
 
+  <!-- TOP DROPS -->
+  <h2 class="top-title">• Last TOP Drops</h2>
+  <div id="top-drops"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
-
