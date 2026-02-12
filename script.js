@@ -38,30 +38,52 @@ function renderInventory() {
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
+
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
       <small>${item.price} coins</small><br>
       <button class="sell-btn">Sell</button>
     `;
+
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
+
     inv.appendChild(div);
   });
 }
-
 renderInventory();
 
-// ================= CASE =================
+// ================= INVENTORY TOGGLE =================
+document.getElementById("toggle-inv-btn").addEventListener("click", () => {
+  const inv = document.getElementById("inventory");
+  inv.classList.toggle("hidden");
+});
+
+// ================= COIN ADJUST =================
+document.getElementById("add-coins-btn").addEventListener("click", () => {
+  coins += 50;
+  updateCoins();
+  saveData();
+});
+
+document.getElementById("remove-coins-btn").addEventListener("click", () => {
+  coins -= 50;
+  if (coins < 0) coins = 0;
+  updateCoins();
+  saveData();
+});
+
+// ================= CASE DATA =================
 let caseData;
 
 fetch("data/cases.json")
   .then(res => res.json())
   .then(data => {
     caseData = data.cases[0];
-
     document.getElementById("case-image").src = caseData.image;
     document.getElementById("case-name").textContent = caseData.name;
-    document.getElementById("open-btn").textContent = `Open for ${caseData.price} coins`;
+    document.getElementById("open-btn").textContent =
+      `Open for ${caseData.price} coins`;
   });
 
 // ================= RNG =================
@@ -81,13 +103,11 @@ function buildSpinner(winItem) {
   strip.innerHTML = "";
 
   const randomItems = [];
-
   for (let i = 0; i < 60; i++) {
     const random = caseData.items[Math.floor(Math.random() * caseData.items.length)];
     randomItems.push(random);
   }
-
-  randomItems[55] = winItem; // Winning item near the end
+  randomItems[55] = winItem; // force winning item near center
 
   randomItems.forEach(item => {
     const div = document.createElement("div");
@@ -118,7 +138,9 @@ document.getElementById("open-btn").addEventListener("click", () => {
   buildSpinner(winItem);
 
   setTimeout(() => {
-    document.getElementById("winner-name").textContent = `You won: ${winItem.name}`;
+    document.getElementById("winner-name").textContent =
+      `You won: ${winItem.name}`;
+
     addToInventory(winItem);
     addRecentDrop(winItem);
   }, 8000);
