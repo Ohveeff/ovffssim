@@ -28,32 +28,25 @@ function sellItem(index) {
   inventory.splice(index, 1);
   saveData();
   updateCoins();
-
-  // flash coins green
   const coinsEl = document.getElementById("coins");
   coinsEl.style.color = "lime";
   setTimeout(() => coinsEl.style.color = "white", 500);
-
   renderInventory();
 }
 
 function renderInventory() {
   const inv = document.getElementById("inventory");
   inv.innerHTML = "";
-
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
-
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
       <small>${item.price} coins</small><br>
       <button class="sell-btn">Sell</button>
     `;
-
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
-
     inv.appendChild(div);
   });
 }
@@ -61,22 +54,15 @@ renderInventory();
 
 // ================= INVENTORY TOGGLE =================
 document.getElementById("toggle-inv-btn").addEventListener("click", () => {
-  const inv = document.getElementById("inventory");
-  inv.classList.toggle("hidden");
+  document.getElementById("inventory").classList.toggle("hidden");
 });
 
 // ================= COIN ADJUST =================
 document.getElementById("add-coins-btn").addEventListener("click", () => {
-  coins += 50;
-  updateCoins();
-  saveData();
+  coins += 50; updateCoins(); saveData();
 });
-
 document.getElementById("remove-coins-btn").addEventListener("click", () => {
-  coins -= 50;
-  if (coins < 0) coins = 0;
-  updateCoins();
-  saveData();
+  coins = Math.max(0, coins - 50); updateCoins(); saveData();
 });
 
 // ================= CASE DATA =================
@@ -88,122 +74,90 @@ fetch("data/cases.json")
   .then(data => {
     caseDataList = data.cases;
     populateCaseSelect();
-    selectCase(caseDataList[0].id); // default to first case
+    selectCase(caseDataList[0].id);
   });
 
-// Populate the select dropdown
+// Populate select dropdown
 function populateCaseSelect() {
   const select = document.getElementById("case-select");
   select.innerHTML = "";
-
   caseDataList.forEach(c => {
     const option = document.createElement("option");
-    option.value = c.id;
-    option.textContent = c.name;
+    option.value = c.id; option.textContent = c.name;
     select.appendChild(option);
   });
+  select.addEventListener("change", () => selectCase(select.value));
 
-  select.addEventListener("change", () => {
-    selectCase(select.value);
+  // Button to toggle dropdown
+  document.getElementById("show-select-btn").addEventListener("click", () => {
+    select.classList.toggle("hidden");
   });
 }
 
-// Change the current case
+// Select case
 function selectCase(caseId) {
   caseData = caseDataList.find(c => c.id === caseId);
   document.getElementById("case-image").src = caseData.image;
   document.getElementById("case-name").textContent = caseData.name;
   document.getElementById("open-btn").textContent = `Open for ${caseData.price} coins`;
-
-  // preload images of the new case
-  caseData.items.forEach(item => {
-    const img = new Image();
-    img.src = item.image;
-  });
+  caseData.items.forEach(item => { new Image().src = item.image; });
 }
 
 // ================= RNG =================
 function weightedRandom(items) {
   const total = items.reduce((sum, i) => sum + i.weight, 0);
   let roll = Math.random() * total;
-
-  for (let item of items) {
-    if (roll < item.weight) return item;
-    roll -= item.weight;
-  }
+  for (let item of items) { if (roll < item.weight) return item; roll -= item.weight; }
 }
 
 // ================= SPINNER =================
 function buildSpinner(winItem) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
-
   const randomItems = [];
-  const totalItems = 60;
-  const winIndex = Math.floor(totalItems / 2);
-
-  for (let i = 0; i < totalItems; i++) {
-    const random = caseData.items[Math.floor(Math.random() * caseData.items.length)];
-    randomItems.push(random);
-  }
+  const totalItems = 60; const winIndex = Math.floor(totalItems/2);
+  for(let i=0;i<totalItems;i++) randomItems.push(caseData.items[Math.floor(Math.random()*caseData.items.length)]);
   randomItems[winIndex] = winItem;
 
-  // Preload spinner images
-  const imagePromises = randomItems.map(item => {
-    return new Promise(resolve => {
-      const img = new Image();
-      img.src = item.image;
-      img.onload = resolve;
-      img.onerror = resolve;
-    });
-  });
-
-  Promise.all(imagePromises).then(() => {
+  // preload images
+  const images = randomItems.map(item => new Promise(res => { const img=new Image(); img.src=item.image; img.onload=res; img.onerror=res; return img; }));
+  Promise.all(images).then(() => {
     randomItems.forEach(item => {
       const div = document.createElement("div");
       div.className = `spinner-item ${item.rarity.toLowerCase()}`;
       div.innerHTML = `<img src="${item.image}">`;
       strip.appendChild(div);
     });
-
     const itemWidth = strip.querySelector(".spinner-item").offsetWidth + 20;
-    const distance = winIndex * itemWidth * -1 + strip.parentElement.offsetWidth / 2 - itemWidth / 2;
-
-    strip.style.transition = "none";
-    strip.style.left = "0px";
-    strip.offsetHeight;
-
-    strip.style.transition = "left 8s cubic-bezier(.1,.7,0,1)";
-    strip.style.left = `${distance}px`;
+    const distance = winIndex * itemWidth * -1 + strip.parentElement.offsetWidth/2 - itemWidth/2;
+    strip.style.transition="none"; strip.style.left="0px"; strip.offsetHeight;
+    strip.style.transition="left 8s cubic-bezier(.1,.7,0,1)"; strip.style.left=`${distance}px`;
   });
 }
 
 // ================= OPEN BUTTON =================
 document.getElementById("open-btn").addEventListener("click", () => {
-  if (!caseData) return;
-
-  if (coins < caseData.price) {
-    const coinsEl = document.getElementById("coins");
-    coinsEl.style.color = "red";
-    setTimeout(() => coinsEl.style.color = "white", 1000);
-    return;
+  if(!caseData) return;
+  if(coins < caseData.price){
+    const coinsEl=document.getElementById("coins"); coinsEl.style.color="red";
+    setTimeout(()=>coinsEl.style.color="white",1000); return;
   }
-
-  coins -= caseData.price;
-  updateCoins();
-  saveData();
-
+  coins -= caseData.price; updateCoins(); saveData();
   const winItem = weightedRandom(caseData.items);
   buildSpinner(winItem);
-
-  setTimeout(() => {
-    document.getElementById("winner-name").textContent =
-      `You won: ${winItem.name}`;
-    addToInventory(winItem);
-    addRecentDrop(winItem);
-  }, 8000);
+  setTimeout(()=>{
+    document.getElementById("winner-name").textContent = `You won: ${winItem.name}`;
+    addToInventory(winItem); addRecentDrop(winItem);
+  },8000);
 });
 
 // ================= TOP DROPS =================
-function addRecentDrop(item) {
-  recentDr
+function addRecentDrop(item){
+  recentDrops.push(item); if(recentDrops.length>20) recentDrops.shift(); saveData(); renderTopDrops();
+}
+function renderTopDrops(){
+  const container=document.getElementById("top-drops"); container.innerHTML="";
+  const sorted=[...recentDrops].sort((a,b)=>b.price-a.price).slice(0,8);
+  sorted.forEach(item=>{
+    const div=document.createElement("div"); div.className=`top-drop ${item.rarity.toLowerCase()}`;
+    div.i
