@@ -38,16 +38,13 @@ function renderInventory() {
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
-
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
       <small>${item.price} coins</small><br>
       <button class="sell-btn">Sell</button>
     `;
-
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
-
     inv.appendChild(div);
   });
 }
@@ -64,8 +61,7 @@ fetch("data/cases.json")
 
     document.getElementById("case-image").src = caseData.image;
     document.getElementById("case-name").textContent = caseData.name;
-    document.getElementById("open-btn").textContent =
-      `Open for ${caseData.price} coins`;
+    document.getElementById("open-btn").textContent = `Open for ${caseData.price} coins`;
   });
 
 // ================= RNG =================
@@ -87,17 +83,15 @@ function buildSpinner(winItem) {
   const randomItems = [];
 
   for (let i = 0; i < 60; i++) {
-    const random =
-      caseData.items[Math.floor(Math.random() * caseData.items.length)];
+    const random = caseData.items[Math.floor(Math.random() * caseData.items.length)];
     randomItems.push(random);
   }
 
-  randomItems[55] = winItem;
+  randomItems[55] = winItem; // Winning item near the end
 
   randomItems.forEach(item => {
     const div = document.createElement("div");
     div.className = `spinner-item ${item.rarity.toLowerCase()}`;
-
     div.innerHTML = `<img src="${item.image}">`;
     strip.appendChild(div);
   });
@@ -124,9 +118,7 @@ document.getElementById("open-btn").addEventListener("click", () => {
   buildSpinner(winItem);
 
   setTimeout(() => {
-    document.getElementById("winner-name").textContent =
-      `You won: ${winItem.name}`;
-
+    document.getElementById("winner-name").textContent = `You won: ${winItem.name}`;
     addToInventory(winItem);
     addRecentDrop(winItem);
   }, 8000);
@@ -135,11 +127,7 @@ document.getElementById("open-btn").addEventListener("click", () => {
 // ================= TOP DROPS =================
 function addRecentDrop(item) {
   recentDrops.push(item);
-
-  if (recentDrops.length > 20) {
-    recentDrops.shift();
-  }
-
+  if (recentDrops.length > 20) recentDrops.shift();
   saveData();
   renderTopDrops();
 }
@@ -155,8 +143,13 @@ function renderTopDrops() {
   sorted.forEach(item => {
     const div = document.createElement("div");
     div.className = `top-drop ${item.rarity.toLowerCase()}`;
-
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
-      <strong>${item.price} coins<
+      <strong>${item.price} coins</strong>
+    `;
+    container.appendChild(div);
+  });
+}
+
+renderTopDrops();
