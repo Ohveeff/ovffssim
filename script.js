@@ -236,3 +236,4 @@ function renderTopDrops() {
 }
 
 renderTopDrops();
+localStorage.clear();
