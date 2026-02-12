@@ -1,5 +1,5 @@
 // ===================== GLOBAL STATE =====================
-let coins = parseFloat(localStorage.getItem("coins")) || 100;
+let coins = parseFloat(localStorage.getItem("coins")) || 1000;
 let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 let cases = [];
 let currentCase = null;
