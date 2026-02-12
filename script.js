@@ -1,13 +1,9 @@
-// ================= COINS (CENTS SYSTEM) =================
-let coins = parseInt(localStorage.getItem("coins")) || 100000; // = 1000.00
+// ================= COINS =================
+let coins = parseFloat(localStorage.getItem("coins")) || 1000;
 updateCoins();
 
-function formatCoins(c) {
-  return (c / 100).toFixed(2);
-}
-
 function updateCoins() {
-  document.getElementById("coins").textContent = `Coins: ${formatCoins(coins)}`;
+  document.getElementById("coins").textContent = `Coins: ${coins.toFixed(2)}`;
   localStorage.setItem("coins", coins);
 }
 
@@ -29,15 +25,17 @@ function addToInventory(item) {
 function renderInventory() {
   const inv = document.getElementById("inventory");
   inv.innerHTML = "";
+
   inventory.forEach((i, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${i.rarity.toLowerCase()}`;
     div.innerHTML = `
       <img src="${i.image}">
       <p>${i.name}</p>
-      <small>${formatCoins(i.price)} coins</small><br>
+      <small>${i.price.toFixed(2)} coins</small><br>
       <button class="sell-btn">Sell</button>
     `;
+
     div.querySelector(".sell-btn").onclick = () => {
       coins += i.price;
       inventory.splice(index, 1);
@@ -45,22 +43,24 @@ function renderInventory() {
       saveData();
       renderInventory();
     };
+
     inv.appendChild(div);
   });
 }
+
 renderInventory();
 
 // ================= UI BUTTONS =================
-document.getElementById("toggle-inv-btn").onclick =
-  () => document.getElementById("inventory").classList.toggle("hidden");
+document.getElementById("toggle-inv-btn").onclick = () =>
+  document.getElementById("inventory").classList.toggle("hidden");
 
 document.getElementById("add-coins-btn").onclick = () => {
-  coins += 5000;
+  coins += 50;
   updateCoins();
 };
 
 document.getElementById("remove-coins-btn").onclick = () => {
-  coins = Math.max(0, coins - 5000);
+  coins = Math.max(0, coins - 50);
   updateCoins();
 };
 
@@ -79,29 +79,38 @@ fetch("data/cases.json")
 function populateCaseSelect() {
   const select = document.getElementById("case-select");
   select.innerHTML = "";
+
   caseDataList.forEach(c => {
     const o = document.createElement("option");
     o.value = c.id;
     o.textContent = c.name;
     select.appendChild(o);
   });
+
   select.onchange = () => selectCase(select.value);
+
   document.getElementById("show-select-btn").onclick =
     () => select.classList.toggle("hidden");
 }
 
 function selectCase(id) {
   caseData = caseDataList.find(c => c.id === id);
+  if (!caseData) return;
+
   document.getElementById("case-name").textContent = caseData.name;
   document.getElementById("case-image").src = caseData.image;
   document.getElementById("open-btn").textContent =
-    `Open for ${formatCoins(caseData.price)} coins`;
+    `Open for ${caseData.price.toFixed(2)} coins`;
+
+  // preload item images
+  caseData.items.forEach(i => new Image().src = i.image);
 }
 
 // ================= RNG =================
 function weightedRandom(items) {
   let total = items.reduce((s, i) => s + i.weight, 0);
   let r = Math.random() * total;
+
   for (let i of items) {
     if (r < i.weight) return i;
     r -= i.weight;
@@ -115,7 +124,7 @@ function buildSpinner(win) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
 
-  // VISUAL POOL (better feel)
+  // Visual pool for better feel
   const visualPool = [];
   caseData.items.forEach(i => {
     const count = Math.max(1, Math.floor(i.weight / 100));
@@ -161,7 +170,13 @@ function buildSpinner(win) {
 // ================= OPEN BUTTON =================
 document.getElementById("open-btn").onclick = () => {
   if (!caseData) return;
-  if (coins < caseData.price) return;
+
+  if (coins < caseData.price) {
+    const c = document.getElementById("coins");
+    c.style.color = "red";
+    setTimeout(() => c.style.color = "white", 800);
+    return;
+  }
 
   coins -= caseData.price;
   updateCoins();
@@ -188,6 +203,7 @@ function addRecentDrop(i) {
 function renderTopDrops() {
   const c = document.getElementById("top-drops");
   c.innerHTML = "";
+
   [...recentDrops]
     .sort((a, b) => b.price - a.price)
     .slice(0, 8)
@@ -197,9 +213,10 @@ function renderTopDrops() {
       d.innerHTML = `
         <img src="${i.image}">
         <p>${i.name}</p>
-        <strong>${formatCoins(i.price)} coins</strong>
+        <strong>${i.price.toFixed(2)} coins</strong>
       `;
       c.appendChild(d);
     });
 }
+
 renderTopDrops();
