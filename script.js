@@ -113,15 +113,17 @@ function weightedRandom(items) {
 function buildSpinner(winItem) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
-  const randomItems = [];
+
   const totalItems = 60;
   const winIndex = Math.floor(totalItems / 2);
+  const randomItems = [];
 
+  // Fill spinner with random items
   for (let i = 0; i < totalItems; i++) {
     const random = caseData.items[Math.floor(Math.random() * caseData.items.length)];
     randomItems.push(random);
   }
-  randomItems[winIndex] = winItem;
+  randomItems[winIndex] = winItem; // Force the winning item
 
   // Preload images
   const imagePromises = randomItems.map(item => {
@@ -134,6 +136,7 @@ function buildSpinner(winItem) {
   });
 
   Promise.all(imagePromises).then(() => {
+    // Create spinner items
     randomItems.forEach(item => {
       const div = document.createElement("div");
       div.className = `spinner-item ${item.rarity.toLowerCase()}`;
@@ -143,19 +146,19 @@ function buildSpinner(winItem) {
 
     const itemWidth = strip.querySelector(".spinner-item").offsetWidth + 20;
 
-    // Faster spin with extra loops
+    // Total distance to scroll (faster with extra spins)
     const extraSpins = 3;
-    const distance = winIndex * itemWidth * -1 - extraSpins * itemWidth * totalItems + strip.parentElement.offsetWidth / 2 - itemWidth / 2;
+    const distance = -(winIndex * itemWidth + totalItems * itemWidth * extraSpins);
 
+    // Reset and start transition
     strip.style.transition = "none";
     strip.style.left = "0px";
-    strip.offsetHeight;
+    strip.offsetHeight; // force reflow
 
-    // 11s spin duration
-    strip.style.transition = "left 11s cubic-bezier(.1,.7,0,1)";
+    strip.style.transition = "left 11s cubic-bezier(.25,.1,.25,1)";
     strip.style.left = `${distance}px`;
 
-    // Highlight the winning item
+    // Highlight winning item after spin
     setTimeout(() => {
       const wonItemDiv = strip.children[winIndex];
       if (wonItemDiv) {
