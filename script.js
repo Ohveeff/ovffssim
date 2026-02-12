@@ -1,9 +1,9 @@
 // ================= COINS =================
-let coins = parseFloat(localStorage.getItem("coins")) || 1000;
+let coins = parseInt(localStorage.getItem("coins")) || 1000;
 updateCoins();
 
 function updateCoins() {
-  document.getElementById("coins").textContent = `Coins: ${coins.toFixed(2)}`;
+  document.getElementById("coins").textContent = `Coins: ${coins}`;
   localStorage.setItem("coins", coins);
 }
 
@@ -32,7 +32,7 @@ function renderInventory() {
     div.innerHTML = `
       <img src="${i.image}">
       <p>${i.name}</p>
-      <small>${i.price.toFixed(2)} coins</small><br>
+      <small>${i.price} coins</small><br>
       <button class="sell-btn">Sell</button>
     `;
 
@@ -51,8 +51,8 @@ function renderInventory() {
 renderInventory();
 
 // ================= UI BUTTONS =================
-document.getElementById("toggle-inv-btn").onclick = () =>
-  document.getElementById("inventory").classList.toggle("hidden");
+document.getElementById("toggle-inv-btn").onclick =
+  () => document.getElementById("inventory").classList.toggle("hidden");
 
 document.getElementById("add-coins-btn").onclick = () => {
   coins += 50;
@@ -100,9 +100,8 @@ function selectCase(id) {
   document.getElementById("case-name").textContent = caseData.name;
   document.getElementById("case-image").src = caseData.image;
   document.getElementById("open-btn").textContent =
-    `Open for ${caseData.price.toFixed(2)} coins`;
+    `Open for ${caseData.price} coins`;
 
-  // preload item images
   caseData.items.forEach(i => new Image().src = i.image);
 }
 
@@ -124,7 +123,6 @@ function buildSpinner(win) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
 
-  // Visual pool for better feel
   const visualPool = [];
   caseData.items.forEach(i => {
     const count = Math.max(1, Math.floor(i.weight / 100));
@@ -213,7 +211,7 @@ function renderTopDrops() {
       d.innerHTML = `
         <img src="${i.image}">
         <p>${i.name}</p>
-        <strong>${i.price.toFixed(2)} coins</strong>
+        <strong>${i.price} coins</strong>
       `;
       c.appendChild(d);
     });
