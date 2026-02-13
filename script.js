@@ -297,3 +297,133 @@ document.getElementById("coinflip-btn").addEventListener("click", () => {
 
   }, 1500);
 });
+
+// ===================== COINFLIP SYSTEM =====================
+let selectedCoinflipIndex = null;
+let coinflipRewardBundle = [];
+
+function getAllItems() {
+  let all = [];
+  cases.forEach(c => {
+    all = all.concat(c.items);
+  });
+  return all;
+}
+
+// Generate reward bundle BEFORE flip
+function generateRewardBundle(wagerItem) {
+
+  const duplicateSame = Math.random() < 0.5;
+  const bundle = [];
+
+  if (duplicateSame) {
+    bundle.push(wagerItem);
+  } else {
+
+    const allItems = getAllItems()
+      .filter(i => i.price <= wagerItem.price * 0.6);
+
+    let totalGiven = 0;
+    let safety = 0;
+
+    while (totalGiven < wagerItem.price && safety < 50 && allItems.length > 0) {
+
+      const randomItem = allItems[Math.floor(Math.random() * allItems.length)];
+
+      if (totalGiven + randomItem.price <= wagerItem.price) {
+        bundle.push(randomItem);
+        totalGiven += randomItem.price;
+      }
+
+      safety++;
+    }
+  }
+
+  return bundle;
+}
+
+function selectCoinflipItem(index) {
+  selectedCoinflipIndex = index;
+  const item = inventory[index];
+
+  // Show selected item
+  document.getElementById("coinflip-selected").innerHTML = `
+    <div class="inv-item ${item.rarity.toLowerCase()}">
+      <img src="${item.image}">
+      <p>${item.name}</p>
+      <strong>${item.price} coins</strong>
+    </div>
+  `;
+
+  // Generate preview bundle
+  coinflipRewardBundle = generateRewardBundle(item);
+
+  const previewDiv = document.getElementById("coinflip-preview");
+  previewDiv.innerHTML = "";
+
+  coinflipRewardBundle.forEach(reward => {
+    const div = document.createElement("div");
+    div.className = `inv-item ${reward.rarity.toLowerCase()}`;
+    div.style.width = "110px";
+    div.innerHTML = `
+      <img src="${reward.image}">
+      <small>${reward.name}</small>
+    `;
+    previewDiv.appendChild(div);
+  });
+
+  document.getElementById("coinflip-btn").disabled = false;
+}
+
+document.getElementById("coinflip-btn").addEventListener("click", () => {
+  if (selectedCoinflipIndex === null) return;
+
+  const resultDiv = document.getElementById("coinflip-result");
+  const coinInner = document.querySelector(".coin-inner");
+
+  resultDiv.textContent = "Flipping...";
+  resultDiv.style.color = "white";
+
+  const win = Math.random() < 0.5;
+  const spins = 6;
+  const finalRotation = win ? 180 : 360;
+
+  coinInner.style.transition = "none";
+  coinInner.style.transform = "rotateY(0deg)";
+  coinInner.offsetHeight;
+
+  coinInner.style.transition = "transform 1.5s ease-in-out";
+  coinInner.style.transform = `rotateY(${spins * 360 + finalRotation}deg)`;
+
+  setTimeout(() => {
+
+    if (win) {
+
+      // Give pre-generated bundle
+      coinflipRewardBundle.forEach(item => {
+        addToInventory(item);
+      });
+
+      resultDiv.textContent = "YOU WON!";
+      resultDiv.style.color = "lime";
+
+    } else {
+
+      // Remove wagered item
+      inventory.splice(selectedCoinflipIndex, 1);
+      saveInventory();
+      renderInventory();
+
+      resultDiv.textContent = "YOU LOST! Item Removed!";
+      resultDiv.style.color = "red";
+    }
+
+    selectedCoinflipIndex = null;
+    coinflipRewardBundle = [];
+
+    document.getElementById("coinflip-btn").disabled = true;
+    document.getElementById("coinflip-selected").innerHTML = "";
+    document.getElementById("coinflip-preview").innerHTML = "";
+
+  }, 1500);
+});
