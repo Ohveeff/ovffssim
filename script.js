@@ -12,33 +12,32 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTopDrops();
   loadCases();
 
-  // Buttons
-  document.getElementById("toggle-inv-btn").onclick = () => {
+  document.getElementById("toggle-inv-btn").onclick = () =>
     document.getElementById("inventory").classList.toggle("hidden");
-  };
 
   document.getElementById("add-coins-btn").onclick = () => {
     coins += 0.10;
     updateCoins();
   };
-
   document.getElementById("remove-coins-btn").onclick = () => {
     coins = Math.max(0, coins - 0.04);
     updateCoins();
   };
 
-  // Case items button
+  // ================= CASE ITEMS BUTTON =================
   const caseItemsBtn = document.getElementById("show-case-items-btn");
-  caseItemsBtn.onclick = () => {
-    const list = document.getElementById("case-items-list");
+  const caseItemsList = document.getElementById("case-items-list");
+
+  caseItemsBtn.addEventListener("click", () => {
     if (!currentCase) return;
-    if (list.style.display === "block") {
-      list.style.display = "none";
+
+    if (caseItemsList.style.display === "block") {
+      caseItemsList.style.display = "none";
     } else {
       renderCaseItems();
-      list.style.display = "block";
+      caseItemsList.style.display = "block";
     }
-  };
+  });
 });
 
 // ===================== COINS =====================
@@ -77,6 +76,7 @@ function renderInventory() {
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
+
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
@@ -137,10 +137,6 @@ function selectCase(id) {
 
   // preload images
   currentCase.items.forEach(i => new Image().src = i.image);
-
-  // hide case items list initially
-  const list = document.getElementById("case-items-list");
-  list.style.display = "none";
 }
 
 // ===================== WEIGHTED RNG =====================
@@ -175,7 +171,6 @@ function spinToItem(winningItem) {
   const spinnerItems = strip.querySelectorAll(".spinner-item");
   const itemWidth = spinnerItems[0].offsetWidth + 30;
   const containerWidth = document.getElementById("spinner-container").offsetWidth;
-
   const offset = -(winnerIndex * itemWidth - containerWidth / 2 + itemWidth / 2);
 
   strip.style.transition = "none";
@@ -198,10 +193,11 @@ function showWinner(item) {
     nameBox.textContent = `You won: ${item.name}`;
     nameBox.className = item.rarity.toLowerCase();
   }
+
   addToInventory(item);
 }
 
-// ===================== OPEN CASE =====================
+// ===================== OPEN BUTTON =====================
 document.getElementById("open-btn").addEventListener("click", () => {
   if (!currentCase) return;
   if (coins < currentCase.price) {
@@ -216,9 +212,10 @@ document.getElementById("open-btn").addEventListener("click", () => {
   spinToItem(winningItem);
 });
 
-// ===================== CASE ITEMS LIST =====================
+// ===================== CASE ITEMS LIST RENDERING =====================
 function renderCaseItems() {
   const list = document.getElementById("case-items-list");
+  if (!currentCase) return;
   list.innerHTML = "";
   list.style.maxHeight = "300px";
   list.style.overflowY = "auto";
