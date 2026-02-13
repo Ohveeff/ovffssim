@@ -19,31 +19,30 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* ================= BUTTON THEME ================= */
 button {
-  background: linear-gradient(135deg, #ffb347, #ff9500);
+  background: linear-gradient(135deg, #ff9500, #ff7a00);
   border: none;
   padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.2s ease;
   color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 3px;
 }
 
 button:hover {
-  transform: scale(1.07);
-  box-shadow: 0 0 20px orange;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px orange;
 }
 
 /* ================= CASE SECTION ================= */
 #case-section {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 40px;
-  background: rgba(25,25,30,0.8);
+  background: rgba(25,25,30,0.85);
   backdrop-filter: blur(8px);
   padding: 30px;
   border-radius: 20px;
@@ -61,28 +60,35 @@ button:hover {
   margin-bottom: 15px;
 }
 
-/* ================= OPEN BUTTON ================= */
-#open-btn {
-  background: linear-gradient(135deg, #ffb347, #ff9500);
-  border: none;
-  padding: 14px 30px;
-  font-size: 18px;
+/* ================= CASE ITEMS LIST ================= */
+#case-items-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.case-item {
+  width: 120px;
+  padding: 10px;
+  background: rgba(25,25,30,0.8);
+  backdrop-filter: blur(6px);
   border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.2s ease;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-#open-btn:hover {
-  transform: scale(1.07);
-  box-shadow: 0 0 20px orange;
+.case-item:hover {
+  transform: translateY(-4px);
 }
 
-/* ================= WINNER NAME ================= */
-#winner-name {
-  font-size: 22px;
-  font-weight: bold;
-  margin: 20px 0;
+.case-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
 }
 
 /* ================= SPINNER ================= */
@@ -112,7 +118,7 @@ button:hover {
 #spinner-container::after {
   content: "";
   position: absolute;
-  left: 50%;               
+  left: 50%;
   transform: translateX(-50%);
   top: 0;
   width: 4px;
@@ -143,7 +149,6 @@ button:hover {
   object-fit: contain;
 }
 
-/* Highlight winning */
 .highlight-won {
   animation: glowScale 1.5s ease-in-out infinite alternate;
   z-index: 20;
@@ -156,7 +161,7 @@ button:hover {
 }
 
 /* ================= INVENTORY ================= */
-#inventory, #case-items-list {
+#inventory {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -186,18 +191,16 @@ button:hover {
 .sell-btn {
   margin-top: 8px;
   padding: 6px;
+  background: #ff9500;
   border: none;
   border-radius: 6px;
   color: white;
   cursor: pointer;
   font-size: 13px;
-  background: linear-gradient(135deg, #ffb347, #ff9500);
-  transition: all 0.2s ease;
 }
 
 .sell-btn:hover {
-  transform: scale(1.07);
-  box-shadow: 0 0 20px orange;
+  box-shadow: 0 0 10px orange;
 }
 
 /* ================= TOP DROPS ================= */
@@ -215,6 +218,7 @@ button:hover {
   background: rgba(25,25,30,0.8);
   backdrop-filter: blur(6px);
   border-radius: 18px;
+  text-align: center;
 }
 
 .top-drop img {
