@@ -80,7 +80,6 @@
         { "name": "Unusual Resonation Robro 3000", "rarity": "mythical", "price": 76.00, "weight": 4600, "image": "images/items/robrou.png" },
         { "name": "Haunted Unusual Voltaic Hat Protector Teufort Kight", "rarity": "haunted", "price": 80.11, "weight": 5500, "image": "images/items/tkv.png" },
         { "name": "Unusual Abyssal Aura Scrap Pack", "rarity": "mythical", "price": 29.99, "weight": 7500, "image": "images/items/aurascrap.png" },
-        { "name": "Unusual Nebula Corona Australis ", "rarity": "mythical", "price": 1147.00, "weight": 300, "image": "images/items/coronaneb.png" }  
         { "name": "Unusual Warp Drive Rogues Rabbit ", "rarity": "mythical", "price": 130.00, "weight": 900, "image": "images/items/warprabbit.png" }
       ]
     },
@@ -108,4 +107,10 @@
         { "name": "Professional Killstreak Australium Sniper Rifle", "rarity": "legendary", "price": 115.00, "weight": 155, "image": "images/items/aussiesniper.png" },
         { "name": "Professional Killstreak Australium SMG", "rarity": "legendary", "price": 26.00, "weight": 190, "image": "images/items/aussiesmg.png" },
         { "name": "Scrap Metal", "rarity": "common", "price": 0.01, "weight": 5500, "image": "images/items/scrap.png" },
-        { "name": "Professional Killstreak Austral
+        { "name": "Professional Killstreak Australium Ambassador", "rarity": "legendary", "price": 37.00, "weight": 185, "image": "images/items/aussieamby.png" },
+        { "name": "Unusual Community Sparkle Professional Killstreak Festivized Golden Frying Pan", "rarity": "mythical", "price": 99000.00, "weight": 1, "image": "images/items/aussiefrying.png" },
+        { "name": "Professional Killstreak Australium Sticky Bomb Launcher", "rarity": "legendary", "price": 90.00, "weight": 170, "image": "images/items/aussiesticky.png" }
+      ]
+    }
+  ]
+}
