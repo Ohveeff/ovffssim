@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTopDrops();
   loadCases();
 
+  // Buttons
   document.getElementById("toggle-inv-btn").onclick = () =>
     document.getElementById("inventory").classList.toggle("hidden");
 
@@ -26,8 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCoins();
   };
 
-  // View Case Items Modal Buttons
+  document.getElementById("open-btn").addEventListener("click", openCase);
+
   document.getElementById("view-items-btn").addEventListener("click", openCaseItemsModal);
+
   document.getElementById("close-modal-btn").addEventListener("click", () => {
     document.getElementById("case-items-modal").classList.add("hidden");
   });
@@ -48,10 +51,8 @@ function saveInventory() {
 
 function addToInventory(item) {
   inventory.push(item);
-
   recentDrops.push(item);
   if (recentDrops.length > 20) recentDrops.shift();
-
   saveInventory();
   renderInventory();
   renderTopDrops();
@@ -142,14 +143,13 @@ function selectCase(id) {
   document.getElementById("open-btn").textContent =
     `Open for ${currentCase.price} Coins`;
 
-  // Preload item images
   currentCase.items.forEach(i => {
     const img = new Image();
     img.src = i.image;
   });
 }
 
-// ===================== WEIGHTED RNG =====================
+// ===================== RNG =====================
 function getRandomItem(items) {
   const totalWeight = items.reduce((sum, i) => sum + i.weight, 0);
   let roll = Math.random() * totalWeight;
@@ -158,11 +158,25 @@ function getRandomItem(items) {
     if (roll < item.weight) return item;
     roll -= item.weight;
   }
-
   return items[0];
 }
 
-// ===================== SPINNER =====================
+// ===================== SPIN =====================
+function openCase() {
+  if (!currentCase) return;
+
+  if (coins < currentCase.price) {
+    alert("Not enough coins!");
+    return;
+  }
+
+  coins -= currentCase.price;
+  updateCoins();
+
+  const winningItem = getRandomItem(currentCase.items);
+  spinToItem(winningItem);
+}
+
 function spinToItem(winningItem) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
@@ -192,8 +206,7 @@ function spinToItem(winningItem) {
   strip.style.transform = "translateX(0px)";
   strip.offsetHeight;
 
-  strip.style.transition =
-    "transform 3.2s cubic-bezier(.25,.85,.35,1)";
+  strip.style.transition = "transform 3.2s cubic-bezier(.25,.85,.35,1)";
   strip.style.transform = `translateX(${offset}px)`;
 
   setTimeout(() => {
@@ -202,33 +215,14 @@ function spinToItem(winningItem) {
   }, 3200);
 }
 
-// ===================== SHOW WINNER =====================
 function showWinner(item) {
   const nameBox = document.getElementById("winner-name");
-
   nameBox.textContent = `You won: ${item.name}`;
   nameBox.className = item.rarity.toLowerCase();
-
   addToInventory(item);
 }
 
-// ===================== OPEN BUTTON =====================
-document.getElementById("open-btn").addEventListener("click", () => {
-  if (!currentCase) return;
-
-  if (coins < currentCase.price) {
-    alert("Not enough coins!");
-    return;
-  }
-
-  coins -= currentCase.price;
-  updateCoins();
-
-  const winningItem = getRandomItem(currentCase.items);
-  spinToItem(winningItem);
-});
-
-// ===================== VIEW CASE ITEMS MODAL =====================
+// ===================== MODAL =====================
 function openCaseItemsModal() {
   if (!currentCase) return;
 
