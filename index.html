@@ -17,15 +17,13 @@
   <button class="theme-btn" id="remove-coins-btn">-0.04 Coins</button>
 </div>
 
-<!-- Case selection -->
 <div id="case-select-wrapper">
   <select id="case-select"></select>
 </div>
 
-<!-- Case section -->
 <div id="case-section">
   <div class="case-left">
-    <img id="case-image" src="" alt="Case Image">
+    <img id="case-image" src="">
   </div>
   <div class="case-right">
     <h2 id="case-name"></h2>
@@ -37,7 +35,6 @@
 
 <div id="winner-name"></div>
 
-<!-- Spinner -->
 <div id="spinner-wrapper">
   <div id="spinner-container">
     <div id="spinner-strip"></div>
@@ -46,6 +43,23 @@
 
 <h2>Inventory</h2>
 <div id="inventory" class="hidden"></div>
+
+<h2>Coinflip</h2>
+<div id="coinflip-section">
+
+  <div id="coinflip-selected"></div>
+
+  <div id="coin">
+    <div class="coin-inner">
+      <div class="coin-face heads">WIN</div>
+      <div class="coin-face tails">LOSE</div>
+    </div>
+  </div>
+
+  <button class="theme-btn" id="coinflip-btn" disabled>Flip Coin (2x)</button>
+  <div id="coinflip-result"></div>
+
+</div>
 
 <h2 class="top-title">• Last TOP Drops</h2>
 <div id="top-drops"></div>
