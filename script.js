@@ -196,3 +196,104 @@ document.getElementById("open-btn").addEventListener("click",()=>{
   const winningItem=getRandomItem(currentCase.items);
   spinToItem(winningItem);
 });
+
+// ===================== COINFLIP SYSTEM =====================
+let selectedCoinflipIndex = null;
+
+function getAllItems() {
+  let all = [];
+  cases.forEach(c => {
+    all = all.concat(c.items);
+  });
+  return all;
+}
+
+function selectCoinflipItem(index) {
+  selectedCoinflipIndex = index;
+  const item = inventory[index];
+
+  document.getElementById("coinflip-selected").innerHTML = `
+    <div class="inv-item ${item.rarity.toLowerCase()}">
+      <img src="${item.image}">
+      <p>${item.name}</p>
+      <strong>${item.price} coins</strong>
+    </div>
+  `;
+
+  document.getElementById("coinflip-btn").disabled = false;
+}
+
+document.getElementById("coinflip-btn").addEventListener("click", () => {
+  if (selectedCoinflipIndex === null) return;
+
+  const item = inventory[selectedCoinflipIndex];
+  const resultDiv = document.getElementById("coinflip-result");
+  const coinInner = document.querySelector(".coin-inner");
+
+  resultDiv.textContent = "Flipping...";
+  resultDiv.style.color = "white";
+
+  const win = Math.random() < 0.5;
+  const spins = 6;
+  const finalRotation = win ? 180 : 360;
+
+  coinInner.style.transition = "none";
+  coinInner.style.transform = "rotateY(0deg)";
+  coinInner.offsetHeight;
+
+  coinInner.style.transition = "transform 1.5s ease-in-out";
+  coinInner.style.transform = `rotateY(${spins * 360 + finalRotation}deg)`;
+
+  setTimeout(() => {
+
+    if (win) {
+
+      const wagerValue = item.price;
+      const duplicateSame = Math.random() < 0.5;
+
+      if (duplicateSame) {
+
+        addToInventory(item);
+        resultDiv.textContent = `YOU WON! Duplicate ${item.name}!`;
+
+      } else {
+
+        const allItems = getAllItems()
+          .filter(i => i.price <= wagerValue * 0.6);
+
+        let totalGiven = 0;
+        let safety = 0;
+
+        while (totalGiven < wagerValue && safety < 50 && allItems.length > 0) {
+
+          const randomItem = allItems[Math.floor(Math.random() * allItems.length)];
+
+          if (totalGiven + randomItem.price <= wagerValue) {
+            addToInventory(randomItem);
+            totalGiven += randomItem.price;
+          }
+
+          safety++;
+        }
+
+        resultDiv.textContent = `YOU WON! Bulk items worth ${totalGiven.toFixed(2)} coins!`;
+      }
+
+      resultDiv.style.color = "lime";
+
+    } else {
+
+      inventory.splice(selectedCoinflipIndex, 1);
+      saveInventory();
+      renderInventory();
+
+      resultDiv.textContent = "YOU LOST! Item Removed!";
+      resultDiv.style.color = "red";
+    }
+
+    selectedCoinflipIndex = null;
+    document.getElementById("coinflip-btn").disabled = true;
+    document.getElementById("coinflip-selected").innerHTML = "";
+
+  }, 1500);
+});
