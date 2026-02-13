@@ -57,7 +57,7 @@
       "id": "robots",
       "name": "🆁🅾🅱🅾🆃🅸🅲",
       "price": 100,
-      "image": "images/cases/robotic.png",
+      "image": "images/cases/robots.png",
       "items": [
         { "name": "Collectors Gunslinger", "rarity": "collector", "price": 400.00, "weight": 350, "image": "images/items/gunslinger.png" },
         { "name": "Strange Collectors Manmelter", "rarity": "collector", "price": 350.00, "weight": 400, "image": "images/items/manmelter.png" },
