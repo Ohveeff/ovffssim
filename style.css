@@ -230,3 +230,18 @@ h1 { margin-bottom: 10px; font-weight: 600; }
   color: white;
   cursor: pointer;
 }
+
+/* Case Items Modal Cards */
+.case-item-card {
+  width: 180px;
+  padding: 15px;
+  background: rgba(25,25,30,0.9);
+  border-radius: 16px;
+  text-align: center;
+  border: 2px solid #333;   /* base border */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.case-item-card:hover {
+  transform: translateY(-5px);
+}
