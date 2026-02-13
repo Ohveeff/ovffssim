@@ -8,41 +8,19 @@ body {
   text-align: center;
 }
 
-h1 {
-  margin-bottom: 10px;
-  font-weight: 600;
-}
+.hidden { display: none !important; }
 
-#coins {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
+h1 { margin-bottom: 10px; font-weight: 600; }
 
-button {
-  background: linear-gradient(135deg, #ff9500, #ff7a00);
-  border: none;
-  padding: 10px 20px;
-  color: white;
-  font-weight: bold;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin: 3px;
-}
-
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px orange;
-}
+#coins { font-size: 18px; font-weight: bold; margin-bottom: 20px; }
 
 /* ================= CASE SECTION ================= */
 #case-section {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 40px;
-  background: rgba(25,25,30,0.85);
+  background: rgba(25,25,30,0.8);
   backdrop-filter: blur(8px);
   padding: 30px;
   border-radius: 20px;
@@ -51,52 +29,48 @@ button:hover {
   box-shadow: 0 0 40px rgba(0,0,0,0.6);
 }
 
-.case-left img {
-  width: 220px;
-  border-radius: 15px;
+.case-left img { width: 220px; border-radius: 15px; }
+
+.case-right h2 { margin-bottom: 15px; }
+
+/* ================= BUTTONS ================= */
+button {
+  background: linear-gradient(135deg, #ffb347, #ff9500);
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  transition: all 0.2s ease;
+  margin: 5px;
 }
 
-.case-right h2 {
-  margin-bottom: 15px;
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px orange;
 }
 
-/* ================= CASE ITEMS LIST ================= */
-#case-items-list {
-  max-height: 200px;
-  overflow-y: auto;
-  margin-top: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+select {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #2a2a35;
+  color: white;
+  border: 2px solid #ff9500;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.case-item {
-  width: 120px;
-  padding: 10px;
-  background: rgba(25,25,30,0.8);
-  backdrop-filter: blur(6px);
-  border-radius: 12px;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.case-item:hover {
-  transform: translateY(-4px);
-}
-
-.case-item img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
+/* ================= WINNER NAME ================= */
+#winner-name {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
 /* ================= SPINNER ================= */
-#spinner-wrapper {
-  width: 1000px;
-  max-width: 95%;
-  margin: 20px auto;
-}
+#spinner-wrapper { width: 1000px; max-width: 95%; margin: 20px auto; }
 
 #spinner-container {
   height: 170px;
@@ -108,13 +82,8 @@ button:hover {
   position: relative;
 }
 
-#spinner-strip {
-  display: flex;
-  align-items: center;
-  transition: transform 6s cubic-bezier(.08,.6,0,1);
-}
+#spinner-strip { display: flex; align-items: center; transition: transform 6s cubic-bezier(.08,.6,0,1); }
 
-/* Center marker (yellow bar) */
 #spinner-container::after {
   content: "";
   position: absolute;
@@ -129,7 +98,6 @@ button:hover {
   z-index: 10;
 }
 
-/* Spinner Items */
 .spinner-item {
   flex: 0 0 auto;
   width: 110px;
@@ -178,15 +146,9 @@ button:hover {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.inv-item:hover {
-  transform: translateY(-6px);
-}
+.inv-item:hover { transform: translateY(-6px); }
 
-.inv-item img {
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
-}
+.inv-item img { width: 70px; height: 70px; object-fit: contain; }
 
 .sell-btn {
   margin-top: 8px;
@@ -197,10 +159,6 @@ button:hover {
   color: white;
   cursor: pointer;
   font-size: 13px;
-}
-
-.sell-btn:hover {
-  box-shadow: 0 0 10px orange;
 }
 
 /* ================= TOP DROPS ================= */
@@ -218,13 +176,18 @@ button:hover {
   background: rgba(25,25,30,0.8);
   backdrop-filter: blur(6px);
   border-radius: 18px;
-  text-align: center;
 }
 
-.top-drop img {
-  width: 75px;
-  height: 75px;
-  object-fit: contain;
+.top-drop img { width: 75px; height: 75px; object-fit: contain; }
+
+/* ================= CASE ITEMS LIST ================= */
+#case-items-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 10px;
+  background: rgba(25,25,30,0.85);
+  padding: 10px;
+  border-radius: 12px;
 }
 
 /* ================= RARITY SYSTEM ================= */
@@ -234,12 +197,12 @@ button:hover {
 .unusual    { border: 2px solid purple; box-shadow: 0 0 18px purple; color: purple; }
 .legendary  { border: 2px solid gold; box-shadow: 0 0 22px gold; color: gold; }
 .mythical   { border: 2px solid violet; box-shadow: 0 0 24px violet; color: violet; }
+
 .genuine    { border: 2px solid #4D7455; box-shadow: 0 0 16px #4D7455; color: #4D7455; }
 .vintage    { border: 2px solid #476291; box-shadow: 0 0 16px #476291; color: #476291; }
 .collector  { border: 2px solid #AA0000; box-shadow: 0 0 22px #AA0000; color: #AA0000; }
 .haunted    { border: 2px solid #38F3AB; box-shadow: 0 0 18px #38F3AB; color: #38F3AB; }
 
-/* Unusual animated glow */
 .unusual img {
   animation: unusualGlow 4s infinite linear;
   filter: drop-shadow(0 0 20px purple);
