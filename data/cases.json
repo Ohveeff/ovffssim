@@ -10,6 +10,8 @@
         { "name": "Stock Shotgun", "rarity": "common", "price": 0.10, "weight": 800, "image": "images/items/shotgun.png" },
         { "name": "Stock Scattergun", "rarity": "common", "price": 0.06, "weight": 700, "image": "images/items/stockscatt.png" },
         { "name": "Diamondback", "rarity": "common", "price": 0.01, "weight": 700, "image": "images/items/diaback.png" },
+        { "name": "Strange Eyelander", "rarity": "strange", "price": 2.15, "weight": 300, "image": "images/items/eyelander.png" },
+        { "name": "Strange Force-A-Nature", "rarity": "strange", "price": 1.95, "weight": 300, "image": "images/items/fan.png" },
         { "name": "Stock Minigun", "rarity": "common", "price": 0.02, "weight": 600, "image": "images/items/minig.png" },
         { "name": "Stock Flamethrower", "rarity": "common", "price": 0.02, "weight": 700, "image": "images/items/flamet.png" },
         { "name": "Stock Rocket Launcher", "rarity": "common", "price": 0.01, "weight": 900, "image": "images/items/rr.png" },
@@ -91,7 +93,7 @@
      },
      {
       "id": "peak",
-      "name": "The Peak",
+      "name": "The Peak⛰️",
       "price": 150,
       "image": "images/cases/peak.png",
       "items": [
@@ -121,7 +123,7 @@
         { "name": "Strange Professional Killstreak Big Earner", "rarity": "strange", "price": 9.11, "weight": 8000, "image": "images/items/stbgks.png" },
         { "name": "Strange Professional Killstreak Phlogistinator", "rarity": "strange", "price": 21.11, "weight": 8000, "image": "images/items/phlog.png" },
         { "name": "Unusual Disco Beatdown Well-Rounded Rifleman", "rarity": "mythical", "price": 156.11, "weight": 3000, "image": "images/items/dbwrr.png" },
-        { "name": "Mann CO. Supply Crate Key ", "rarity": "Common", "price": 2.50, "weight": 15000, "image": "images/items/key.png" },
+        { "name": "Mann CO. Supply Crate Key ", "rarity": "common", "price": 2.50, "weight": 15000, "image": "images/items/key.png" },
         { "name": "Australium Specialized Killstreak Eyelander ", "rarity": "legendary", "price": 139.00, "weight": 2000, "image": "images/items/aussieeye.png" }
       ]
     },
