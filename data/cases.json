@@ -33,8 +33,8 @@
       "price": 15.00,
       "image": "images/cases/sanctuary.png",
       "items": [
-        { "name": "Unusual Magenta Monstrum Vaudville Visor", "rarity": "mythical", "price": 43.30, "weight": 230, "image": "images/items/magmonstrum.png" },
-        { "name": "Unusual Flavorsome Sunset Reel Fly Hat", "rarity": "mythical", "price": 54.25, "weight": 240, "image": "images/items/sunreel.png" },
+        { "name": "Unusual Magenta Monstrum Vaudville Visor", "rarity": "mythical", "price": 43.30, "weight": 270, "image": "images/items/magmonstrum.png" },
+        { "name": "Unusual Flavorsome Sunset Reel Fly Hat", "rarity": "mythical", "price": 54.25, "weight": 280, "image": "images/items/sunreel.png" },
         { "name": "Unusual Smoking Spliting Headache", "rarity": "mythical", "price": 14.99, "weight": 400, "image": "images/items/shs.png" },
         { "name": "Strange Killstreak Big Earner", "rarity": "strange", "price": 4.01, "weight": 1400, "image": "images/items/stbigks.png" },
         { "name": "Smoking Jacket", "rarity": "common", "price": 3.61, "weight": 450, "image": "images/items/smokingjacket.png" },
