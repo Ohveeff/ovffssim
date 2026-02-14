@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("toggle-inv-btn").onclick = () =>
     document.getElementById("inventory").classList.toggle("hidden");
   document.getElementById("add-coins-btn").onclick = () => {
-    coins += 5.01;
+    coins += 5.00;
     updateCoins();
   };
   document.getElementById("remove-coins-btn").onclick = () => {
-    coins = Math.max(0, coins - 0.04);
+    coins = Math.max(0, coins - 5.00);
     updateCoins();
   };
 
