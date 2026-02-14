@@ -97,7 +97,7 @@
      {
       "id": "peak",
       "name": "The Peak⛰️",
-      "price": 150,
+      "price": 120,
       "image": "images/cases/peak.png",
       "items": [
         { "name": "Collectors Flapjack", "rarity": "collector", "price": 7642.00, "weight": 10, "image": "images/items/flapjack.png" },
