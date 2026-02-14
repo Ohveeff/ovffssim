@@ -33,8 +33,8 @@
       "price": 15.00,
       "image": "images/cases/sanctuary.png",
       "items": [
-        { "name": "Unusual Magenta Monstrum Vaudville Visor", "rarity": "mythical", "price": 43.30, "weight": 210, "image": "images/items/magmonstrum.png" },
-        { "name": "Unusual Flavorsome Sunset Reel Fly Hat", "rarity": "mythical", "price": 54.25, "weight": 170, "image": "images/items/sunreel.png" },
+        { "name": "Unusual Magenta Monstrum Vaudville Visor", "rarity": "mythical", "price": 43.30, "weight": 230, "image": "images/items/magmonstrum.png" },
+        { "name": "Unusual Flavorsome Sunset Reel Fly Hat", "rarity": "mythical", "price": 54.25, "weight": 240, "image": "images/items/sunreel.png" },
         { "name": "Unusual Smoking Spliting Headache", "rarity": "mythical", "price": 14.99, "weight": 400, "image": "images/items/shs.png" },
         { "name": "Strange Killstreak Big Earner", "rarity": "strange", "price": 4.01, "weight": 1400, "image": "images/items/stbigks.png" },
         { "name": "Smoking Jacket", "rarity": "common", "price": 3.61, "weight": 450, "image": "images/items/smokingjacket.png" },
@@ -51,12 +51,15 @@
         { "name": "Unusual Stellar Ascent Ludicrously Lunatic Lunon Fedora", "rarity": "mythical", "price": 62.00, "weight": 170, "image": "images/items/stelfed.png" },
         { "name": "Unusual Green Energy Professional's Panama", "rarity": "mythical", "price": 91.45, "weight": 140, "image": "images/items/greenpanama.png" },
         { "name": "Unusual Searing Plasma Nunhood", "rarity": "mythical", "price": 28.00, "weight": 300, "image": "images/items/spn.png" },
+        { "name": "Unusual Atomic Mighty Mitre", "rarity": "mythical", "price": 45.00, "weight": 400, "image": "images/items/amm.png" },
+        { "name": "Unusual Ocean Swirl Angel Of Death", "rarity": "mythical", "price": 62.99, "weight": 330, "image": "images/items/oaod.png" },
+        { "name": "Unusual Rainbow Reverie Burly Beast", "rarity": "unusual", "price": 300.00, "weight": 75, "image": "images/items/sbb1.png" },
         { "name": "The Exorcizor", "rarity": "common", "price": 0.03, "weight": 2000, "image": "images/items/exoc.png" },
         { "name": "The Ghastlierest Gibus", "rarity": "common", "price": 1.88, "weight": 1000, "image": "images/items/ggibus.png" },
         { "name": "Strange Professional Killstreak Solemn Vow", "rarity": "strange", "price": 5.99, "weight": 1300, "image": "images/items/solemn.png" },
         { "name": "Professional Killstreak Black Rose", "rarity": "collector", "price": 999.99, "weight": 10, "image": "images/items/blackrose.png" },
         { "name": "The Plutonidome", "rarity": "common", "price": 0.71, "weight": 350, "image": "images/items/pluto.png" },
-        { "name": "Unusual Starstorm Slumber Cranial Carcharodon", "rarity": "mythical", "price": 90.00, "weight": 90, "image": "images/items/starcran.png" },
+        { "name": "Unusual Starstorm Slumber Cranial Carcharodon", "rarity": "mythical", "price": 90.00, "weight": 270, "image": "images/items/starcran.png" },
         { "name": "Genuine Doublecross-Comm", "rarity": "genuine", "price": 5.99, "weight": 500, "image": "images/items/doublecomm.png" },
         { "name": "Unusual Dead Presidents Tundra Top", "rarity": "mythical", "price": 60.00, "weight": 220, "image": "images/items/deadtundra.png" }
       ]
