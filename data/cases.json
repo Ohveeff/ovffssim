@@ -53,7 +53,7 @@
         { "name": "Unusual Searing Plasma Nunhood", "rarity": "mythical", "price": 28.00, "weight": 300, "image": "images/items/spn.png" },
         { "name": "Unusual Atomic Mighty Mitre", "rarity": "mythical", "price": 45.00, "weight": 400, "image": "images/items/amm.png" },
         { "name": "Unusual Ocean Swirl Angel Of Death", "rarity": "mythical", "price": 62.99, "weight": 330, "image": "images/items/oaod.png" },
-        { "name": "Unusual Rainbow Reverie Burly Beast", "rarity": "unusual", "price": 300.00, "weight": 75, "image": "images/items/sbb1.png" },
+        { "name": "Unusual Rainbow Reverie Burly Beast", "rarity": "collector", "price": 300.00, "weight": 75, "image": "images/items/sbb1.png" },
         { "name": "The Exorcizor", "rarity": "common", "price": 0.03, "weight": 2000, "image": "images/items/exoc.png" },
         { "name": "The Ghastlierest Gibus", "rarity": "common", "price": 1.88, "weight": 1000, "image": "images/items/ggibus.png" },
         { "name": "Strange Professional Killstreak Solemn Vow", "rarity": "strange", "price": 5.99, "weight": 1300, "image": "images/items/solemn.png" },
