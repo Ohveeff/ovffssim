@@ -7,6 +7,8 @@ let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
+document.getElementById("sell-all-btn").onclick = sellAllItems;
+ 
   updateCoins();
   renderInventory();
   renderTopDrops();
@@ -84,6 +86,28 @@ function renderInventory() {
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
     inv.appendChild(div);
   });
+}
+
+function sellAllItems() {
+  if (inventory.length === 0) {
+    alert("Inventory is empty!");
+    return;
+  }
+
+  let totalValue = 0;
+
+  inventory.forEach(item => {
+    totalValue += item.price;
+  });
+
+  coins += totalValue;
+  inventory = [];
+
+  saveInventory();
+  updateCoins();
+  renderInventory();
+
+  alert(`Sold all items for ${totalValue.toFixed(2)} coins!`);
 }
 
 // ===================== TOP DROPS =====================
