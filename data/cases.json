@@ -80,7 +80,7 @@
         { "name": "Unusual Nuts n' Bolts Stronium Stove Pipe", "rarity": "mythical", "price": 11.76, "weight": 6000, "image": "images/items/nutstove.png" },
         { "name": "Strange Mecha-Medes", "rarity": "strange", "price": 8.91, "weight": 5000, "image": "images/items/mechamedes.png" },
         { "name": "Strange Battery Canteens", "rarity": "strange", "price": 29.99, "weight": 7500, "image": "images/items/batterycanteen.png" },
-        { "name": "The Battery Bandolier", "rarity": "common", "price": 0.06, "weight": 11000, "image": "images/items/battery.png" },
+        { "name": "The Battery Bandolier", "rarity": "common", "price": 0.06, "weight": 33000, "image": "images/items/battery.png" },
         { "name": "Unusual Nebula Rusty Reaper", "rarity": "mythical", "price": 435.35, "weight": 400, "image": "images/items/rustynebula.png" },
         { "name": "Unusual Atomic Bolted Bicorn", "rarity": "mythical", "price": 64.00, "weight": 3333, "image": "images/items/atomicbicorn.png" },
         { "name": "Unusual Tesla Coil Bananades", "rarity": "mythical", "price": 110.76, "weight": 999, "image": "images/items/teslabananades.png" },
