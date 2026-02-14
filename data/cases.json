@@ -143,7 +143,7 @@
         { "name": "Unusual Verdatica Scot Bonnet", "rarity": "mythical", "price": 760.00, "weight": 5, "image": "images/items/vsb.png" },
         { "name": "Unusual Phantom Crown Towering Pillar of Summer Shades", "rarity": "mythical", "price": 500.00, "weight": 10, "image": "images/items/pcpss.png" },
         { "name": "Unusual Serenus Lumen Mann of the Seven Sees", "rarity": "mythical", "price": 440.00, "weight": 10, "image": "images/items/motss.png" },
-        { "name": "Refined Metal", "rarity": "mythical", "price": 0.03, "weight": 950, "image": "images/items/refined.png" },
+        { "name": "Refined Metal", "rarity": "mythical", "price": 0.03, "weight": 950, "image": "images/items/refined.png" }
        
       ]
      },
