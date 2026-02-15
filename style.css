@@ -220,3 +220,66 @@ h1 { margin-bottom: 10px; font-weight: 600; }
   color: white;
   cursor: pointer;
 }
+
+/* ===============================
+   COINFLIP STYLES
+   =============================== */
+
+#coinflipSection {
+  padding: 20px;
+  background: #111;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+#betOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.inventory-card {
+  width: 120px;
+  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s;
+  border: 2px solid transparent;
+}
+
+.inventory-card img {
+  width: 80px;
+  height: 80px;
+}
+
+.inventory-card:hover {
+  transform: scale(1.05);
+}
+
+.inventory-card.selected {
+  border: 2px solid gold;
+}
+
+#coin {
+  font-size: 60px;
+  margin: 20px;
+  transition: transform 2s ease-in-out;
+}
+
+#coin.flip {
+  transform: rotateY(1440deg);
+}
+
+#coinflipPool {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.pool-item {
+  background: #222;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
