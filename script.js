@@ -281,3 +281,61 @@ document.getElementById("open-btn")
 
     spinToItem(winningItem);
   });
+
+// ===================== COINFLIP =====================
+const coinflipBtn = document.getElementById('coinflip-btn');
+const coinflipResult = document.getElementById('coinflip-result');
+const coinflipAnim = document.getElementById('coinflip-animation');
+
+coinflipBtn.addEventListener('click', () => {
+  const amount = parseFloat(document.getElementById('bet-amount').value);
+  const choice = document.getElementById('bet-choice').value;
+
+  if (!amount || amount <= 0) {
+    coinflipResult.textContent = "Enter a valid bet amount!";
+    return;
+  }
+
+  if (amount > coins) {
+    coinflipResult.textContent = "Not enough coins!";
+    return;
+  }
+
+  // Deduct coins first
+  coins -= amount;
+  updateCoins();
+
+  // Animation: spinning coin
+  coinflipAnim.innerHTML = '';
+  const coin = document.createElement('div');
+  coin.style.width = '100px';
+  coin.style.height = '100px';
+  coin.style.borderRadius = '50%';
+  coin.style.background = 'gold';
+  coin.style.margin = '0 auto';
+  coin.style.display = 'flex';
+  coin.style.alignItems = 'center';
+  coin.style.justifyContent = 'center';
+  coin.style.fontWeight = 'bold';
+  coin.style.fontSize = '24px';
+  coinflipAnim.appendChild(coin);
+
+  let frames = 10;
+  let interval = setInterval(() => {
+    coin.textContent = Math.random() < 0.5 ? 'Heads' : 'Tails';
+    frames--;
+    if (frames <= 0) {
+      clearInterval(interval);
+
+      // Determine result
+      const result = Math.random() < 0.5 ? 'heads' : 'tails';
+      let won = choice === result;
+
+      if (won) coins += amount * 2;
+
+      updateCoins();
+      coinflipResult.textContent = `Coin landed on ${result.toUpperCase()}. You ${won ? 'won' : 'lost'}!`;
+      saveInventory(); // optional: save coins if you want persistency
+    }
+  }, 150);
+});
