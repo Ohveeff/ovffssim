@@ -30,6 +30,12 @@ h1 { margin-bottom: 10px; font-weight: 600; }
   box-shadow: 0 0 15px orange;
 }
 
+.bet-item.selected {
+  border: 2px solid gold;
+  box-shadow: 0 0 15px gold;
+  background: rgba(90,70,0,0.6);
+}
+
 /* ================= CASE + COINFLIP CONTAINER ================= */
 .section-container {
   display: flex;
