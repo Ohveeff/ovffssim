@@ -126,151 +126,198 @@ document.getElementById("open-btn").onclick=()=>{
   addToInventory({...item});
 };
 
-// ===================== COINFLIP =====================
+// ===================== COINFLIP STATE =====================
 let selectedBet = null;
-let betType = null;
-let selectedElement = null;
+let betType = null; // "coins" or "item"
 
-const coin = document.getElementById("coin");
-const wagerDisplay = document.getElementById("wager-display");
-const winDisplay = document.getElementById("win-display");
+// ===================== COINFLIP INIT =====================
+document.addEventListener("DOMContentLoaded", () => {
+  const flipBtn = document.getElementById("flip-btn");
+  if (flipBtn) flipBtn.onclick = startCoinflip;
 
+  renderBetOptions();
+});
+
+// ===================== RENDER BET OPTIONS =====================
 function renderBetOptions() {
-  const betSelection = document.getElementById("bet-selection");
-  betSelection.innerHTML = "";
+  const container = document.getElementById("coinflip-options");
+  if (!container) return;
 
-  // COIN OPTIONS
-  [10, 50].forEach(amount => {
-    const div = document.createElement("div");
-    div.className = "bet-item";
-    div.textContent = `${amount} Coins`;
+  container.innerHTML = "";
 
-    div.onclick = () => handleSelection(div, amount, "coins");
+  // ---- COIN OPTION ----
+  const coinDiv = document.createElement("div");
+  coinDiv.className = "bet-item coin-option";
+  coinDiv.innerHTML = `
+    <div class="coin-icon">🪙</div>
+    <div>Coins</div>
+  `;
 
-    betSelection.appendChild(div);
-  });
+  coinDiv.onclick = () => {
+    if (selectedBet === "coins") {
+      selectedBet = null;
+      betType = null;
+      coinDiv.classList.remove("selected");
+      updatePoolDisplay();
+      return;
+    }
 
-  // ITEM OPTIONS
+    selectedBet = "coins";
+    betType = "coins";
+    document.querySelectorAll(".bet-item").forEach(e => e.classList.remove("selected"));
+    coinDiv.classList.add("selected");
+    updatePoolDisplay();
+  };
+
+  container.appendChild(coinDiv);
+
+  // ---- ITEM OPTIONS ----
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
-    div.className = "bet-item";
-    div.innerHTML = `<img src="${item.image}">${item.name} x${item.amount || 1}`;
+    div.className = `bet-item ${item.rarity}`;
 
-    div.onclick = () => handleSelection(div, index, "item");
+    div.innerHTML = `
+      <img src="${item.image}">
+      <div>${item.name}</div>
+      ${item.amount > 1 ? `<div>x${item.amount}</div>` : ""}
+    `;
 
-    betSelection.appendChild(div);
+    div.onclick = () => {
+      if (selectedBet === index) {
+        selectedBet = null;
+        betType = null;
+        div.classList.remove("selected");
+        updatePoolDisplay();
+        return;
+      }
+
+      selectedBet = index;
+      betType = "item";
+
+      document.querySelectorAll(".bet-item").forEach(e => e.classList.remove("selected"));
+      div.classList.add("selected");
+      updatePoolDisplay();
+    };
+
+    container.appendChild(div);
   });
 }
 
-function handleSelection(element, value, type) {
-  // deselect if clicking same
-  if (selectedElement === element) {
-    clearSelection();
-    return;
-  }
-
-  clearSelection();
-
-  selectedBet = value;
-  betType = type;
-  selectedElement = element;
-  element.classList.add("selected");
-
-  updatePoolDisplay();
-}
-
-function clearSelection() {
-  document.querySelectorAll(".bet-item").forEach(el =>
-    el.classList.remove("selected")
-  );
-
-  selectedBet = null;
-  betType = null;
-  selectedElement = null;
-
-  wagerDisplay.innerHTML = "";
-  winDisplay.innerHTML = "";
-}
-
+// ===================== UPDATE POOL DISPLAY =====================
 function updatePoolDisplay() {
-  wagerDisplay.innerHTML = "";
-  winDisplay.innerHTML = "";
+  const wager = document.getElementById("wager-display");
+  const possible = document.getElementById("possible-win-display");
 
-  if (!betType) return;
+  if (!wager || !possible) return;
+
+  wager.innerHTML = "";
+  possible.innerHTML = "";
+
+  if (selectedBet === null) return;
 
   if (betType === "coins") {
-    wagerDisplay.innerHTML = `<p>${selectedBet} Coins</p>`;
-    winDisplay.innerHTML = `<p>${selectedBet * 2} Coins</p>`;
+    wager.innerHTML = `<div class="coin-pool">🪙 ${coins.toFixed(2)}</div>`;
+
+    const equalItems = inventory.filter(i => i.price <= coins);
+
+    equalItems.forEach(i => {
+      const div = document.createElement("div");
+      div.className = `pool-item ${i.rarity}`;
+      div.innerHTML = `
+        <img src="${i.image}">
+        <div>${i.name}</div>
+      `;
+      possible.appendChild(div);
+    });
   }
 
   if (betType === "item") {
     const item = inventory[selectedBet];
-    if (!item) return;
 
-    wagerDisplay.innerHTML = `<img src="${item.image}"><p>${item.name}</p>`;
-    winDisplay.innerHTML = `<img src="${item.image}"><p>${item.name} x2</p>`;
+    const wagerDiv = document.createElement("div");
+    wagerDiv.className = `pool-item ${item.rarity}`;
+    wagerDiv.innerHTML = `
+      <img src="${item.image}">
+      <div>${item.name}</div>
+    `;
+    wager.appendChild(wagerDiv);
+
+    const equalItems = inventory.filter(i => i.price <= item.price);
+
+    equalItems.forEach(i => {
+      const div = document.createElement("div");
+      div.className = `pool-item ${i.rarity}`;
+      div.innerHTML = `
+        <img src="${i.image}">
+        <div>${i.name}</div>
+      `;
+      possible.appendChild(div);
+    });
   }
 }
 
-document.getElementById("flip-btn").onclick = () => {
-  if (!betType) {
-    alert("Select a bet first");
+// ===================== START COINFLIP =====================
+function startCoinflip() {
+  if (selectedBet === null) {
+    alert("Select coins or an item first!");
     return;
   }
 
-  coin.classList.remove("coin-flip");
-  void coin.offsetWidth; // restart animation
-  coin.classList.add("coin-flip");
+  const result = Math.random() < 0.5; // 50/50
 
-  const resultText = document.getElementById("flip-result");
-  resultText.textContent = "Flipping...";
-  resultText.style.color = "white";
+  animateCoin(result);
+}
+
+// ===================== COIN ANIMATION =====================
+function animateCoin(win) {
+  const coin = document.getElementById("coin-animation");
+  if (!coin) return;
+
+  coin.classList.remove("win", "lose");
+  coin.classList.add("flipping");
 
   setTimeout(() => {
-    const win = Math.random() < 0.5;
+    coin.classList.remove("flipping");
+    coin.classList.add(win ? "win" : "lose");
 
-    if (betType === "coins") {
-      if (coins < selectedBet) {
-        alert("Not enough coins");
-        return;
-      }
+    if (win) handleWin();
+    else handleLoss();
+  }, 2000);
+}
 
-      coins -= selectedBet;
+// ===================== WIN =====================
+function handleWin() {
+  if (betType === "coins") {
+    coins *= 2;
+    updateCoins();
+  }
 
-      if (win) {
-        coins += selectedBet * 2;
-        resultText.textContent = "YOU WIN!";
-        resultText.style.color = "gold";
-      } else {
-        resultText.textContent = "YOU LOSE!";
-        resultText.style.color = "red";
-      }
+  if (betType === "item") {
+    const item = inventory[selectedBet];
 
-      updateCoins();
-    }
+    // give duplicate of same item
+    addToInventory({ ...item });
+  }
 
-    if (betType === "item") {
-      const item = inventory[selectedBet];
-      if (!item) return;
+  saveInventory();
+  renderInventory();
+  renderBetOptions();
+  updatePoolDisplay();
+}
 
-      if (win) {
-        item.amount++;
-        resultText.textContent = "YOU WIN!";
-        resultText.style.color = "gold";
-      } else {
-        if (item.amount > 1) item.amount--;
-        else inventory.splice(selectedBet, 1);
+// ===================== LOSS =====================
+function handleLoss() {
+  if (betType === "coins") {
+    coins = 0;
+    updateCoins();
+  }
 
-        resultText.textContent = "YOU LOSE!";
-        resultText.style.color = "red";
-      }
+  if (betType === "item") {
+    inventory.splice(selectedBet, 1);
+  }
 
-      saveInventory();
-      renderInventory();
-    }
-
-    clearSelection();
-    renderBetOptions();
-
-  }, 1500);
-};
+  saveInventory();
+  renderInventory();
+  renderBetOptions();
+  updatePoolDisplay();
+}
