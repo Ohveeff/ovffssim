@@ -15,80 +15,70 @@
   <button class="theme-btn" id="toggle-inv-btn">Inventory</button>
   <button class="theme-btn" id="add-coins-btn">+10.01 Coins</button>
   <button class="theme-btn" id="remove-coins-btn">-5.00 Coins</button>
-  <button class="theme-btn" id="toggle-coinflip-btn">Coinflip Mode</button>
+  <button class="theme-btn" id="toggleModeBtn">Switch to Coinflip</button>
 </div>
 
-<!-- Case selection -->
-<div id="case-select-wrapper">
-  <select id="case-select"></select>
-</div>
+<!-- ================= CASE MODE ================= -->
+<div id="casesMode">
 
-<!-- Case section -->
-<div id="case-section">
-  <div class="case-left">
-    <img id="case-image" src="" alt="Case Image">
+  <div id="case-select-wrapper">
+    <select id="case-select"></select>
   </div>
-  <div class="case-right">
-    <h2 id="case-name"></h2>
-    <button class="theme-btn" id="open-btn"></button>
-    <button class="theme-btn" id="show-case-items-btn">Show Case Items</button>
-    <div id="case-items-list"></div>
-  </div>
-</div>
 
-<div id="winner-name"></div>
-
-<!-- Coinflip Section -->
-<div id="coinflip-section" class="hidden">
-  <div id="coinflip-container">
+  <div id="case-section">
     <div class="case-left">
-      <h3>Bet</h3>
-      <div id="bet-selection"></div>
+      <img id="case-image" src="" alt="Case Image">
     </div>
+
     <div class="case-right">
-      <h3>Flip Result</h3>
-      <div id="flip-result">?</div>
-      <button class="theme-btn" id="flip-btn">Flip!</button>
+      <h2 id="case-name"></h2>
+      <button class="theme-btn" id="open-btn"></button>
+      <button class="theme-btn" id="show-case-items-btn">Show Case Items</button>
+      <div id="case-items-list"></div>
     </div>
   </div>
-</div>
 
-  <div id="coin-area">
-  <div id="coin"></div>
-</div>
+  <div id="winner-name"></div>
 
-<div id="coin-pool">
-  <div class="pool-box">
-    <h3>Your Wager</h3>
-    <div id="wager-display"></div>
+  <div id="spinner-wrapper">
+    <div id="spinner-container">
+      <div id="spinner-strip"></div>
+    </div>
   </div>
-  <div class="pool-box">
-    <h3>Possible Win</h3>
-    <div id="win-display"></div>
-  </div>
+
 </div>
 
-<!-- Spinner -->
-<div id="spinner-wrapper">
-  <div id="spinner-container">
-    <div id="spinner-strip"></div>
+<!-- ================= COINFLIP MODE ================= -->
+<div id="coinflipSection" style="display:none;">
+
+  <div class="coinflip-container">
+    <h2>Coinflip Mode</h2>
+
+    <div class="coinflip-area">
+      <div id="coinflipPool"></div>
+      <div id="coinflipResult"></div>
+    </div>
+
+    <div id="coinflipInventory"></div>
+
+    <button id="startCoinflipBtn" class="theme-btn">Flip</button>
+
+    <div id="coinAnimation"></div>
   </div>
+
 </div>
 
-<!-- Inventory Section -->
+<!-- ================= INVENTORY ================= -->
 <div class="inventory-header">
   <h2>Inventory</h2>
   <button id="sell-all-btn" class="theme-btn">Sell All</button>
 </div>
+
 <div id="inventory" class="hidden"></div>
 
 <h2 class="top-title">• Last TOP Drops</h2>
 <div id="top-drops"></div>
 
 <script src="script.js"></script>
-</body>
-</html>
-
-  <script src="script.js"></script>
 </body>
 </html>
