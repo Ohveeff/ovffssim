@@ -95,6 +95,36 @@
       ]
      },
     {
+      "id": "f",
+      "name": "f",
+      "price": f,
+      "image": "images/cases/f.png",
+      "items": [
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" }
+      ]
+    },
+    {
       "id": "heavy",
       "name": "Heavy Weapons",
       "price": 10.00,
@@ -109,7 +139,7 @@
         { "name": "Carl", "rarity": "legendary", "price": 0.19, "weight": 1000, "image": "images/items/carl.png" },
         { "name": "Evil Carl", "rarity": "mythical", "price": 111.76, "weight": 50, "image": "images/items/ecarl.png" },
         { "name": "Unusual Sulphurous Soviet Strongarms", "rarity": "mythical", "price": 89.91, "weight": 50, "image": "images/items/sssu.png" },
-        { "name": "Strange Battle Baclava", "rarity": "strange", "price": 69.99, "weight": 75, "image": "images/items/sbb1.png" },
+        { "name": "Strange Battle Baclava", "rarity": "strange", "price": 69.99, "weight": 75, "image": "images/items/sbb0.png" },
         { "name": "Unusual Amaranthine Road Rage", "rarity": "mythical", "price": 30.00, "weight": 530, "image": "images/items/arru.png" },
         { "name": "Heavy's Unusual Eyes of Molten Mannvich", "rarity": "collector", "price": 635.35, "weight": 1, "image": "images/items/eomm.png" },
         { "name": "Officer's Ushanka", "rarity": "legendary", "price":0.08, "weight": 6000, "image": "images/items/ou.png" },
@@ -121,7 +151,9 @@
         { "name": "Strange Holiday Punch", "rarity": "strange", "price": 29.00, "weight": 540, "image": "images/items/holifists.png" },
         { "name": "Genuine Robo-Sandvich", "rarity": "genuine", "price": 550.00, "weight": 5, "image": "images/items/robosand.png" },
         { "name": "Bread Bite", "rarity": "legendary", "price": 12.99, "weight": 3000, "image": "images/items/breadb.png" },
-        { "name": "Professional Killstreak Iron Curtain", "rarity": "legendary", "price": 72.00, "weight": 230, "image": "images/items/ironcurt.png" }
+        { "name": "Professional Killstreak Iron Curtain", "rarity": "legendary", "price": 72.00, "weight": 230, "image": "images/items/ironcurt.png" },
+        { "name": "Unusual Burning Flames Large Luchador", "rarity": "mythical", "price": 190.00, "weight": 10, "image": "images/items/ubfll.png" },
+        { "name": "Unusual Demonflame One-Man Army", "rarity": "mythical", "price": 125.00, "weight": 10, "image": "images/items/uoma.png" },
       ]
      },
      {
@@ -166,17 +198,41 @@
       "price": 85,
       "image": "images/cases/fivejackpot.png",
       "items": [
-        { "name": "Unusual Piercing Headache Propaniac", "rarity": "mythical", "price": 750.00, "weight": 1000, "image": "images/items/php1.png" },
+        { "name": "Unusual Piercing Headache Propaniac", "rarity": "mythical", "price": 750.00, "weight": 1400, "image": "images/items/php1.png" },
         { "name": "Unusual Darkblaze Colonel Kringle", "rarity": "collector", "price": 10000.00, "weight": 100, "image": "images/items/dbcc1.png" },
-        { "name": "Unusual Cold Cosmos Brimmed Bootlegger", "rarity": "mythical", "price": 660.00, "weight": 1100, "image": "images/items/bbcc.png" },
-        { "name": "Unusual Flourishing Passion Mean Captain", "rarity": "mythical", "price": 875.00, "weight": 500, "image": "images/items/mcfp.png" },
+        { "name": "Unusual Cold Cosmos Brimmed Bootlegger", "rarity": "mythical", "price": 1100.00, "weight": 1100, "image": "images/items/bbcc.png" },
+        { "name": "Unusual Flourishing Passion Mean Captain", "rarity": "mythical", "price": 1875.00, "weight": 500, "image": "images/items/mcfp.png" },
         { "name": "Unusual Verdatica Scot Bonnet", "rarity": "mythical", "price": 996.00, "weight": 500, "image": "images/items/vsb.png" },
-        { "name": "Unusual Phantom Crown Towering Pillar of Summer Shades", "rarity": "mythical", "price": 1950.00, "weight": 800, "image": "images/items/pcpss.png" },
+        { "name": "Unusual Phantom Crown Towering Pillar of Summer Shades", "rarity": "mythical", "price": 1950.00, "weight": 400, "image": "images/items/pcpss.png" },
         { "name": "Unusual Serenus Lumen Mann of the Seven Sees", "rarity": "mythical", "price": 842.00, "weight": 1000, "image": "images/items/motss.png" },
         { "name": "Refined Metal", "rarity": "common", "price": 0.03, "weight": 95000, "image": "images/items/refined.png" }
-       
       ]
      },
+        {
+      "id": "f",
+      "name": "f",
+      "price": 10000000.00,
+      "image": "images/cases/f.png",
+      "items": [
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "common", "price": 1.00, "weight": 10, "image": "images/items/f.png" }
+      ]
+    },
     {
       "id": "aussie",
       "name": "AUSTRALIUM🪙",
