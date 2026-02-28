@@ -124,6 +124,7 @@
         { "name": "Professional Killstreak Iron Curtain", "rarity": "legendary", "price": 72.00, "weight": 230, "image": "images/items/icurtain.png" },
         { "name": "Unusual Burning Flames Large Luchador", "rarity": "mythical", "price": 190.00, "weight": 10, "image": "images/items/ubfll.png" },
         { "name": "Unusual Demonflame One-Man Army", "rarity": "mythical", "price": 125.00, "weight": 10, "image": "images/items/udoma.png" },
+        { "name": "Unusual Ventum Maris Brass Beast", "rarity": "mythical", "price": 73.00, "weight": 30, "image": "images/items/ubrass.png" }
       ]
      },
      {
