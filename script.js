@@ -1,65 +1,65 @@
-// ================= GLOBAL =================
-let coins = parseFloat(localStorage.getItem("coins"))||100;
-let inventory = JSON.parse(localStorage.getItem("inventory"))||[];
+// GLOBAL STATE
+let coins = parseFloat(localStorage.getItem("coins")) || 100;
+let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 let cases = [];
 let currentCase = null;
-let recentDrops = JSON.parse(localStorage.getItem("recentDrops"))||[];
-let coinflipSelectedItem = null;
-let coinflipChoice = "Heads"; // Default choice
 
-document.addEventListener("DOMContentLoaded",()=>{
+// COINFLIP
+let coinflipSelectedItem = null;
+let coinflipChoice = null;
+
+// INIT
+document.addEventListener("DOMContentLoaded", () => {
   updateCoins();
   renderInventory();
   renderTopDrops();
   loadCases();
-  setupButtons();
+
+  document.getElementById("toggle-inv-btn").onclick = () => {
+    document.getElementById("inventory").classList.toggle("hidden");
+  };
+  document.getElementById("add-coins-btn").onclick = () => { coins += 0.10; updateCoins(); };
+  document.getElementById("remove-coins-btn").onclick = () => { coins = Math.max(0, coins - 5.00); updateCoins(); };
+  document.getElementById("switch-gamemode-btn").onclick = switchGamemode;
+  document.getElementById("show-case-items-btn").onclick = renderCaseItems;
+  document.getElementById("open-btn").onclick = openCase;
+  document.getElementById("coinflip-btn").onclick = flipCoin;
 });
 
-// ================= BUTTONS =================
-function setupButtons(){
-  document.getElementById("toggle-inv-btn").onclick=()=>document.getElementById("inventory").classList.toggle("hidden");
-  document.getElementById("add-coins-btn").onclick=()=>{ coins+=0.10; updateCoins(); };
-  document.getElementById("remove-coins-btn").onclick=()=>{ coins=Math.max(0,coins-5.00); updateCoins(); };
-  document.getElementById("switch-gamemode-btn").onclick=switchGamemode;
-}
-
-// ================= COINS =================
+// COINS
 function updateCoins(){
-  document.getElementById("coins").textContent=`Coins: ${coins.toFixed(2)}`;
-  localStorage.setItem("coins",coins);
+  document.getElementById("coins").textContent = `Balance: ${coins.toFixed(2)}`;
+  localStorage.setItem("coins", coins);
 }
 
-// ================= INVENTORY =================
+// INVENTORY
 function saveInventory(){
-  localStorage.setItem("inventory",JSON.stringify(inventory));
-  localStorage.setItem("recentDrops",JSON.stringify(recentDrops));
+  localStorage.setItem("inventory", JSON.stringify(inventory));
+  localStorage.setItem("recentDrops", JSON.stringify(recentDrops));
 }
 
 function addToInventory(item){
   inventory.push(item);
   recentDrops.push(item);
   if(recentDrops.length>20) recentDrops.shift();
-  saveInventory(); renderInventory(); renderTopDrops();
-}
-
-function sellItem(index){
-  coins+=inventory[index].price;
-  inventory.splice(index,1); saveInventory(); updateCoins(); renderInventory();
+  saveInventory();
+  renderInventory();
+  renderTopDrops();
 }
 
 function renderInventory(){
-  const inv=document.getElementById("inventory");
-  inv.innerHTML="";
+  const inv = document.getElementById("inventory");
+  inv.innerHTML = "";
   inventory.forEach((item,index)=>{
     const div=document.createElement("div");
     div.className=`inv-item ${item.rarity.toLowerCase()}`;
-    div.innerHTML=`<img src="${item.image}"><p>${item.name}</p><small>${item.price} coins</small><button class="sell-btn theme-btn">Sell</button>`;
-    div.querySelector(".sell-btn").onclick=()=>sellItem(index);
+    div.innerHTML=`<img src="${item.image}"><p>${item.name}</p><small>${item.price} coins</small><button class="sell-btn">Sell</button>`;
+    div.querySelector(".sell-btn").onclick=()=>{ coins+=item.price; inventory.splice(index,1); saveInventory(); updateCoins(); renderInventory(); };
     inv.appendChild(div);
   });
 }
 
-// ================= TOP DROPS =================
 function renderTopDrops(){
   const c=document.getElementById("top-drops");
   c.innerHTML="";
@@ -71,70 +71,39 @@ function renderTopDrops(){
   });
 }
 
-// ================= LOAD CASES =================
+// CASES
 function loadCases(){
-  fetch("cases.json").then(r=>r.json()).then(data=>{
-    cases=data.cases;
-    const select=document.getElementById("case-select");
+  fetch("data/cases.json").then(r=>r.json()).then(data=>{
+    cases = data.cases;
+    const select = document.getElementById("case-select");
     select.innerHTML="";
     cases.forEach(c=>{
       const option=document.createElement("option");
-      option.value=c.id; option.textContent=`${c.name} (${c.price} coins)`;
+      option.value=c.id;
+      option.textContent=`${c.name} (${c.price} coins)`;
       select.appendChild(option);
     });
-    select.onchange=()=>selectCase(select.value);
+    select.onchange = ()=> selectCase(select.value);
     selectCase(cases[0].id);
   });
 }
 
 function selectCase(id){
-  currentCase=cases.find(c=>c.id===id);
+  currentCase = cases.find(c=>c.id===id);
   if(!currentCase) return;
   document.getElementById("case-image").src=currentCase.image;
   document.getElementById("case-name").textContent=currentCase.name;
-  document.getElementById("open-btn").textContent=`Open for ${currentCase.price} Coins`;
-  currentCase.items.forEach(i=>new Image().src=i.image);
+  document.getElementById("open-btn").textContent=`Open for ${currentCase.price} coins`;
 }
 
-// ================= CASE ITEMS =================
-document.getElementById("show-case-items-btn").onclick=()=>{
-  if(!currentCase) return;
-  const list=document.getElementById("case-items-list");
-  list.style.display=(list.style.display==="block")?"none":"block";
-  if(list.style.display==="block") renderCaseItems();
-};
-
-function renderCaseItems(){
-  if(!currentCase) return;
-  const list=document.getElementById("case-items-list");
-  list.innerHTML="";
-  const totalWeight=currentCase.items.reduce((s,i)=>s+i.weight,0);
-  currentCase.items.sort((a,b)=>b.price-a.price).forEach(item=>{
-    const chance=((item.weight/totalWeight)*100).toFixed(2);
-    const div=document.createElement("div");
-    div.className=`inv-item ${item.rarity.toLowerCase()}`;
-    div.innerHTML=`<img src="${item.image}" style="width:50px;height:50px;object-fit:contain;"><div style="text-align:left;"><strong>${item.name}</strong><br>${item.price} coins<br>${chance}%</div>`;
-    list.appendChild(div);
-  });
-}
-
-// ================= RNG =================
 function getRandomItem(items){
-  const totalWeight=items.reduce((s,i)=>s+i.weight,0);
+  const totalWeight = items.reduce((sum,i)=>sum+i.weight,0);
   let roll=Math.random()*totalWeight;
   for(let item of items){ if(roll<item.weight) return item; roll-=item.weight; }
   return items[0];
 }
 
-// ================= SPINNER =================
-document.getElementById("open-btn").onclick=()=>{
-  if(!currentCase) return;
-  if(coins<currentCase.price){alert("Not enough coins!"); return;}
-  coins-=currentCase.price; updateCoins();
-  const winningItem=getRandomItem(currentCase.items);
-  spinToItem(winningItem);
-};
-
+// SPINNER
 function spinToItem(winningItem){
   const strip=document.getElementById("spinner-strip");
   strip.innerHTML="";
@@ -151,7 +120,9 @@ function spinToItem(winningItem){
   const itemWidth=spinnerItems[0].offsetWidth+30;
   const containerWidth=document.getElementById("spinner-container").offsetWidth;
   const offset=-(winnerIndex*itemWidth-containerWidth/2+itemWidth/2);
-  strip.style.transition="none"; strip.style.transform="translateX(0px)"; strip.offsetHeight;
+  strip.style.transition="none";
+  strip.style.transform="translateX(0px)";
+  strip.offsetHeight;
   strip.style.transition="transform 3.2s cubic-bezier(.25,.85,.35,1)";
   strip.style.transform=`translateX(${offset}px)`;
   setTimeout(()=>{
@@ -160,71 +131,104 @@ function spinToItem(winningItem){
   },3200);
 }
 
+function openCase(){
+  if(!currentCase) return;
+  if(coins<currentCase.price){ alert("Not enough coins!"); return; }
+  coins -= currentCase.price;
+  updateCoins();
+  const winningItem = getRandomItem(currentCase.items);
+  spinToItem(winningItem);
+}
+
 function showWinner(item){
   const nameBox=document.getElementById("winner-name");
-  if(nameBox){nameBox.textContent=`You won: ${item.name}`; nameBox.className=item.rarity.toLowerCase();}
+  if(nameBox){ nameBox.textContent=`You won: ${item.name}`; nameBox.className=item.rarity.toLowerCase(); }
   addToInventory(item);
 }
 
-// ================= COINFLIP =================
+function renderCaseItems(){
+  if(!currentCase) return;
+  const list=document.getElementById("case-items-list");
+  list.innerHTML="";
+  const totalWeight=currentCase.items.reduce((s,i)=>s+i.weight,0);
+  currentCase.items.forEach(item=>{
+    const div=document.createElement("div");
+    div.className=`inv-item ${item.rarity.toLowerCase()}`;
+    const chance=((item.weight/totalWeight)*100).toFixed(2);
+    div.innerHTML=`<img src="${item.image}" style="width:50px;height:50px;object-fit:contain;"><div style="text-align:left;"><strong>${item.name}</strong><br>${item.price} coins<br>${chance}%</div>`;
+    list.appendChild(div);
+  });
+}
+
+// GAMEMODE SWITCH
 function switchGamemode(){
   const caseSection=document.getElementById("case-section");
-  const coinSection=document.getElementById("coinflip-section");
-  if(caseSection.classList.contains("hidden")){
-    caseSection.classList.remove("hidden");
-    coinSection.classList.add("hidden");
+  const coinflipSection=document.getElementById("coinflip-section");
+  const btn=document.getElementById("switch-gamemode-btn");
+  if(caseSection.style.display==="none"){
+    caseSection.style.display="flex"; coinflipSection.style.display="none"; btn.textContent="Switch to Coinflip";
+    renderInventory();
   }else{
-    caseSection.classList.add("hidden");
-    coinSection.classList.remove("hidden");
-    loadCoinflipInventory();
+    caseSection.style.display="none"; coinflipSection.style.display="block"; btn.textContent="Switch to Cases";
+    renderCoinflipInventory();
   }
 }
 
-function loadCoinflipInventory(){
-  const select=document.getElementById("coinflip-item-select");
-  select.innerHTML="";
+// COINFLIP
+function renderCoinflipInventory(){
+  const container=document.getElementById("coinflip-inventory");
+  container.innerHTML="";
   inventory.forEach((item,index)=>{
-    const option=document.createElement("option");
-    option.value=index;
-    option.textContent=`${item.name} (${item.price} coins)`;
-    select.appendChild(option);
+    const div=document.createElement("div");
+    div.className=`inv-item ${item.rarity.toLowerCase()}`;
+    div.innerHTML=`<img src="${item.image}"><p>${item.name}</p><small>${item.price} coins</small>`;
+    div.onclick=()=>{
+      coinflipSelectedItem=item;
+      renderCoinflipChoices();
+      updateCoinflipPreview();
+    };
+    container.appendChild(div);
   });
-  select.onchange=()=>{ coinflipSelectedItem=inventory[select.value]; updateCoinflipPreview(); };
-  if(inventory.length>0){ select.value=0; coinflipSelectedItem=inventory[0]; updateCoinflipPreview(); }
+}
 
-  // Heads/Tails buttons
+function renderCoinflipChoices(){
   const choiceDiv=document.getElementById("coinflip-choice");
   choiceDiv.innerHTML="";
+  if(!coinflipSelectedItem) return;
   const headsBtn=document.createElement("button");
   headsBtn.className="theme-btn"; headsBtn.textContent="Heads";
-  headsBtn.onclick=()=>{coinflipChoice="Heads";updateCoinflipPreview();};
+  headsBtn.onclick=()=>{ coinflipChoice="Heads"; updateCoinflipPreview(); };
   const tailsBtn=document.createElement("button");
   tailsBtn.className="theme-btn"; tailsBtn.textContent="Tails";
-  tailsBtn.onclick=()=>{coinflipChoice="Tails";updateCoinflipPreview();};
-  choiceDiv.appendChild(headsBtn); choiceDiv.appendChild(tailsBtn);
-
-  document.getElementById("coinflip-btn").onclick=flipCoin;
+  tailsBtn.onclick=()=>{ coinflipChoice="Tails"; updateCoinflipPreview(); };
+  choiceDiv.appendChild(headsBtn);
+  choiceDiv.appendChild(tailsBtn);
 }
 
 function updateCoinflipPreview(){
   const preview=document.getElementById("coinflip-preview");
   preview.innerHTML="";
-  if(!coinflipSelectedItem) return;
+  if(!coinflipSelectedItem || !coinflipChoice) return;
   const div=document.createElement("div");
   div.className="coin-preview";
-  div.innerHTML=`<img src="${coinflipSelectedItem.image}" style="width:80px;height:80px;"><br>${coinflipSelectedItem.name}`;
+  div.innerHTML=`<img src="${coinflipSelectedItem.image}"><br>${coinflipSelectedItem.name}<br>Choice: ${coinflipChoice}`;
   preview.appendChild(div);
 }
 
 function flipCoin(){
-  if(!coinflipSelectedItem){ alert("Select an item!"); return;}
+  if(!coinflipSelectedItem || !coinflipChoice){ alert("Select an item and side"); return; }
   const result=Math.random()<0.5?"Heads":"Tails";
   const resBox=document.getElementById("coinflip-result");
   if(result===coinflipChoice){
-    resBox.textContent=`You won! You keep the ${coinflipSelectedItem.name}`;
+    resBox.textContent=`You won! ${coinflipSelectedItem.name}`;
   }else{
-    resBox.textContent=`You lost! You lose the ${coinflipSelectedItem.name}`;
-    const index=inventory.indexOf(coinflipSelectedItem);
-    if(index!==-1){ inventory.splice(index,1); saveInventory(); renderInventory(); }
+    resBox.textContent=`You lost your ${coinflipSelectedItem.name}`;
+    const idx=inventory.indexOf(coinflipSelectedItem);
+    if(idx>=0){ inventory.splice(idx,1); saveInventory(); renderInventory(); }
   }
+  coinflipSelectedItem=null;
+  coinflipChoice=null;
+  renderCoinflipInventory();
+  document.getElementById("coinflip-choice").innerHTML="";
+  document.getElementById("coinflip-preview").innerHTML="";
 }
