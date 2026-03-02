@@ -100,6 +100,59 @@ function renderInventory() {
   });
 }
 
+// Populate the coinflip dropdown
+function updateCoinflipDropdown() {
+  const select = document.getElementById("coinflip-select");
+  select.innerHTML = '<option value="">Select an item...</option>';
+
+  inventory.forEach((item, index) => {
+    const opt = document.createElement("option");
+    opt.value = index;
+    opt.textContent = `${item.name} (${item.price} coins)`;
+    select.appendChild(opt);
+  });
+}
+
+// Coinflip spin function
+function spinCoinflip() {
+  const select = document.getElementById("coinflip-select");
+  const index = select.value;
+  if (index === "") return alert("Select an item first!");
+  const item = inventory[index];
+
+  const coin = document.getElementById("coin");
+  coin.classList.remove("flipping", "heads", "tails");
+  void coin.offsetWidth; // force reflow
+  coin.classList.add("flipping");
+
+  const win = Math.random() < 0.5;
+
+  setTimeout(() => {
+    // End rotation to show proper side
+    coin.style.transform = `rotateY(${win ? 0 : 180}deg)`;
+    coin.classList.remove("flipping");
+    coin.classList.add(win ? "heads" : "tails");
+
+    if (win) {
+      inventory.push({...item});
+      alert(`You WON! ${item.name} has been duplicated.`);
+    } else {
+      inventory.splice(index, 1);
+      alert(`You LOSE! ${item.name} has been removed.`);
+    }
+
+    saveInventory();
+    renderInventory();
+    renderTopDrops();
+    updateCoinflipDropdown();
+  }, 2000); // match animation duration
+}
+
+// Hook up the button
+document.getElementById("coinflip-btn").addEventListener("click", spinCoinflip);
+
+// Call this whenever inventory changes
+updateCoinflipDropdown();
 // ===================== COINFLIP =====================
 function updateCoinflipSelect() {
   const select = document.getElementById("coinflip-select");
