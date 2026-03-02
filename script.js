@@ -7,10 +7,7 @@ let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
-
-  // Buttons
   document.getElementById("sell-all-btn").onclick = sellAllItems;
-
   document.getElementById("toggle-inv-btn").onclick = () =>
     document.getElementById("inventory").classList.toggle("hidden");
 
@@ -24,13 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCoins();
   };
 
-  // Case Items Button
   const caseItemsBtn = document.getElementById("show-case-items-btn");
   const caseItemsList = document.getElementById("case-items-list");
-
   caseItemsBtn.addEventListener("click", () => {
     if (!currentCase) return;
-
     if (caseItemsList.style.display === "block") {
       caseItemsList.style.display = "none";
       caseItemsBtn.textContent = "Show Potential Items";
@@ -68,7 +62,6 @@ function addToInventory(item) {
   renderTopDrops();
 }
 
-// Sell single item
 function sellItem(index) {
   coins += inventory[index].price;
   inventory.splice(index, 1);
@@ -77,30 +70,20 @@ function sellItem(index) {
   renderInventory();
 }
 
-// Sell all items
 function sellAllItems() {
-  if (inventory.length === 0) {
-    alert("Inventory is empty!");
-    return;
-  }
-
+  if (inventory.length === 0) { alert("Inventory is empty!"); return; }
   let totalValue = inventory.reduce((sum, item) => sum + item.price, 0);
-
   coins += totalValue;
   inventory = [];
-
   saveInventory();
   updateCoins();
   renderInventory();
-
   alert(`Sold all items for ${totalValue.toFixed(2)} coins!`);
 }
 
-// Render inventory
 function renderInventory() {
   const inv = document.getElementById("inventory");
   inv.innerHTML = "";
-
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
@@ -112,249 +95,23 @@ function renderInventory() {
     `;
     div.querySelector(".sell-btn").onclick = () => {
       sellItem(index);
-      addCoinflipButtons(); // refresh coinflip buttons
+      addCoinflipButtons();
     };
     inv.appendChild(div);
   });
-
-  addCoinflipButtons(); // Add coinflip buttons after rendering inventory
-}
-
-// ===================== COINFLIP =====================
-function addCoinflipButtons() {
-  const inv = document.getElementById("inventory");
-  const items = inv.querySelectorAll(".inv-item");
-
-  items.forEach((div, index) => {
-    // Avoid adding duplicate buttons
-    if (div.querySelector(".coinflip-btn")) return;
-
-    const btn = document.createElement("button");
-    btn.textContent = "Coinflip";
-    btn.className = "theme-btn coinflip-btn";
-    btn.style.marginTop = "5px";
-
-    btn.onclick = () => coinflipItem(index);
-    div.appendChild(btn);
-  });
-}
-
-function coinflipItem(index) {
-  if (inventory.length === 0) return;
-
-  const item = inventory[index];
-  const win = Math.random() < 0.5; // 50% chance
-
-  if (win) {
-    inventory.push({...item}); // duplicate the item
-    alert(`You WON! ${item.name} has been duplicated.`);
-  } else {
-    inventory.splice(index, 1); // remove item
-    alert(`You LOSE! ${item.name} has been removed.`);
-  }
-
-  saveInventory();
-  renderInventory();
   addCoinflipButtons();
 }
 
-// ===================== TOP DROPS =====================
-function renderTopDrops() {
-  const c = document.getElementById("top-drops");
-  c.innerHTML = "";
-
-  [...recentDrops]
-    .sort((a, b) => b.price - a.price)
-    .slice(0, 8)
-    .forEach(i => {
-      const d = document.createElement("div");
-      d.className = `top-drop ${i.rarity.toLowerCase()}`;
-      d.innerHTML = `
-        <img src="${i.image}">
-        <p>${i.name}</p>
-        <strong>${i.price} coins</strong>
-      `;
-      c.appendChild(d);
-    });
-}
-
-// ===================== LOAD CASES =====================
-function loadCases() {
-  fetch("data/cases.json")
-    .then(r => r.json())
-    .then(data => {
-      cases = data.cases;
-
-      const select = document.getElementById("case-select");
-      select.innerHTML = "";
-
-      cases.forEach(c => {
-        const option = document.createElement("option");
-        option.value = c.id;
-        option.textContent = `${c.name} (${c.price} coins)`;
-        select.appendChild(option);
-      });
-
-      select.onchange = () => selectCase(select.value);
-      selectCase(cases[0].id);
-    });
-}
-
-function selectCase(id) {
-  currentCase = cases.find(c => c.id === id);
-  if (!currentCase) return;
-
-  document.getElementById("case-image").src = currentCase.image;
-  document.getElementById("case-name").textContent = currentCase.name;
-  document.getElementById("open-btn").textContent =
-    `Open for ${currentCase.price} Coins`;
-
-  currentCase.items.forEach(i => new Image().src = i.image);
-}
-
-// ===================== CASE ITEMS =====================
-function renderCaseItems() {
-  if (!currentCase) return;
-
-  const list = document.getElementById("case-items-list");
-  list.innerHTML = "";
-
-  const totalWeight = currentCase.items.reduce((sum, i) => sum + i.weight, 0);
-
-  currentCase.items
-    .slice()
-    .sort((a, b) => b.price - a.price)
-    .forEach(item => {
-      const div = document.createElement("div");
-      div.className = `inv-item ${item.rarity.toLowerCase()}`;
-
-      const chance = ((item.weight / totalWeight) * 100).toFixed(2);
-
-      div.innerHTML = `
-        <img src="${item.image}" style="width:50px;height:50px;object-fit:contain;">
-        <div style="text-align:left;">
-          <strong>${item.name}</strong><br>
-          ${item.price} coins<br>
-          ${chance}%
-        </div>
-      `;
-      list.appendChild(div);
-    });
-}
-
-// ===================== RNG =====================
-function getRandomItem(items) {
-  const totalWeight = items.reduce((sum, i) => sum + i.weight, 0);
-  let roll = Math.random() * totalWeight;
-
-  for (let item of items) {
-    if (roll < item.weight) return item;
-    roll -= item.weight;
-  }
-
-  return items[0];
-}
-
-// ===================== SPINNER =====================
-function spinToItem(winningItem) {
-  const strip = document.getElementById("spinner-strip");
-  strip.innerHTML = "";
-
-  const totalSlots = 50;
-  const winnerIndex = 38;
-  const items = currentCase.items;
-
-  for (let i = 0; i < totalSlots; i++) {
-    let item = items[Math.floor(Math.random() * items.length)];
-    if (i === winnerIndex) item = winningItem;
-
-    const div = document.createElement("div");
-    div.className = `spinner-item ${item.rarity.toLowerCase()}`;
-    div.innerHTML = `<img src="${item.image}">`;
-    strip.appendChild(div);
-  }
-
-  const spinnerItems = strip.querySelectorAll(".spinner-item");
-  const itemWidth = spinnerItems[0].offsetWidth + 30;
-  const containerWidth = document.getElementById("spinner-container").offsetWidth;
-
-  const offset = -(winnerIndex * itemWidth - containerWidth / 2 + itemWidth / 2);
-
-  strip.style.transition = "none";
-  strip.style.transform = "translateX(0px)";
-  strip.offsetHeight;
-
-  strip.style.transition = "transform 3.2s cubic-bezier(.25,.85,.35,1)";
-  strip.style.transform = `translateX(${offset}px)`;
-
-  setTimeout(() => {
-    spinnerItems[winnerIndex].classList.add("highlight-won");
-    showWinner(winningItem);
-  }, 3200);
-}
-
-// ===================== SHOW WINNER =====================
-function showWinner(item) {
-  const nameBox = document.getElementById("winner-name");
-  if (nameBox) {
-    nameBox.textContent = ` ${item.name}`;
-    nameBox.className = item.rarity.toLowerCase();
-  }
-
-  addToInventory(item);
-}
-
-// ===================== OPEN BUTTON =====================
-document.getElementById("open-btn").addEventListener("click", () => {
-
-  if (!currentCase) return;
-
-  if (coins < currentCase.price) {
-    alert("Not enough coins!");
-    return;
-  }
-
-  coins -= currentCase.price;
-  updateCoins();
-
-  const winningItem = getRandomItem(currentCase.items);
-  spinToItem(winningItem);
-});
-
-function spinCoin(callback) {
-  const coin = document.getElementById("coin");
-  const win = Math.random() < 0.5; // 50% chance
-
-  coin.classList.remove("heads", "tails");
-  coin.style.transform = "rotateY(0deg)";
-
-  // Spin animation
-  let rotations = 6; // number of flips
-  let degree = 360 * rotations + (win ? 0 : 180);
-
-  coin.style.transition = "transform 2s ease-out";
-  coin.style.transform = `rotateY(${degree}deg)`;
-
-  setTimeout(() => {
-    coin.classList.add(win ? "heads" : "tails");
-    callback(win);
-  }, 2000); // matches the CSS transition
-}
-
 // ===================== COINFLIP =====================
 function addCoinflipButtons() {
   const inv = document.getElementById("inventory");
   const items = inv.querySelectorAll(".inv-item");
-
   items.forEach((div, index) => {
-    // Avoid adding duplicate buttons
     if (div.querySelector(".coinflip-btn")) return;
-
     const btn = document.createElement("button");
     btn.textContent = "Coinflip";
     btn.className = "theme-btn coinflip-btn";
     btn.style.marginTop = "5px";
-
     btn.onclick = () => coinflipItem(index);
     div.appendChild(btn);
   });
@@ -363,39 +120,145 @@ function addCoinflipButtons() {
 function coinflipItem(index) {
   if (inventory.length === 0) return;
   const item = inventory[index];
-
-  // Start the 3D coin flip
   spinCoin(win => {
     if (win) {
-      inventory.push({...item}); // duplicate item
+      inventory.push({...item});
       alert(`You WON! ${item.name} has been duplicated.`);
     } else {
-      inventory.splice(index, 1); // remove item
+      inventory.splice(index, 1);
       alert(`You LOSE! ${item.name} has been removed.`);
     }
-
     saveInventory();
     renderInventory();
+    addCoinflipButtons();
   });
 }
 
 function spinCoin(callback) {
   const coin = document.getElementById("coin");
   const win = Math.random() < 0.5;
-
   coin.classList.remove("heads", "tails");
   coin.style.transform = "rotateY(0deg)";
-
-  // 3D flip: multiple rotations + ending on red (heads) or black (tails)
-  const rotations = 6; // how many full flips
-  const degree = 360 * rotations + (win ? 0 : 180);
-
+  let rotations = 6;
+  let degree = 360 * rotations + (win ? 0 : 180);
   coin.style.transition = "transform 2s ease-out";
   coin.style.transform = `rotateY(${degree}deg)`;
-
-  // Wait for animation to finish
   setTimeout(() => {
     coin.classList.add(win ? "heads" : "tails");
     callback(win);
   }, 2000);
 }
+
+// ===================== TOP DROPS =====================
+function renderTopDrops() {
+  const c = document.getElementById("top-drops");
+  c.innerHTML = "";
+  [...recentDrops].sort((a,b)=>b.price-a.price).slice(0,8).forEach(i=>{
+    const d = document.createElement("div");
+    d.className = `top-drop ${i.rarity.toLowerCase()}`;
+    d.innerHTML = `<img src="${i.image}"><p>${i.name}</p><strong>${i.price} coins</strong>`;
+    c.appendChild(d);
+  });
+}
+
+// ===================== LOAD CASES =====================
+function loadCases() {
+  fetch("data/cases.json")
+    .then(r=>r.json())
+    .then(data=>{
+      cases = data.cases;
+      const select = document.getElementById("case-select");
+      select.innerHTML = "";
+      cases.forEach(c=>{
+        const option = document.createElement("option");
+        option.value = c.id;
+        option.textContent = `${c.name} (${c.price} coins)`;
+        select.appendChild(option);
+      });
+      select.onchange = () => selectCase(select.value);
+      selectCase(cases[0].id);
+    });
+}
+
+function selectCase(id) {
+  currentCase = cases.find(c=>c.id===id);
+  if (!currentCase) return;
+  document.getElementById("case-image").src = currentCase.image;
+  document.getElementById("case-name").textContent = currentCase.name;
+  document.getElementById("open-btn").textContent = `Open for ${currentCase.price} Coins`;
+  currentCase.items.forEach(i => new Image().src = i.image);
+}
+
+function renderCaseItems() {
+  if (!currentCase) return;
+  const list = document.getElementById("case-items-list");
+  list.innerHTML = "";
+  const totalWeight = currentCase.items.reduce((sum,i)=>sum+i.weight,0);
+  currentCase.items.slice().sort((a,b)=>b.price-a.price).forEach(item=>{
+    const div = document.createElement("div");
+    div.className = `inv-item ${item.rarity.toLowerCase()}`;
+    const chance = ((item.weight/totalWeight)*100).toFixed(2);
+    div.innerHTML = `
+      <img src="${item.image}" style="width:50px;height:50px;object-fit:contain;">
+      <div style="text-align:left;">
+        <strong>${item.name}</strong><br>${item.price} coins<br>${chance}%
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+// ===================== RNG =====================
+function getRandomItem(items) {
+  const totalWeight = items.reduce((sum,i)=>sum+i.weight,0);
+  let roll = Math.random()*totalWeight;
+  for (let item of items){
+    if (roll<item.weight) return item;
+    roll-=item.weight;
+  }
+  return items[0];
+}
+
+// ===================== SPINNER =====================
+function spinToItem(winningItem) {
+  const strip = document.getElementById("spinner-strip");
+  strip.innerHTML="";
+  const totalSlots = 50, winnerIndex = 38, items=currentCase.items;
+  for(let i=0;i<totalSlots;i++){
+    let item = items[Math.floor(Math.random()*items.length)];
+    if(i===winnerIndex)item=winningItem;
+    const div=document.createElement("div");
+    div.className=`spinner-item ${item.rarity.toLowerCase()}`;
+    div.innerHTML=`<img src="${item.image}">`;
+    strip.appendChild(div);
+  }
+  const spinnerItems = strip.querySelectorAll(".spinner-item");
+  const itemWidth = spinnerItems[0].offsetWidth + 30;
+  const containerWidth = document.getElementById("spinner-container").offsetWidth;
+  const offset = -(winnerIndex*itemWidth - containerWidth/2 + itemWidth/2);
+  strip.style.transition="none";
+  strip.style.transform="translateX(0px)";
+  strip.offsetHeight;
+  strip.style.transition="transform 3.2s cubic-bezier(.25,.85,.35,1)";
+  strip.style.transform=`translateX(${offset}px)`;
+  setTimeout(()=>{
+    spinnerItems[winnerIndex].classList.add("highlight-won");
+    showWinner(winningItem);
+  },3200);
+}
+
+// ===================== SHOW WINNER =====================
+function showWinner(item){
+  const nameBox=document.getElementById("winner-name");
+  if(nameBox){nameBox.textContent=` ${item.name}`;nameBox.className=item.rarity.toLowerCase();}
+  addToInventory(item);
+}
+
+// ===================== OPEN BUTTON =====================
+document.getElementById("open-btn").addEventListener("click", ()=>{
+  if(!currentCase)return;
+  if(coins<currentCase.price){alert("Not enough coins!");return;}
+  coins-=currentCase.price;
+  updateCoins();
+  const winningItem = getRandomItem(currentCase.items);
+  spinToItem(winningItem);
+});
