@@ -4,6 +4,8 @@ let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 let cases = [];
 let currentCase = null;
 let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
+let coinflipMode = false;
+let coinflipWagerIndex = null;
 
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,6 +26,20 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCoins();
   };
 
+  // Coinflip toggle
+  const coinflipToggleBtn = document.createElement("button");
+  coinflipToggleBtn.className = "theme-btn";
+  coinflipToggleBtn.textContent = "Toggle Coinflip Mode";
+  coinflipToggleBtn.style.margin = "10px";
+  document.body.insertBefore(coinflipToggleBtn, document.getElementById("coins").nextSibling);
+
+  coinflipToggleBtn.onclick = () => {
+    coinflipMode = !coinflipMode;
+    document.getElementById("case-section").style.display = coinflipMode ? "none" : "flex";
+    document.getElementById("coinflip-wrapper").style.display = coinflipMode ? "block" : "none";
+    coinflipToggleBtn.textContent = coinflipMode ? "Back to Cases" : "Toggle Coinflip Mode";
+  };
+
   // Case Items Button
   const caseItemsBtn = document.getElementById("show-case-items-btn");
   const caseItemsList = document.getElementById("case-items-list");
@@ -40,6 +56,36 @@ document.addEventListener("DOMContentLoaded", () => {
       caseItemsBtn.textContent = "Hide Case Items";
     }
   });
+
+  // Coinflip Wrapper
+  const coinflipWrapper = document.createElement("div");
+  coinflipWrapper.id = "coinflip-wrapper";
+  coinflipWrapper.style.display = "none";
+  coinflipWrapper.style.margin = "20px auto";
+  coinflipWrapper.style.textAlign = "center";
+  coinflipWrapper.innerHTML = `
+    <h2>Coinflip</h2>
+    <p>Select an item from your inventory to wager:</p>
+    <select id="coinflip-select"></select>
+    <div style="margin-top:20px;">
+      <div id="coinflip-chip" style="width:100px;height:100px;margin:0 auto;cursor:pointer;"></div>
+    </div>
+    <p id="coinflip-result" style="margin-top:10px;font-weight:bold;"></p>
+  `;
+  document.body.appendChild(coinflipWrapper);
+
+  const coinflipSelect = document.getElementById("coinflip-select");
+  const coinflipChip = document.getElementById("coinflip-chip");
+  const coinflipResult = document.getElementById("coinflip-result");
+
+  coinflipChip.onclick = () => {
+    if (coinflipSelect.selectedIndex === -1) {
+      alert("Select an item to wager!");
+      return;
+    }
+    coinflipWagerIndex = coinflipSelect.value;
+    performCoinflip();
+  };
 
   updateCoins();
   renderInventory();
@@ -66,6 +112,7 @@ function addToInventory(item) {
   saveInventory();
   renderInventory();
   renderTopDrops();
+  renderCoinflipSelect();
 }
 
 function sellItem(index) {
@@ -74,6 +121,7 @@ function sellItem(index) {
   saveInventory();
   updateCoins();
   renderInventory();
+  renderCoinflipSelect();
 }
 
 function sellAllItems() {
@@ -90,6 +138,7 @@ function sellAllItems() {
   saveInventory();
   updateCoins();
   renderInventory();
+  renderCoinflipSelect();
 
   alert(`Sold all items for ${totalValue.toFixed(2)} coins!`);
 }
@@ -109,6 +158,22 @@ function renderInventory() {
     `;
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
     inv.appendChild(div);
+  });
+
+  renderCoinflipSelect();
+}
+
+// ===================== COINFLIP SELECT =====================
+function renderCoinflipSelect() {
+  const select = document.getElementById("coinflip-select");
+  if (!select) return;
+  select.innerHTML = "";
+
+  inventory.forEach((item, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = `${item.name} (${item.rarity})`;
+    select.appendChild(option);
   });
 }
 
@@ -173,8 +238,7 @@ function renderCaseItems() {
   const list = document.getElementById("case-items-list");
   list.innerHTML = "";
 
-  const totalWeight = currentCase.items
-    .reduce((sum, i) => sum + i.weight, 0);
+  const totalWeight = currentCase.items.reduce((sum, i) => sum + i.weight, 0);
 
   currentCase.items
     .slice()
@@ -231,18 +295,15 @@ function spinToItem(winningItem) {
 
   const spinnerItems = strip.querySelectorAll(".spinner-item");
   const itemWidth = spinnerItems[0].offsetWidth + 30;
-  const containerWidth =
-    document.getElementById("spinner-container").offsetWidth;
+  const containerWidth = document.getElementById("spinner-container").offsetWidth;
 
-  const offset =
-    -(winnerIndex * itemWidth - containerWidth / 2 + itemWidth / 2);
+  const offset = -(winnerIndex * itemWidth - containerWidth / 2 + itemWidth / 2);
 
   strip.style.transition = "none";
   strip.style.transform = "translateX(0px)";
   strip.offsetHeight;
 
-  strip.style.transition =
-    "transform 3.2s cubic-bezier(.25,.85,.35,1)";
+  strip.style.transition = "transform 3.2s cubic-bezier(.25,.85,.35,1)";
   strip.style.transform = `translateX(${offset}px)`;
 
   setTimeout(() => {
@@ -265,9 +326,7 @@ function showWinner(item) {
 // ===================== OPEN BUTTON =====================
 document.getElementById("open-btn")
   .addEventListener("click", () => {
-
     if (!currentCase) return;
-
     if (coins < currentCase.price) {
       alert("Not enough coins!");
       return;
@@ -276,90 +335,47 @@ document.getElementById("open-btn")
     coins -= currentCase.price;
     updateCoins();
 
-    const winningItem =
-      getRandomItem(currentCase.items);
-
+    const winningItem = getRandomItem(currentCase.items);
     spinToItem(winningItem);
   });
 
-// ===================== MODE TOGGLE =====================
-
-const toggleBtn = document.getElementById("toggle-mode-btn");
-const caseSection = document.getElementById("case-section");
-const coinflipSection = document.getElementById("coinflip-section");
-
-let coinflipSelectedIndex = null;
-let inCoinflip = false;
-
-toggleBtn.addEventListener("click", () => {
-  inCoinflip = !inCoinflip;
-
-  if (inCoinflip) {
-    caseSection.classList.add("hidden");
-    coinflipSection.classList.remove("hidden");
-    toggleBtn.textContent = "Switch to Cases 🎁";
-    renderCoinflipInventory();
-  } else {
-    caseSection.classList.remove("hidden");
-    coinflipSection.classList.add("hidden");
-    toggleBtn.textContent = "Switch to Coinflip 🎲";
-  }
-});
-
-// ===================== COINFLIP INVENTORY =====================
-
-function renderCoinflipInventory() {
-  const container = document.getElementById("coinflip-inventory");
-  container.innerHTML = "";
-  coinflipSelectedIndex = null;
-  document.getElementById("coinflip-result").textContent = "";
-
-  inventory.forEach((item, index) => {
-    const div = document.createElement("div");
-    div.className = `cf-item ${item.rarity.toLowerCase()}`;
-    div.innerHTML = `
-      <img src="${item.image}">
-      <p>${item.name}</p>
-    `;
-
-    div.onclick = () => {
-      coinflipSelectedIndex = index;
-      document.querySelectorAll(".cf-item").forEach(el =>
-        el.classList.remove("cf-selected")
-      );
-      div.classList.add("cf-selected");
-    };
-
-    container.appendChild(div);
-  });
-}
-
 // ===================== COINFLIP LOGIC =====================
+function performCoinflip() {
+  if (coinflipWagerIndex === null) return;
 
-document.getElementById("coinflip-btn").addEventListener("click", () => {
-  if (coinflipSelectedIndex === null) {
-    alert("Select an item to wager!");
-    return;
-  }
+  const item = inventory[coinflipWagerIndex];
+  coinflipResult.textContent = "";
+  coinflipChip.innerHTML = "";
 
-  const resultBox = document.getElementById("coinflip-result");
-  const wageredItem = inventory[coinflipSelectedIndex];
+  // Create spinning chip
+  coinflipChip.style.background = "radial-gradient(circle, red 50%, black 50%)";
+  coinflipChip.style.borderRadius = "50%";
+  coinflipChip.style.width = "100px";
+  coinflipChip.style.height = "100px";
+  coinflipChip.style.transition = "transform 2s ease-out";
 
-  const win = Math.random() < 0.5;
+  // Start spin
+  setTimeout(() => {
+    const flipResult = Math.random() < 0.5 ? "red" : "black";
 
-  if (win) {
-    // Duplicate item
-    inventory.push({ ...wageredItem });
-    resultBox.textContent = `YOU WON! +1 ${wageredItem.name}`;
-    resultBox.className = wageredItem.rarity.toLowerCase();
-  } else {
-    // Remove wagered item
-    inventory.splice(coinflipSelectedIndex, 1);
-    resultBox.textContent = `You lost ${wageredItem.name}`;
-    resultBox.className = "common";
-  }
+    coinflipChip.style.transform = "rotateY(1800deg)";
 
-  saveInventory();
-  renderInventory();
-  renderCoinflipInventory();
-});
+    setTimeout(() => {
+      coinflipChip.style.background = flipResult === "red" ?
+        "radial-gradient(circle, red 50%, black 50%)" :
+        "radial-gradient(circle, black 50%, red 50%)";
+
+      if (flipResult === "red") {
+        coinflipResult.textContent = `You WON! ${item.name} duplicated!`;
+        addToInventory({...item}); // duplicate
+      } else {
+        coinflipResult.textContent = `You LOST! ${item.name} removed from inventory.`;
+        inventory.splice(coinflipWagerIndex, 1);
+        saveInventory();
+        renderInventory();
+      }
+      coinflipWagerIndex = null;
+      renderCoinflipSelect();
+    }, 2000);
+  }, 100);
+}
