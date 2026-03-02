@@ -1,60 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OVFF’s Sim</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OVFF's Sim</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>OVFF's Sim</h1>
+        <div class="mode-toggle">
+            <button id="toggle-mode">Switch to Coinflip</button>
+        </div>
+    </header>
 
-<h1>OVFF’s Sim</h1>
-<div id="coins">Balance: 0.00</div>
-<div class="inventory-header">
-  <button id="toggle-inv-btn" class="theme-btn">Toggle Inventory</button>
-  <button id="sell-all-btn" class="theme-btn">Sell All</button>
-  <button id="add-coins-btn" class="theme-btn">+0.10 Coins</button>
-  <button id="remove-coins-btn" class="theme-btn">-5 Coins</button>
-</div>
+    <main>
+        <!-- Inventory Section -->
+        <section id="inventory">
+            <h2>Inventory</h2>
+            <div id="inventory-items" class="items-grid">
+                <!-- Items dynamically added here -->
+            </div>
+        </section>
 
-<!-- ================= CASE SECTION ================= -->
-<div id="case-section">
-  <div class="case-left">
-    <img id="case-image" src="" alt="Case Image">
-  </div>
-  <div class="case-right">
-    <h2 id="case-name">Select a Case</h2>
-    <select id="case-select"></select>
-    <button id="show-case-items-btn" class="theme-btn">Show Potential Items</button>
-    <div id="case-items-list" class="hidden"></div>
-    <button id="open-btn" class="theme-btn">Open Case</button>
-  </div>
-</div>
+        <!-- Case Opening Section -->
+        <section id="case-section">
+            <h2>Cases</h2>
+            <div id="case-selector">
+                <!-- Cases dynamically loaded here -->
+            </div>
+            <div id="case-spinner-container">
+                <div id="case-spinner">
+                    <!-- Spinner items dynamically added here -->
+                </div>
+                <button id="open-case">Open Case</button>
+            </div>
+            <div id="top-drops">
+                <h3>Latest TOP Drops</h3>
+                <div class="items-grid" id="top-drops-grid"></div>
+            </div>
+        </section>
 
-<!-- ================= SPINNER ================= -->
-<div id="spinner-wrapper">
-  <div id="spinner-container">
-    <div id="spinner-strip"></div>
-  </div>
-</div>
-<div id="winner-name"></div>
+        <!-- Coinflip Section -->
+        <section id="coinflip-section" style="display:none;">
+            <h2>Coinflip</h2>
+            <div id="coinflip-inventory" class="items-grid">
+                <!-- Items to wager dynamically added here -->
+            </div>
+            <div id="coinflip-controls">
+                <p>Select your item and choose heads or tails:</p>
+                <button class="coin-choice" data-side="heads">Heads</button>
+                <button class="coin-choice" data-side="tails">Tails</button>
+            </div>
+            <div id="coinflip-result"></div>
+        </section>
+    </main>
 
-<!-- ================= INVENTORY ================= -->
-<div id="inventory" class="hidden"></div>
+    <footer>
+        <p>&copy; 2026 OVFF's Sim</p>
+    </footer>
 
-<!-- ================= TOP DROPS ================= -->
-<h2>Top Drops</h2>
-<div id="top-drops"></div>
-
-<!-- ================= COINFLIP ================= -->
-<h2>Item Coinflip</h2>
-<div id="coinflip-section">
-  <select id="coinflip-item-select"></select>
-  <button id="coinflip-heads" class="theme-btn">Heads</button>
-  <button id="coinflip-tails" class="theme-btn">Tails</button>
-  <div id="coinflip-result"></div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
