@@ -320,3 +320,23 @@ document.getElementById("open-btn").addEventListener("click", () => {
   const winningItem = getRandomItem(currentCase.items);
   spinToItem(winningItem);
 });
+
+function spinCoin(callback) {
+  const coin = document.getElementById("coin");
+  const win = Math.random() < 0.5; // 50% chance
+
+  coin.classList.remove("heads", "tails");
+  coin.style.transform = "rotateY(0deg)";
+
+  // Spin animation
+  let rotations = 6; // number of flips
+  let degree = 360 * rotations + (win ? 0 : 180);
+
+  coin.style.transition = "transform 2s ease-out";
+  coin.style.transform = `rotateY(${degree}deg)`;
+
+  setTimeout(() => {
+    coin.classList.add(win ? "heads" : "tails");
+    callback(win);
+  }, 2000); // matches the CSS transition
+}
