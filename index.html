@@ -10,10 +10,10 @@
 
 <h1>OVFF’s Sim</h1>
 
-<div id="coins">Balance: 0.00</div>
+<div id="coins"></div>
 
 <div id="controls">
-  <button class="theme-btn" id="toggle-inv-btn">devving</button>
+  <button class="theme-btn" id="toggle-inv-btn">Inventory</button>
   <button class="theme-btn" id="add-coins-btn">+0.10 Coins</button>
   <button class="theme-btn" id="remove-coins-btn">Donate To Charity</button>
 </div>
@@ -30,7 +30,7 @@
   </div>
   <div class="case-right">
     <h2 id="case-name"></h2>
-    <button class="theme-btn" id="open-btn">Open Case</button>
+    <button class="theme-btn" id="open-btn"></button>
     <button class="theme-btn" id="show-case-items-btn">Show Potential Items</button>
     <div id="case-items-list"></div>
   </div>
@@ -58,14 +58,13 @@
 <div id="top-drops"></div>
 
 <!-- Coinflip Section -->
-<div id="coinflip-wrapper">
+<div id="coinflip-wrapper" style="margin-top:30px;">
   <h2>Item Coinflip 🎲</h2>
   <select id="coinflip-item-select"></select>
   <button class="theme-btn" id="start-coinflip-btn">Flip Coin</button>
-  <div id="coinflip-result"></div>
+  <div id="coinflip-result" style="margin-top:15px;"></div>
 </div>
 
-<script src="cases.json" type="application/json" id="cases-json"></script>
 <script src="script.js"></script>
 </body>
 </html>
