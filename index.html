@@ -2,36 +2,36 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>OVFF's Sim</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OVFF’s Sim</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>OVFF's Sim</h1>
+<h1>OVFF’s Sim</h1>
 
-<div id="coins"></div>
+<div id="coins">Balance: 0.00</div>
 
 <div id="controls">
   <button class="theme-btn" id="toggle-inv-btn">devving</button>
   <button class="theme-btn" id="add-coins-btn">+0.10 Coins</button>
-  <button class="theme-btn" id="remove-coins-btn">Charity</button>
-  <button class="theme-btn" id="coinflip-toggle-btn">Coinflip</button>
+  <button class="theme-btn" id="remove-coins-btn">Donate To Charity</button>
 </div>
 
-<!-- Case selection -->
+<!-- Case Selection -->
 <div id="case-select-wrapper">
   <select id="case-select"></select>
 </div>
 
-<!-- Case section -->
+<!-- Case Section -->
 <div id="case-section">
   <div class="case-left">
     <img id="case-image" src="" alt="Case Image">
   </div>
   <div class="case-right">
     <h2 id="case-name"></h2>
-    <button class="theme-btn" id="open-btn"></button>
-    <button class="theme-btn" id="show-case-items-btn">Show Potential Drops</button>
+    <button class="theme-btn" id="open-btn">Open Case</button>
+    <button class="theme-btn" id="show-case-items-btn">Show Potential Items</button>
     <div id="case-items-list"></div>
   </div>
 </div>
@@ -45,27 +45,27 @@
   </div>
 </div>
 
-<!-- Coinflip section -->
-<div id="coinflip-section" class="hidden">
-  <h2>Coinflip</h2>
-  <select id="coinflip-item-select"></select>
-  <div id="coinflip-preview"></div>
-  <div id="coin">
-    <div class="coin-inner">
-      <div class="coin-face heads">Heads</div>
-      <div class="coin-face tails">Tails</div>
-    </div>
-  </div>
-  <button class="theme-btn" id="coinflip-btn">Flip Coin</button>
-  <div id="coinflip-result"></div>
+<!-- Inventory Section -->
+<div class="inventory-header">
+  <h2>Inventory</h2>
+  <button id="sell-all-btn" class="theme-btn">Sell All</button>
 </div>
 
-<h2>Inventory</h2>
 <div id="inventory" class="hidden"></div>
 
+<!-- Top Drops -->
 <h2 class="top-title">• Last TOP Drops</h2>
 <div id="top-drops"></div>
 
+<!-- Coinflip Section -->
+<div id="coinflip-wrapper">
+  <h2>Item Coinflip 🎲</h2>
+  <select id="coinflip-item-select"></select>
+  <button class="theme-btn" id="start-coinflip-btn">Flip Coin</button>
+  <div id="coinflip-result"></div>
+</div>
+
+<script src="cases.json" type="application/json" id="cases-json"></script>
 <script src="script.js"></script>
 </body>
 </html>
