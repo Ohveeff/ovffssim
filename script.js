@@ -340,3 +340,62 @@ function spinCoin(callback) {
     callback(win);
   }, 2000); // matches the CSS transition
 }
+
+// ===================== COINFLIP =====================
+function addCoinflipButtons() {
+  const inv = document.getElementById("inventory");
+  const items = inv.querySelectorAll(".inv-item");
+
+  items.forEach((div, index) => {
+    // Avoid adding duplicate buttons
+    if (div.querySelector(".coinflip-btn")) return;
+
+    const btn = document.createElement("button");
+    btn.textContent = "Coinflip";
+    btn.className = "theme-btn coinflip-btn";
+    btn.style.marginTop = "5px";
+
+    btn.onclick = () => coinflipItem(index);
+    div.appendChild(btn);
+  });
+}
+
+function coinflipItem(index) {
+  if (inventory.length === 0) return;
+  const item = inventory[index];
+
+  // Start the 3D coin flip
+  spinCoin(win => {
+    if (win) {
+      inventory.push({...item}); // duplicate item
+      alert(`You WON! ${item.name} has been duplicated.`);
+    } else {
+      inventory.splice(index, 1); // remove item
+      alert(`You LOSE! ${item.name} has been removed.`);
+    }
+
+    saveInventory();
+    renderInventory();
+  });
+}
+
+function spinCoin(callback) {
+  const coin = document.getElementById("coin");
+  const win = Math.random() < 0.5;
+
+  coin.classList.remove("heads", "tails");
+  coin.style.transform = "rotateY(0deg)";
+
+  // 3D flip: multiple rotations + ending on red (heads) or black (tails)
+  const rotations = 6; // how many full flips
+  const degree = 360 * rotations + (win ? 0 : 180);
+
+  coin.style.transition = "transform 2s ease-out";
+  coin.style.transform = `rotateY(${degree}deg)`;
+
+  // Wait for animation to finish
+  setTimeout(() => {
+    coin.classList.add(win ? "heads" : "tails");
+    callback(win);
+  }, 2000);
+}
