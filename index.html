@@ -8,22 +8,16 @@
 <body>
 
 <h1>OVFF's Sim</h1>
-
 <div id="coins"></div>
 
 <div id="controls">
-  <button class="theme-btn" id="toggle-inv-btn">Toggle Inventory</button>
-  <button class="theme-btn" id="add-coins-btn">+10.00 Coins</button>
-  <button class="theme-btn" id="remove-coins-btn">-0.04 Coins</button>
-  <button class="theme-btn" id="coinflip-toggle-btn">Coinflip</button>
+  <button class="theme-btn" id="toggle-inv-btn">Devving</button>
+  <button class="theme-btn" id="add-coins-btn">+0.10 Coins</button>
+  <button class="theme-btn" id="remove-coins-btn">Charity </button>
+  <button class="theme-btn" id="switch-gamemode-btn">Switch to Coinflip</button>
 </div>
 
-<!-- Case selection -->
-<div id="case-select-wrapper">
-  <select id="case-select"></select>
-</div>
-
-<!-- Case section -->
+<!-- CASE SECTION -->
 <div id="case-section">
   <div class="case-left">
     <img id="case-image" src="" alt="Case Image">
@@ -31,7 +25,7 @@
   <div class="case-right">
     <h2 id="case-name"></h2>
     <button class="theme-btn" id="open-btn"></button>
-    <button class="theme-btn" id="show-case-items-btn">Show Case Items</button>
+    <button class="theme-btn" id="show-case-items-btn">Show Potential Drops</button>
     <div id="case-items-list"></div>
   </div>
 </div>
@@ -42,21 +36,17 @@
 <div id="spinner-wrapper">
   <div id="spinner-container">
     <div id="spinner-strip"></div>
+    <div id="spinner-center-bar"></div>
   </div>
 </div>
 
-<!-- Coinflip section -->
+<!-- COINFLIP SECTION -->
 <div id="coinflip-section" class="hidden">
   <h2>Coinflip</h2>
   <select id="coinflip-item-select"></select>
-  <div id="coinflip-preview"></div>
-  <div id="coin">
-    <div class="coin-inner">
-      <div class="coin-face heads">Heads</div>
-      <div class="coin-face tails">Tails</div>
-    </div>
-  </div>
-  <button class="theme-btn" id="coinflip-btn">Flip Coin</button>
+  <div id="coinflip-choice" style="margin:10px 0;"></div>
+  <div id="coinflip-preview" style="display:flex; gap:20px; justify-content:center; margin:10px 0;"></div>
+  <button class="theme-btn" id="coinflip-btn">Flip!</button>
   <div id="coinflip-result"></div>
 </div>
 
