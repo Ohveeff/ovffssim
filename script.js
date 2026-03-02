@@ -281,3 +281,85 @@ document.getElementById("open-btn")
 
     spinToItem(winningItem);
   });
+
+// ===================== MODE TOGGLE =====================
+
+const toggleBtn = document.getElementById("toggle-mode-btn");
+const caseSection = document.getElementById("case-section");
+const coinflipSection = document.getElementById("coinflip-section");
+
+let coinflipSelectedIndex = null;
+let inCoinflip = false;
+
+toggleBtn.addEventListener("click", () => {
+  inCoinflip = !inCoinflip;
+
+  if (inCoinflip) {
+    caseSection.classList.add("hidden");
+    coinflipSection.classList.remove("hidden");
+    toggleBtn.textContent = "Switch to Cases 🎁";
+    renderCoinflipInventory();
+  } else {
+    caseSection.classList.remove("hidden");
+    coinflipSection.classList.add("hidden");
+    toggleBtn.textContent = "Switch to Coinflip 🎲";
+  }
+});
+
+// ===================== COINFLIP INVENTORY =====================
+
+function renderCoinflipInventory() {
+  const container = document.getElementById("coinflip-inventory");
+  container.innerHTML = "";
+  coinflipSelectedIndex = null;
+  document.getElementById("coinflip-result").textContent = "";
+
+  inventory.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = `cf-item ${item.rarity.toLowerCase()}`;
+    div.innerHTML = `
+      <img src="${item.image}">
+      <p>${item.name}</p>
+    `;
+
+    div.onclick = () => {
+      coinflipSelectedIndex = index;
+      document.querySelectorAll(".cf-item").forEach(el =>
+        el.classList.remove("cf-selected")
+      );
+      div.classList.add("cf-selected");
+    };
+
+    container.appendChild(div);
+  });
+}
+
+// ===================== COINFLIP LOGIC =====================
+
+document.getElementById("coinflip-btn").addEventListener("click", () => {
+  if (coinflipSelectedIndex === null) {
+    alert("Select an item to wager!");
+    return;
+  }
+
+  const resultBox = document.getElementById("coinflip-result");
+  const wageredItem = inventory[coinflipSelectedIndex];
+
+  const win = Math.random() < 0.5;
+
+  if (win) {
+    // Duplicate item
+    inventory.push({ ...wageredItem });
+    resultBox.textContent = `YOU WON! +1 ${wageredItem.name}`;
+    resultBox.className = wageredItem.rarity.toLowerCase();
+  } else {
+    // Remove wagered item
+    inventory.splice(coinflipSelectedIndex, 1);
+    resultBox.textContent = `You lost ${wageredItem.name}`;
+    resultBox.className = "common";
+  }
+
+  saveInventory();
+  renderInventory();
+  renderCoinflipInventory();
+});
