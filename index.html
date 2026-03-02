@@ -389,10 +389,10 @@ document.getElementById("flip-btn").addEventListener("click",()=>{
   const win = Math.random()<0.5;
   if(win){
     inventory.push({...item});
-    resultEl.textContent = `You won! You got another ${item.name} 🎉`;
+    resultEl.textContent = `You won another ${item.name} 🎉`;
   } else {
     inventory.splice(index,1);
-    resultEl.textContent = `You lost your ${item.name} 😢`;
+    resultEl.textContent = `You lost your ${item.name} `;
   }
   saveInventory();
   renderInventory();
