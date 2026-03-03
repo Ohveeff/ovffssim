@@ -6,7 +6,54 @@ let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 let cases = [];
 let currentCase = null;
+function loadCases() {
+  fetch("data/cases.json")
+    .then(res => res.json())
+    .then(data => {
+      cases = data.cases;
+      const display = document.getElementById("case-select-display");
+      const options = document.getElementById("case-select-options");
+      options.innerHTML = "";
 
+      cases.forEach(c => {
+        const div = document.createElement("div");
+        div.innerHTML = `<img src="${c.image}"><span>${c.name} (${c.price} coins)</span>`;
+        div.onclick = () => {
+          selectCase(c.id);
+          options.style.display = "none";
+        };
+        options.appendChild(div);
+      });
+
+      // Initial selection
+      selectCase(cases[0].id);
+
+      // Toggle dropdown
+      display.onclick = () => {
+        options.style.display = options.style.display === "block" ? "none" : "block";
+      };
+
+      // Close dropdown if clicked outside
+      document.addEventListener("click", (e) => {
+        if (!display.contains(e.target) && !options.contains(e.target)) {
+          options.style.display = "none";
+        }
+      });
+    });
+}
+
+function selectCase(id) {
+  currentCase = cases.find(c => c.id === id);
+  if (!currentCase) return;
+
+  document.getElementById("case-image").src = currentCase.image;
+  document.getElementById("case-name").textContent = currentCase.name;
+  document.getElementById("open-btn").textContent = ` ${currentCase.price} Coins`;
+
+  // Update display in dropdown
+  const display = document.getElementById("case-select-display");
+  display.innerHTML = `<img src="${currentCase.image}"><span>${currentCase.name} (${currentCase.price} coins)</span>`;
+}
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
   updateCoins();
