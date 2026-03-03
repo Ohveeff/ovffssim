@@ -191,7 +191,7 @@ function selectCase(id) {
 
   document.getElementById("case-image").src = currentCase.image;
   document.getElementById("case-name").textContent = currentCase.name;
-  document.getElementById("open-btn").textContent = `Open for ${currentCase.price} Coins`;
+  document.getElementById("open-btn").textContent = ` ${currentCase.price} Coins`;
 }
 
 function openCase() {
