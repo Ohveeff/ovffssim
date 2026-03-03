@@ -20,11 +20,11 @@
   <button class="theme-btn" id="toggle-inv-btn">devving</button>
   <button class="theme-btn" id="add-coins-btn">+50 Coins</button>
   <button class="theme-btn" id="remove-coins-btn">Donate To Charity</button>
-  <button class="theme-btn" id="toggle-mode-btn">Switch to Case Battle</button>
+  <button class="theme-btn" id="switch-mode-btn">Switch to Case Battle</button>
 </div>
 
-<!-- ================= MAIN SECTION ================= -->
-<div id="main-section">
+<!-- Normal Cases / Coinflip -->
+<div id="normal-section">
   <!-- Coinflip Section -->
   <div id="coinflip-section">
     <h2>Coinflip</h2>
@@ -39,11 +39,9 @@
   </div>
 
   <!-- Case selection -->
-  <div id="case-select-wrapper">
-    <div class="custom-dropdown">
-      <div id="case-select-display"></div>
-      <div id="case-select-options"></div>
-    </div>
+  <div id="case-select-wrapper" class="custom-dropdown">
+    <div id="case-select-display"></div>
+    <div id="case-select-options"></div>
   </div>
 
   <!-- Case section -->
@@ -61,38 +59,30 @@
 
   <!-- Winner Name -->
   <div id="winner-name"></div>
-
-  <!-- Spinner -->
-  <div id="spinner-wrapper">
-    <div id="spinner-container">
-      <div id="spinner-strip"></div>
-    </div>
-  </div>
 </div>
 
-<!-- ================= BATTLE SECTION ================= -->
+<!-- Case Battle Section -->
 <div id="battle-section" style="display:none;">
-  <h2>Case Battle Mode</h2>
-  <p>Each battle costs the selected case price.</p>
-
+  <h2>Case Battle</h2>
+  <div class="battle-controls">
+    <select id="battle-case-select"></select>
+    <button class="theme-btn" id="battle-start-btn"></button>
+  </div>
   <div id="battle-spinners">
-    <div id="battle-player" class="battle-column">
+    <div>
       <h3>Player</h3>
-      <div id="battle-spinner-container" class="spinner-container">
-        <div id="battle-spinner-player-strip" class="spinner-strip"></div>
+      <div id="battle-spinner-player-wrapper">
+        <div id="battle-spinner-player-strip"></div>
       </div>
     </div>
-
-    <div id="battle-bot" class="battle-column">
+    <div>
       <h3>Bot</h3>
-      <div id="battle-spinner-container" class="spinner-container">
-        <div id="battle-spinner-bot-strip" class="spinner-strip"></div>
+      <div id="battle-spinner-bot-wrapper">
+        <div id="battle-spinner-bot-strip"></div>
       </div>
     </div>
   </div>
-
-  <button class="theme-btn" id="battle-btn">Start Battle</button>
-  <div id="battle-winner" style="margin-top:20px; font-size:20px; font-weight:bold;"></div>
+  <div id="battle-winner" style="margin-top:20px;font-size:20px;font-weight:bold;"></div>
 </div>
 
 <!-- Inventory Section -->
