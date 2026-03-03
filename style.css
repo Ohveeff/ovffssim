@@ -265,3 +265,53 @@ h1 {
   50% { transform: rotateY(1080deg) scale(1.1); }
   100% { transform: rotateY(2160deg) scale(1); }
 }
+#new-banner {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff0000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 2px solid #ff0000;
+  border-radius: 6px;
+  text-shadow:
+     0 0 5px #ff0000,
+     0 0 10px #ff0000,
+     0 0 20px #ff0000,
+     0 0 40px #ff0000;
+  box-shadow:
+     0 0 5px #ff0000,
+     0 0 10px #ff0000,
+     0 0 20px #ff0000,
+     0 0 40px #ff0000;
+  animation: neonGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neonGlow {
+  from {
+    text-shadow:
+      0 0 5px #ff0000,
+      0 0 10px #ff0000,
+      0 0 20px #ff0000,
+      0 0 40px #ff0000;
+    box-shadow:
+      0 0 5px #ff0000,
+      0 0 10px #ff0000,
+      0 0 20px #ff0000,
+      0 0 40px #ff0000;
+  }
+  to {
+    text-shadow:
+      0 0 10px #ff4d4d,
+      0 0 20px #ff4d4d,
+      0 0 30px #ff4d4d,
+      0 0 50px #ff4d4d;
+    box-shadow:
+      0 0 10px #ff4d4d,
+      0 0 20px #ff4d4d,
+      0 0 30px #ff4d4d,
+      0 0 50px #ff4d4d;
+  }
+}
