@@ -9,7 +9,6 @@ let currentCase = null;
 
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
-
   updateCoins();
   renderInventory();
   renderTopDrops();
@@ -32,9 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("coinflip-btn").onclick = () => {
     const select = document.getElementById("coinflip-select");
     const index = parseInt(select.value);
-    if (!isNaN(index)) {
-      coinflipItem(index);
-    }
+    if (!isNaN(index)) coinflipItem(index);
   };
 
   document.getElementById("open-btn").onclick = openCase;
@@ -42,7 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ===================== COINS =====================
 function updateCoins() {
-  document.getElementById("coins").textContent = `Balance: ${coins.toFixed(2)}`;
+  document.getElementById("coins").textContent =
+    `Balance: ${coins.toFixed(2)}`;
   localStorage.setItem("coins", coins);
 }
 
@@ -59,14 +57,12 @@ function renderInventory() {
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
-
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
       <small>${item.price} coins</small>
       <button class="sell-btn theme-btn">Sell</button>
     `;
-
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
     container.appendChild(div);
   });
@@ -83,7 +79,6 @@ function sellItem(index) {
 
 function sellAllItems() {
   if (inventory.length === 0) return alert("Inventory empty.");
-
   const total = inventory.reduce((sum, i) => sum + i.price, 0);
   coins += total;
   inventory = [];
@@ -126,7 +121,6 @@ function populateCoinflipDropdown() {
   }
 
   select.disabled = false;
-
   inventory.forEach((item, index) => {
     const option = document.createElement("option");
     option.value = index;
@@ -139,21 +133,19 @@ function coinflipItem(index) {
   const item = inventory[index];
   const coin = document.getElementById("coin");
 
+  // Strict win/loss logic
   const win = Math.random() < 0.5;
 
-  // Set coin faces strictly
-  if (win) {
-    coin.classList.add("heads");
-    coin.classList.remove("tails");
-  } else {
-    coin.classList.add("tails");
-    coin.classList.remove("heads");
-  }
+  // Reset classes
+  coin.classList.remove("heads", "tails", "flipping");
 
-  // Animate poker chip flip
+  // Apply proper color: red = heads = win, black = tails = lose
+  coin.classList.add(win ? "heads" : "tails");
+
+  // Start flipping animation
   coin.classList.add("flipping");
-  coin.style.transform = `rotateY(${win ? 2160 : 1980}deg)`; // spin multiple times
 
+  // After animation ends
   setTimeout(() => {
     coin.classList.remove("flipping");
 
@@ -168,7 +160,7 @@ function coinflipItem(index) {
     saveInventory();
     renderInventory();
     populateCoinflipDropdown();
-  }, 2200);
+  }, 2000);
 }
 
 // ===================== CASE SYSTEM =====================
@@ -179,14 +171,12 @@ function loadCases() {
       cases = data.cases;
       const select = document.getElementById("case-select");
       select.innerHTML = "";
-
       cases.forEach(c => {
         const option = document.createElement("option");
         option.value = c.id;
         option.textContent = `${c.name} (${c.price} coins)`;
         select.appendChild(option);
       });
-
       select.onchange = () => selectCase(select.value);
       selectCase(cases[0].id);
     });
@@ -221,7 +211,6 @@ function getRandomItem(items) {
     if (roll < item.weight) return item;
     roll -= item.weight;
   }
-
   return items[0];
 }
 
@@ -234,7 +223,9 @@ function spinToItem(winningItem) {
   const winnerIndex = 38;
 
   for (let i = 0; i < slots; i++) {
-    let item = currentCase.items[Math.floor(Math.random() * currentCase.items.length)];
+    let item = currentCase.items[
+      Math.floor(Math.random() * currentCase.items.length)
+    ];
     if (i === winnerIndex) item = winningItem;
 
     const div = document.createElement("div");
