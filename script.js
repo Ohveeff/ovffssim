@@ -6,54 +6,7 @@ let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 let cases = [];
 let currentCase = null;
-function loadCases() {
-  fetch("data/cases.json")
-    .then(res => res.json())
-    .then(data => {
-      cases = data.cases;
-      const display = document.getElementById("case-select-display");
-      const options = document.getElementById("case-select-options");
-      options.innerHTML = "";
 
-      cases.forEach(c => {
-        const div = document.createElement("div");
-        div.innerHTML = `<img src="${c.image}"><span>${c.name} (${c.price} coins)</span>`;
-        div.onclick = () => {
-          selectCase(c.id);
-          options.style.display = "none";
-        };
-        options.appendChild(div);
-      });
-
-      // Initial selection
-      selectCase(cases[0].id);
-
-      // Toggle dropdown
-      display.onclick = () => {
-        options.style.display = options.style.display === "block" ? "none" : "block";
-      };
-
-      // Close dropdown if clicked outside
-      document.addEventListener("click", (e) => {
-        if (!display.contains(e.target) && !options.contains(e.target)) {
-          options.style.display = "none";
-        }
-      });
-    });
-}
-
-function selectCase(id) {
-  currentCase = cases.find(c => c.id === id);
-  if (!currentCase) return;
-
-  document.getElementById("case-image").src = currentCase.image;
-  document.getElementById("case-name").textContent = currentCase.name;
-  document.getElementById("open-btn").textContent = ` ${currentCase.price} Coins`;
-
-  // Update display in dropdown
-  const display = document.getElementById("case-select-display");
-  display.innerHTML = `<img src="${currentCase.image}"><span>${currentCase.name} (${currentCase.price} coins)</span>`;
-}
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
   updateCoins();
@@ -64,20 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Buttons
   document.getElementById("sell-all-btn").onclick = sellAllItems;
-  document.getElementById("add-coins-btn").onclick = () => {
-    coins += 50.00;
-    updateCoins();
-  };
-  document.getElementById("remove-coins-btn").onclick = () => {
-    coins = Math.max(0, coins - 5.00);
-    updateCoins();
-  };
+  document.getElementById("add-coins-btn").onclick = () => { coins += 50.00; updateCoins(); };
+  document.getElementById("remove-coins-btn").onclick = () => { coins = Math.max(0, coins - 5.00); updateCoins(); };
   document.getElementById("coinflip-btn").onclick = () => {
     const select = document.getElementById("coinflip-select");
     const index = parseInt(select.value);
     if (!isNaN(index)) coinflipItem(index);
   };
   document.getElementById("open-btn").onclick = openCase;
+  document.getElementById("show-case-items-btn").onclick = toggleCaseItems;
 });
 
 // ===================== COINS =====================
@@ -131,8 +79,8 @@ function sellAllItems() {
   alert(`Sold everything for ${total.toFixed(2)} coins.`);
 }
 
-// ===================== SHOW / HIDE CASE ITEMS + ODDS =====================
-document.getElementById("show-case-items-btn").onclick = () => {
+// ===================== SHOW CASE ITEMS =====================
+function toggleCaseItems() {
   const list = document.getElementById("case-items-list");
   if (!currentCase) return;
 
@@ -159,7 +107,7 @@ document.getElementById("show-case-items-btn").onclick = () => {
     `;
     list.appendChild(div);
   });
-};
+}
 
 // ===================== TOP DROPS =====================
 function renderTopDrops() {
@@ -245,16 +193,34 @@ function loadCases() {
     .then(res => res.json())
     .then(data => {
       cases = data.cases;
-      const select = document.getElementById("case-select");
-      select.innerHTML = "";
+      const display = document.getElementById("case-select-display");
+      const options = document.getElementById("case-select-options");
+      options.innerHTML = "";
+
       cases.forEach(c => {
-        const option = document.createElement("option");
-        option.value = c.id;
-        option.textContent = `${c.name} (${c.price} coins)`;
-        select.appendChild(option);
+        const div = document.createElement("div");
+        div.innerHTML = `<img src="${c.image}"><span>${c.name} (${c.price} coins)</span>`;
+        div.onclick = () => {
+          selectCase(c.id);
+          options.style.display = "none";
+        };
+        options.appendChild(div);
       });
-      select.onchange = () => selectCase(select.value);
+
+      // Initial selection
       selectCase(cases[0].id);
+
+      // Toggle dropdown
+      display.onclick = () => {
+        options.style.display = options.style.display === "block" ? "none" : "block";
+      };
+
+      // Close dropdown if clicked outside
+      document.addEventListener("click", (e) => {
+        if (!display.contains(e.target) && !options.contains(e.target)) {
+          options.style.display = "none";
+        }
+      });
     });
 }
 
@@ -265,6 +231,10 @@ function selectCase(id) {
   document.getElementById("case-image").src = currentCase.image;
   document.getElementById("case-name").textContent = currentCase.name;
   document.getElementById("open-btn").textContent = ` ${currentCase.price} Coins`;
+
+  // Update dropdown display
+  const display = document.getElementById("case-select-display");
+  display.innerHTML = `<img src="${currentCase.image}"><span>${currentCase.name} (${currentCase.price} coins)</span>`;
 }
 
 function openCase() {
