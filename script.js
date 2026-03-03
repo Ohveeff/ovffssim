@@ -131,14 +131,14 @@ function coinflipItem(index) {
   const flipBtn = document.getElementById("coinflip-btn");
   flipBtn.disabled = true;
 
-  // Random win/lose
-  const win = Math.random() < 0.5; // 50% chance
+  // 50/50 chance
+  const win = Math.random() < 0.5;
   const finalClass = win ? "head" : "tail";
 
   let flips = 0;
-  const totalFlips = 10; // Number of alternating flips
+  const totalFlips = 10; // alternating flips before final landing
+
   const flipInterval = setInterval(() => {
-    // Alternate colors visually
     coin.classList.toggle("head");
     coin.classList.toggle("tail");
     flips++;
