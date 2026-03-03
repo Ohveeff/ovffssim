@@ -9,13 +9,15 @@
 
 <h1>OVFF's Sim</h1>
 
-<!-- Neon Banner -->
-<div id="new-banner">NEW: COINFLIP</div>
+<!-- Neon New Banner -->
+<div id="neon-banner">New!</div>
 
+<!-- Coins Display -->
 <div id="coins"></div>
 
+<!-- Controls -->
 <div id="controls">
-  <button class="theme-btn" id="toggle-inv-btn">devving</button>
+  <button class="theme-btn" id="toggle-inv-btn">Button Of Muck and Malice</button>
   <button class="theme-btn" id="add-coins-btn">+0.10 Coins</button>
   <button class="theme-btn" id="remove-coins-btn">Donate To Charity</button>
 </div>
@@ -23,18 +25,12 @@
 <!-- Coinflip Section -->
 <div id="coinflip-section">
   <h2>Coinflip</h2>
-
-  <!-- Item selection -->
   <select id="coinflip-select"></select>
-
-  <!-- Spin button -->
   <button id="coinflip-btn" class="theme-btn">Flip Coin</button>
-
-  <!-- Poker chip coin container -->
   <div id="coin-container">
-    <div id="coin" class="red-win">
-      <div class="face red"></div>
-      <div class="face black"></div>
+    <div id="coin">
+      <div class="head"></div>
+      <div class="tail"></div>
     </div>
   </div>
 </div>
@@ -57,6 +53,7 @@
   </div>
 </div>
 
+<!-- Winner Name -->
 <div id="winner-name"></div>
 
 <!-- Spinner -->
@@ -71,12 +68,13 @@
   <h2>Inventory</h2>
   <button id="sell-all-btn" class="theme-btn">Sell All</button>
 </div>
+<div id="inventory"></div>
 
-<div id="inventory" class="hidden"></div>
-
+<!-- Top Drops -->
 <h2 class="top-title">• Last TOP Drops</h2>
 <div id="top-drops"></div>
 
+<!-- JS -->
 <script src="script.js"></script>
 </body>
 </html>
