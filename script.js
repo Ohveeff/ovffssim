@@ -54,7 +54,7 @@ function renderInventory() {
       <img src="${item.image}">
       <p>${item.name}</p>
       <small>${item.price} coins</small>
-      <button class="sell-btn theme-btn">Sell</button>
+      <button class="sell-btn theme-btn">Scrap</button>
     `;
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
     container.appendChild(div);
@@ -71,7 +71,7 @@ function sellItem(index) {
 }
 
 function sellAllItems() {
-  if (inventory.length === 0) return alert("Inventory empty.");
+  if (inventory.length === 0) return alert("Backpack is empty.");
   const total = inventory.reduce((sum, i) => sum + i.price, 0);
   coins += total;
   inventory = [];
@@ -361,7 +361,7 @@ function spinBattle(playerItem, botItem, caseObj) {
       winnerBox.textContent = `Player Wins! You got ${playerItem.name} & ${botItem.name}`;
       winnerBox.className = playerItem.rarity.toLowerCase();
     } else {
-      winnerBox.textContent = `Bot Wins! You got nothing.`;
+      winnerBox.textContent = `Bot Wins!`;
       winnerBox.className = "";
     }
     saveInventory();
