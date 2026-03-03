@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCoins();
   };
   document.getElementById("remove-coins-btn").onclick = () => {
-    coins = Math.max(0, coins - 5);
+    coins = Math.max(0, coins - 5000);
     updateCoins();
   };
   document.getElementById("coinflip-btn").onclick = () => {
