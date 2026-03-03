@@ -10,7 +10,7 @@
 <h1>OVFF's Sim</h1>
 
 <!-- Neon New Banner -->
-<div id="neon-banner">New: COINFLIP & BATTLE</div>
+<div id="neon-banner">New: COINFLIP / CASE BATTLE</div>
 
 <!-- Coins Display -->
 <div id="coins"></div>
@@ -20,10 +20,10 @@
   <button class="theme-btn" id="toggle-inv-btn">devving</button>
   <button class="theme-btn" id="add-coins-btn">+50 Coins</button>
   <button class="theme-btn" id="remove-coins-btn">Donate To Charity</button>
-  <button class="theme-btn" id="toggle-battle-btn">Toggle Battle Mode</button>
+  <button class="theme-btn" id="toggle-mode-btn">Switch to Case Battle</button>
 </div>
 
-<!-- ================= MAIN SECTION ================= -->
+<!-- ================= CASE / COINFLIP SECTION ================= -->
 <div id="main-section">
 
   <!-- Coinflip Section -->
@@ -32,17 +32,18 @@
     <select id="coinflip-select"></select>
     <button id="coinflip-btn" class="theme-btn">Flip Coin</button>
     <div id="coin-container">
-      <div id="coin">
-        <div class="head"></div>
-        <div class="tail"></div>
+      <div id="coin" class="head">
+        <img src="images/items/coin-head.png" alt="Coin Head">
       </div>
     </div>
   </div>
 
   <!-- Case selection -->
-  <div class="custom-dropdown" id="case-select-wrapper">
-    <div id="case-select-display"></div>
-    <div id="case-select-options"></div>
+  <div id="case-select-wrapper">
+    <div class="custom-dropdown">
+      <div id="case-select-display"></div>
+      <div id="case-select-options"></div>
+    </div>
   </div>
 
   <!-- Case section -->
@@ -62,22 +63,32 @@
 
 <!-- ================= CASE BATTLE SECTION ================= -->
 <div id="battle-section" style="display:none;">
-  <h2>Case Battle Mode</h2>
-  <div id="battle-spinners" style="display:flex; justify-content:center; gap:40px;">
+  <h2>Case Battle</h2>
+  <div id="battle-select-wrapper">
+    <div class="custom-dropdown">
+      <div id="battle-case-select-display"></div>
+      <div id="battle-case-select-options"></div>
+    </div>
+    <button id="battle-btn" class="theme-btn">Start Battle</button>
+  </div>
+
+  <div id="battle-spinners" style="display:flex; justify-content:center; gap:50px; margin-top:20px;">
     <div>
       <h3>Player</h3>
-      <div id="battle-player-strip" style="width:400px; height:170px; overflow:hidden; border:2px solid #333; border-radius:15px; background:rgba(20,20,25,0.9);"></div>
+      <div id="battle-spinner-player-container">
+        <div id="battle-spinner-player-strip"></div>
+      </div>
     </div>
     <div>
       <h3>Bot</h3>
-      <div id="battle-bot-strip" style="width:400px; height:170px; overflow:hidden; border:2px solid #333; border-radius:15px; background:rgba(20,20,25,0.9);"></div>
+      <div id="battle-spinner-bot-container">
+        <div id="battle-spinner-bot-strip"></div>
+      </div>
     </div>
   </div>
-  <button class="theme-btn" id="start-battle-btn">Start Case Battle</button>
-</div>
 
-<!-- Winner Name -->
-<div id="winner-name"></div>
+  <div id="battle-winner-name" style="margin-top:20px; font-size:22px; font-weight:bold;"></div>
+</div>
 
 <!-- Inventory Section -->
 <div class="inventory-header">
