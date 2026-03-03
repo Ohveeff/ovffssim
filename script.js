@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Buttons
   document.getElementById("sell-all-btn").onclick = sellAllItems;
   document.getElementById("add-coins-btn").onclick = () => {
-    coins += 5.00;
+    coins += 50.00;
     updateCoins();
   };
   document.getElementById("remove-coins-btn").onclick = () => {
