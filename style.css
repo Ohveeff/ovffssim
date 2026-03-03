@@ -33,7 +33,7 @@ h1 { margin-bottom: 10px; font-weight: 600; }
 
 /* ================= BUTTON THEME ================= */
 .theme-btn {
-  background: linear-gradient(135deg, #ff9500, #ffb347);
+  background: linear-gradient(135deg, #00c8c8, #00e0e0);
   border: none;
   padding: 10px 22px;
   font-size: 16px;
@@ -42,10 +42,11 @@ h1 { margin-bottom: 10px; font-weight: 600; }
   font-weight: bold;
   margin: 5px;
   transition: all 0.2s ease;
+  color: black;
 }
 .theme-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px orange;
+  box-shadow: 0 0 15px #00e0e0;
 }
 
 /* ================= CASE SECTION ================= */
@@ -133,6 +134,7 @@ h1 { margin-bottom: 10px; font-weight: 600; }
   font-size: 13px;
   color: #f0f0f0;
 }
+
 /* ================= OPEN BUTTON ================= */
 #open-btn { margin-top: 10px; display: inline-block; }
 
@@ -205,10 +207,10 @@ h1 { margin-bottom: 10px; font-weight: 600; }
 .sell-btn {
   margin-top: 8px;
   padding: 6px;
-  background: #ff9500;
+  background: #00c8c8;
   border: none;
   border-radius: 6px;
-  color: white;
+  color: black;
   cursor: pointer;
   font-size: 13px;
 }
@@ -220,17 +222,18 @@ h1 { margin-bottom: 10px; font-weight: 600; }
   margin-top: 30px;
 }
 #sell-all-btn {
-  background: linear-gradient(135deg, #ffb347, #ff9500);
+  background: linear-gradient(135deg, #00e0e0, #00c8c8);
   border: none;
   padding: 8px 18px;
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease;
+  color: black;
 }
 #sell-all-btn:hover {
   transform: scale(1.07);
-  box-shadow: 0 0 15px orange;
+  box-shadow: 0 0 15px #00e0e0;
 }
 
 /* ================= TOP DROPS ================= */
@@ -301,13 +304,5 @@ h1 { margin-bottom: 10px; font-weight: 600; }
   transition: transform 0.2s ease;
   border: 4px solid white;
 }
-#coin.head, #coin.tail {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  backface-visibility: hidden;
-  box-shadow: 0 0 15px #ff0000, 0 0 25px #ff4d4d;
-}
 #coin.head { background: red; transform: rotateY(0deg); }
-#coin.tail { background: black; transform: rotateY(180deg); }
+#coin.tail { background: #00e0e0; transform: rotateY(180deg); }
