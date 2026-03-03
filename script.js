@@ -132,19 +132,21 @@ function coinflipItem(index) {
   flipBtn.disabled = true;
 
   // 50/50 chance
-  const win = Math.random() < 0.5;
-  const finalClass = win ? "head" : "tail";
+  const win = Math.random() < 0.5; // true = win, false = lose
+  const finalClass = win ? "head" : "tail"; // head = red, tail = black
 
   let flips = 0;
-  const totalFlips = 10; // alternating flips before final landing
+  const totalFlips = 10; // alternating flips before landing
 
   const flipInterval = setInterval(() => {
+    // alternate visual flip
     coin.classList.toggle("head");
     coin.classList.toggle("tail");
     flips++;
 
     if (flips > totalFlips) {
       clearInterval(flipInterval);
+      // remove both and set final
       coin.classList.remove("head", "tail");
       coin.classList.add(finalClass);
 
