@@ -10,48 +10,62 @@
 <h1>OVFF's Sim</h1>
 
 <!-- Neon New Banner -->
-<div id="neon-banner">New: COINFLIP</div>
+<div id="neon-banner">New: COINFLIP / Case Battle</div>
 
 <!-- Coins Display -->
 <div id="coins"></div>
 
 <!-- Controls -->
 <div id="controls">
-  <button class="theme-btn" id="toggle-inv-btn">devving</button>
+  <button class="theme-btn" id="toggle-mode-btn">Switch to Case Battle</button>
   <button class="theme-btn" id="add-coins-btn">+0.10 Coins</button>
   <button class="theme-btn" id="remove-coins-btn">Donate To Charity</button>
 </div>
 
-<!-- Coinflip Section -->
-<div id="coinflip-section">
-  <h2>Coinflip</h2>
-  <select id="coinflip-select"></select>
-  <button id="coinflip-btn" class="theme-btn">Flip Coin</button>
-  <div id="coin-container">
-    <div id="coin">
-      <img class="coin-face head" src="images/items/coin-head.png" alt="Heads">
-      <img class="coin-face tail" src="images/items/coin-tail.png" alt="Tails">
+<!-- Normal Game Section (Coinflip + Cases) -->
+<div id="normal-section">
+  <!-- Coinflip Section -->
+  <div id="coinflip-section">
+    <h2>Coinflip</h2>
+    <select id="coinflip-select"></select>
+    <button id="coinflip-btn" class="theme-btn">Flip Coin</button>
+    <div id="coin-container">
+      <div id="coin">
+        <div class="head"></div>
+        <div class="tail"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case selection -->
+  <div id="case-select-wrapper" class="custom-dropdown">
+    <div id="case-select-display"></div>
+    <div id="case-select-options"></div>
+  </div>
+
+  <!-- Case section -->
+  <div id="case-section">
+    <div class="case-left">
+      <img id="case-image" src="" alt="Case Image">
+    </div>
+    <div class="case-right">
+      <h2 id="case-name"></h2>
+      <button class="theme-btn" id="open-btn"></button>
+      <button class="theme-btn" id="show-case-items-btn">Show Potential Items</button>
+      <div id="case-items-list"></div>
     </div>
   </div>
 </div>
 
-<!-- Case selection dropdown -->
-<div class="custom-dropdown">
-  <div id="case-select-display"></div>
-  <div id="case-select-options"></div>
-</div>
-
-<!-- Case section -->
-<div id="case-section">
-  <div class="case-left">
-    <img id="case-image" src="" alt="Case Image">
+<!-- Case Battle Section (Initially Hidden) -->
+<div id="casebattle-section" style="display:none;">
+  <h2>Case Battle Mode</h2>
+  <div id="casebattle-select-wrapper" class="custom-dropdown">
+    <div id="casebattle-select-display"></div>
+    <div id="casebattle-select-options"></div>
   </div>
-  <div class="case-right">
-    <h2 id="case-name"></h2>
-    <button class="theme-btn" id="open-btn"></button>
-    <button class="theme-btn" id="show-case-items-btn">Show Potential Items</button>
-    <div id="case-items-list"></div>
-  </div>
+  <button class="theme-btn" id="start-battle-btn">Start Battle</button>
+  <div id="battle-result"></div>
 </div>
 
 <!-- Winner Name -->
