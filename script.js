@@ -9,6 +9,7 @@ let currentCase = null;
 
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
+
   updateCoins();
   renderInventory();
   renderTopDrops();
@@ -17,13 +18,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Buttons
   document.getElementById("sell-all-btn").onclick = sellAllItems;
-  document.getElementById("add-coins-btn").onclick = () => { coins += 0.10; updateCoins(); };
-  document.getElementById("remove-coins-btn").onclick = () => { coins = Math.max(0, coins - 5); updateCoins(); };
+
+  document.getElementById("add-coins-btn").onclick = () => {
+    coins += 0.10;
+    updateCoins();
+  };
+
+  document.getElementById("remove-coins-btn").onclick = () => {
+    coins = Math.max(0, coins - 5);
+    updateCoins();
+  };
+
   document.getElementById("coinflip-btn").onclick = () => {
     const select = document.getElementById("coinflip-select");
     const index = parseInt(select.value);
-    if (!isNaN(index)) coinflipItem(index);
+    if (!isNaN(index)) {
+      coinflipItem(index);
+    }
   };
+
   document.getElementById("open-btn").onclick = openCase;
 });
 
@@ -46,12 +59,14 @@ function renderInventory() {
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
+
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
       <small>${item.price} coins</small>
       <button class="sell-btn theme-btn">Sell</button>
     `;
+
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
     container.appendChild(div);
   });
@@ -67,7 +82,8 @@ function sellItem(index) {
 }
 
 function sellAllItems() {
-  if (!inventory.length) return alert("Inventory empty.");
+  if (inventory.length === 0) return alert("Inventory empty.");
+
   const total = inventory.reduce((sum, i) => sum + i.price, 0);
   coins += total;
   inventory = [];
@@ -103,7 +119,7 @@ function populateCoinflipDropdown() {
   const select = document.getElementById("coinflip-select");
   select.innerHTML = "";
 
-  if (!inventory.length) {
+  if (inventory.length === 0) {
     select.innerHTML = `<option>No items available</option>`;
     select.disabled = true;
     return;
@@ -125,29 +141,34 @@ function coinflipItem(index) {
 
   const win = Math.random() < 0.5;
 
-  // Spin animation: show both sides
-  const rotations = 6;
-  const finalDeg = 360 * rotations + (win ? 0 : 180);
-  coin.style.transform = `rotateY(${finalDeg}deg)`;
+  // Set coin faces strictly
+  if (win) {
+    coin.classList.add("heads");
+    coin.classList.remove("tails");
+  } else {
+    coin.classList.add("tails");
+    coin.classList.remove("heads");
+  }
 
-  // Add temporary flipping class for glow effect
+  // Animate poker chip flip
   coin.classList.add("flipping");
+  coin.style.transform = `rotateY(${win ? 2160 : 1980}deg)`; // spin multiple times
 
   setTimeout(() => {
     coin.classList.remove("flipping");
 
     if (win) {
-      inventory.push({ ...item }); // duplicate item
+      inventory.push({ ...item });
       alert(`You WON! ${item.name} duplicated.`);
     } else {
-      inventory.splice(index, 1); // remove item
+      inventory.splice(index, 1);
       alert(`You LOST! ${item.name} removed.`);
     }
 
     saveInventory();
     renderInventory();
     populateCoinflipDropdown();
-  }, 2000);
+  }, 2200);
 }
 
 // ===================== CASE SYSTEM =====================
@@ -177,7 +198,8 @@ function selectCase(id) {
 
   document.getElementById("case-image").src = currentCase.image;
   document.getElementById("case-name").textContent = currentCase.name;
-  document.getElementById("open-btn").textContent = `Open for ${currentCase.price} Coins`;
+  document.getElementById("open-btn").textContent =
+    `Open for ${currentCase.price} Coins`;
 }
 
 function openCase() {
@@ -227,8 +249,7 @@ function spinToItem(winningItem) {
 
   strip.style.transition = "none";
   strip.style.transform = "translateX(0)";
-  strip.offsetHeight; // force reflow
-
+  strip.offsetHeight;
   strip.style.transition = "transform 3.2s cubic-bezier(.25,.85,.35,1)";
   strip.style.transform = `translateX(${offset}px)`;
 
