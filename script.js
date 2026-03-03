@@ -129,37 +129,29 @@ function coinflipItem(index) {
   const item = inventory[index];
   const coin = document.getElementById("coin");
   const flipBtn = document.getElementById("coinflip-btn");
-
   flipBtn.disabled = true;
 
-  const win = true; // Red = win
-  const totalFlips = 8; // Number of alternating flips
-  let currentFlip = 0;
+  // Random win/lose
+  const win = Math.random() < 0.5; // 50% chance
+  const finalClass = win ? "head" : "tail";
 
+  let flips = 0;
+  const totalFlips = 10; // Number of alternating flips
   const flipInterval = setInterval(() => {
-    // Alternate colors: red = win, black = lose
-    if (currentFlip % 2 === 0) {
-      coin.classList.add("head");
-      coin.classList.remove("tail");
-    } else {
-      coin.classList.add("tail");
-      coin.classList.remove("head");
-    }
+    // Alternate colors visually
+    coin.classList.toggle("head");
+    coin.classList.toggle("tail");
+    flips++;
 
-    currentFlip++;
-
-    if (currentFlip > totalFlips) {
+    if (flips > totalFlips) {
       clearInterval(flipInterval);
+      coin.classList.remove("head", "tail");
+      coin.classList.add(finalClass);
 
-      // Land on final result
       if (win) {
-        coin.classList.add("head");
-        coin.classList.remove("tail");
         inventory.push({ ...item });
         alert(`You WON! ${item.name} duplicated.`);
       } else {
-        coin.classList.add("tail");
-        coin.classList.remove("head");
         inventory.splice(index, 1);
         alert(`You LOST! ${item.name} removed.`);
       }
@@ -169,7 +161,7 @@ function coinflipItem(index) {
       populateCoinflipDropdown();
       flipBtn.disabled = false;
     }
-  }, 200);
+  }, 150);
 }
 
 // ===================== CASE SYSTEM =====================
@@ -214,7 +206,6 @@ function openCase() {
 function getRandomItem(items) {
   const total = items.reduce((sum, i) => sum + i.weight, 0);
   let roll = Math.random() * total;
-
   for (let item of items) {
     if (roll < item.weight) return item;
     roll -= item.weight;
