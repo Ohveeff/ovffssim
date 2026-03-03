@@ -117,7 +117,6 @@ function selectCase(id) {
   document.getElementById("case-name").textContent = currentCase.name;
   document.getElementById("open-btn").textContent = ` ${currentCase.price} Coins`;
 
-  // Update display in dropdown
   const display = document.getElementById("case-select-display");
   display.innerHTML = `<img src="${currentCase.image}"><span>${currentCase.name} (${currentCase.price} coins)</span>`;
 }
@@ -221,20 +220,21 @@ function coinflipItem(index) {
   flipBtn.disabled = true;
 
   const win = Math.random() < 0.5;
-  const finalClass = win ? "head" : "tail";
+
+  // Set coin to show the item image
+  coin.style.backgroundImage = `url('${item.image}')`;
+  coin.style.transform = "rotateY(0deg)";
 
   let flips = 0;
   const totalFlips = 10;
 
   const flipInterval = setInterval(() => {
-    coin.classList.toggle("head");
-    coin.classList.toggle("tail");
     flips++;
+    coin.style.transform = `rotateY(${flips * 180}deg)`;
 
     if (flips > totalFlips) {
       clearInterval(flipInterval);
-      coin.classList.remove("head", "tail");
-      coin.classList.add(finalClass);
+      coin.style.transform = `rotateY(0deg)`;
 
       if (win) {
         inventory.push({ ...item });
