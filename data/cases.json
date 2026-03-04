@@ -23,7 +23,7 @@
         { "name": "Unusual Terror-Watt Capo's Capper", "rarity": "mythical", "price": 60.99, "weight": 30, "image": "images/items/regrets.png" },
         { "name": "Strange Pistol", "rarity": "strange", "price": 0.89, "weight": 450, "image": "images/items/pistol.png" },
         { "name": "Unusual Miami Nights B-ANKH!", "rarity": "mythical", "price": 111.99, "weight": 15, "image": "images/items/miab.png" },
-        { "name": "Unusual Hellfire Well-Rounded Rifleman", "rarity": "collector", "price": 2700.99, "weight": 1, "image": "images/items/unusual1.png" },
+        { "name": "Unusual Hellfire Well-Rounded Rifleman", "rarity": "mythical", "price": 2700.99, "weight": 1, "image": "images/items/unusual1.png" },
         { "name": "Unusual The Dark Doorway Heavy Artillery Officer's Cap", "rarity": "mythical", "price": 130.00, "weight": 10, "image": "images/items/tddh.png" }
       ]
     },
@@ -44,7 +44,7 @@
         { "name": "Unusual Sulphurous Heavy Lifter", "rarity": "mythical", "price": 89.91, "weight": 50, "image": "images/items/ushl.png" },
         { "name": "Strange Battle Baclava", "rarity": "strange", "price": 69.99, "weight": 75, "image": "images/items/sbb0.png" },
         { "name": "Unusual Amaranthine Road Rage", "rarity": "mythical", "price":150.00, "weight": 530, "image": "images/items/arru.png" },
-        { "name": "Heavy's Unusual Eyes of Molten Mannvich", "rarity": "collector", "price": 635.35, "weight": 3, "image": "images/items/eomm.png" },
+        { "name": "Heavy's Unusual Eyes of Molten Mannvich", "rarity": "mythical", "price": 635.35, "weight": 3, "image": "images/items/eomm.png" },
         { "name": "Officer's Ushanka", "rarity": "legendary", "price":0.08, "weight": 2600, "image": "images/items/ou.png" },
         { "name": "Unusual Malevolent Monoculi Team Captian", "rarity": "mythical", "price": 210.76, "weight": 30, "image": "images/items/mmtc.png" },
         { "name": "Heavys Professional Killstreak Family Business", "rarity": "strange", "price": 18.84, "weight": 3000, "image": "images/items/familyb.png" },
@@ -86,11 +86,11 @@
         { "name": "Unusual Searing Plasma Nunhood", "rarity": "mythical", "price": 28.00, "weight": 400, "image": "images/items/spn.png" },
         { "name": "Unusual Atomic Mighty Mitre", "rarity": "mythical", "price": 45.00, "weight": 300, "image": "images/items/amm.png" },
         { "name": "Unusual Ocean Swirl Angel Of Death", "rarity": "mythical", "price": 62.99, "weight": 290, "image": "images/items/oaod.png" },
-        { "name": "Unusual Rainbow Reverie Burly Beast", "rarity": "collector", "price": 423.73, "weight": 25, "image": "images/items/sbb1.png" },
+        { "name": "Unusual Rainbow Reverie Burly Beast", "rarity": "mythical", "price": 423.73, "weight": 25, "image": "images/items/sbb1.png" },
         { "name": "The Exorcizor", "rarity": "legendary", "price": 0.03, "weight": 2000, "image": "images/items/exoc.png" },
         { "name": "The Ghastlierest Gibus", "rarity": "legendary", "price": 1.88, "weight": 1000, "image": "images/items/ggibus.png" },
         { "name": "Strange Professional Killstreak Solemn Vow", "rarity": "strange", "price": 5.99, "weight": 1300, "image": "images/items/solemn.png" },
-        { "name": "Professional Killstreak Black Rose", "rarity": "collector", "price": 999.99, "weight": 3, "image": "images/items/blackrose.png" },
+        { "name": "Professional Killstreak Black Rose", "rarity": "legendary", "price": 999.99, "weight": 3, "image": "images/items/blackrose.png" },
         { "name": "The Plutonidome", "rarity": "legendary", "price": 0.71, "weight": 350, "image": "images/items/pluto.png" },
         { "name": "Unusual Starstorm Slumber Cranial Carcharodon", "rarity": "mythical", "price": 90.00, "weight": 270, "image": "images/items/starcran.png" },
         { "name": "Genuine Doublecross-Comm", "rarity": "genuine", "price": 5.99, "weight": 500, "image": "images/items/doublecomm.png" },
@@ -122,7 +122,7 @@
         { "name": "Unusual Scorching Flames Glasgow Great Helm", "rarity": "mythical", "price": 450.00, "weight": 549, "image": "images/items/sfggh.png" },
         { "name": "Unusual Stare From Beyond Brim-Full of Bullets", "rarity": "mythical", "price": 846.00, "weight": 149, "image": "images/items/bfobsfb.png" },
         { "name": "Unusual Pumpkin Moon Wandering Wraith", "rarity": "mythical", "price": 900.00, "weight": 78, "image": "images/items/wwpm.png" },
-        { "name": "Unusual Misty Skull Grimm Hatte", "rarity": "collector", "price": 1350.00, "weight": 74, "image": "images/items/ghms.png" }
+        { "name": "Unusual Misty Skull Grimm Hatte", "rarity": "mythical", "price": 1350.00, "weight": 74, "image": "images/items/ghms.png" }
       ]
     },
      {
@@ -144,7 +144,16 @@
         { "name": "Chicken Kiev", "rarity": "legendary", "price": 60.43, "weight": 9999, "image": "images/items/kiev.png" },
         { "name": "Spine-Tingling Skull", "rarity": "legendary", "price": 83.54, "weight": 999, "image": "images/items/spineskull.png" },
         { "name": "Collector's Boston Basher", "rarity": "collector", "price": 117.50, "weight": 999, "image": "images/items/bostonbasher.png" },
-        { "name": "Spine-Chilling Skull", "rarity": "legendary", "price": 158.32, "weight": 999, "image": "images/items/f.png" }
+        { "name": "Spine-Chilling Skull", "rarity": "legendary", "price": 158.32, "weight": 999, "image": "images/items/spine.png" },
+        { "name": "Horseless Headless Horsemann's Head", "rarity": "legendary", "price": 185.80, "weight": 999, "image": "images/items/hhhh.png" },
+        { "name": "Unusual Stellar Ascent Horror Shawl", "rarity": "mythical", "price": 250.45, "weight": 999, "image": "images/items/usahs.png" },
+        { "name": "Unusual Acid Climate Lumbercap", "rarity": "mythical", "price": 405.00, "weight": 499, "image": "images/items/uacl.png" },
+        { "name": "Unusual Amaranthine Armored Authority", "rarity": "mythical", "price": 720.00, "weight": 499, "image": "images/items/uaaa.png" },
+        { "name": "Unusual Haunted Ghosts Pyromancer's Mask", "rarity": "mythical", "price": 1305.00, "weight": 499, "image": "images/items/hgpm.png" },
+        { "name": "Unusual Hellfire Armored Authority", "rarity": "mythical", "price": 2475.00, "weight": 199, "image": "images/items/hfaa.png" },
+        { "name": "Unusual It's a Secret To Everyone Blighted Beak", "rarity": "mythical", "price": 4500.00, "weight": 99, "image": "images/items/iastebb.png" },
+        { "name": "Unusual Knifestorm Coffin Kit", "rarity": "mythical", "price": 6750.00, "weight": 118, "image": "images/items/ukcn.png" },
+        { "name": "Unusual Demonflame Crome Dome", "rarity": "mythical", "price": 9000.00, "weight": 99, "image": "images/items/dcd.png" }
       ]
     },
     {
@@ -169,7 +178,7 @@
         { "name": "Unusual Tesla Coil Bananades", "rarity": "mythical", "price": 200.76, "weight": 999, "image": "images/items/teslabananades.png" },
         { "name": "Unusual Cold Cosmos Idiot Box", "rarity": "mythical", "price": 362.84, "weight": 400, "image": "images/items/coldidiot.png" },
         { "name": "Unusual Fragmented Photons Running Man", "rarity": "mythical", "price": 49.99, "weight": 6000, "image": "images/items/runningfrags.png" },
-        { "name": "Unusual Halcyon Halo Robotler 2000", "rarity": "collector", "price": 34000.00, "weight": 22, "image": "images/items/halobotler.png" },
+        { "name": "Unusual Halcyon Halo Robotler 2000", "rarity": "mythical", "price": 34000.00, "weight": 22, "image": "images/items/halobotler.png" },
         { "name": "Unusual Sapped Glitched Circuit Board", "rarity": "mythical", "price": 173.19, "weight": 800, "image": "images/items/circuitsap.png" },
         { "name": "Unusual Resonation Robro 3000", "rarity": "mythical", "price": 76.00, "weight": 5400, "image": "images/items/robrou.png" },
         { "name": "Haunted Unusual Voltaic Hat Protector Teufort Kight", "rarity": "haunted", "price": 90.00, "weight": 5400, "image": "images/items/tkv.png" },
@@ -184,7 +193,7 @@
       "image": "images/cases/fivejackpot.png",
       "items": [
         { "name": "Unusual Piercing Headache Propaniac", "rarity": "mythical", "price": 750.00, "weight": 1400, "image": "images/items/php1.png" },
-        { "name": "Unusual Darkblaze Colonel Kringle", "rarity": "collector", "price": 10000.00, "weight": 100, "image": "images/items/dbcc1.png" },
+        { "name": "Unusual Darkblaze Colonel Kringle", "rarity": "mythical", "price": 10000.00, "weight": 100, "image": "images/items/dbcc1.png" },
         { "name": "Unusual Cold Cosmos Brimmed Bootlegger", "rarity": "mythical", "price": 1100.00, "weight": 1100, "image": "images/items/bbcc.png" },
         { "name": "Unusual Flourishing Passion Mean Captain", "rarity": "mythical", "price": 1875.00, "weight": 500, "image": "images/items/mcfp.png" },
         { "name": "Unusual Verdatica Scot Bonnet", "rarity": "mythical", "price": 996.00, "weight": 500, "image": "images/items/vsb.png" },
@@ -204,13 +213,13 @@
         { "name": "Unusual Playful Aurora Fuel Injector", "rarity": "mythical", "price": 744.99, "weight": 200, "image": "images/items/pafi.png" },
         { "name": "Unusual Ghosts of Smissmas Time Alcoholic Automoton", "rarity": "mythical", "price": 666.00, "weight": 200, "image": "images/items/gostaa.png" },
         { "name": "Unusual Golstruck Anger", "rarity": "mythical", "price": 505.00, "weight": 200, "image": "images/items/gsa.png" },
-        { "name": "Unusual Cosmic Constellations Blizzard Britches", "rarity": "collector", "price": 963.00, "weight": 120, "image": "images/items/ccbb.png" },
+        { "name": "Unusual Cosmic Constellations Blizzard Britches", "rarity": "mythical", "price": 963.00, "weight": 120, "image": "images/items/ccbb.png" },
         { "name": "Unusual Polar Forecast Doublecross-Comm", "rarity": "mythical", "price": 280.00, "weight": 3500, "image": "images/items/dccp.png" },
         { "name": "Strange Bushi-Dou", "rarity": "strange", "price": 25.76, "weight": 6000, "image": "images/items/bd2.png" },
         { "name": "Unusual Burning Flames Mad Mask", "rarity": "mythical", "price": 2000.00, "weight": 80, "image": "images/items/bfmm.png" },
         { "name": "Unusual Dazzling Constellations Bruiser's Bandanna", "rarity": "mythical", "price": 3075.00, "weight": 75, "image": "images/items/dcbb.png" },
         { "name": "Strange Triggermans Tacticals", "rarity": "strange", "price": 37.56, "weight": 4000, "image": "images/items/trigtact.png" },
-        { "name": "Unusual Cold Cosmos Patriot Peak", "rarity": "collector", "price": 8232.00, "weight": 16, "image": "images/items/ppcc.png" },
+        { "name": "Unusual Cold Cosmos Patriot Peak", "rarity": "mythical", "price": 8232.00, "weight": 16, "image": "images/items/ppcc.png" },
         { "name": "Unusual Refracting Fractals Field Fatigues", "rarity": "mythical", "price": 94.00, "weight": 3000, "image": "images/items/ffrf.png" },
         { "name": "Unusual Searing Stove Masked Loyalty", "rarity": "mythical", "price": 110.76, "weight": 2000, "image": "images/items/ssml.png" },
         { "name": "Unusual Ring of Fire Lunatics Leathers", "rarity": "mythical", "price": 28.84, "weight": 5000, "image": "images/items/rofll.png" },
