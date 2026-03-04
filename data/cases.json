@@ -232,7 +232,8 @@
         { "name": "Professional Killstreak Australium SMG", "rarity": "legendary", "price": 26.00, "weight": 190, "image": "images/items/aussiesmg.png" },
         { "name": "Scrap Metal", "rarity": "legendary", "price": 0.01, "weight": 5500, "image": "images/items/scrap.png" },
         { "name": "Professional Killstreak Australium Ambassador", "rarity": "legendary", "price": 47.00, "weight": 185, "image": "images/items/aussieamby.png" },
-        { "name": "Unusual Community Sparkle Professional Killstreak Festivized Golden Frying Pan", "rarity": "mythical", "price": 99000.00, "weight": 1, "image": "images/items/aussiefrying.png" },
+        { "name": "Professional Killstreak Golden Frying Pan", "rarity": "mythical", "price": 8000.00, "weight": 6, "image": "images/items/aussiefrying.png" },
+        { "name": "Unusual Community Sparkle Professional Killstreak Festivized Golden Frying Pan", "rarity": "collector", "price": 99000.00, "weight": 1, "image": "images/items/comspgp.png" },
         { "name": "Professional Killstreak Australium Sticky Bomb Launcher", "rarity": "legendary", "price": 90.00, "weight": 170, "image": "images/items/aussiesticky.png" }
       ]
     }
