@@ -27,6 +27,35 @@
         { "name": "Unusual The Dark Doorway Heavy Artillery Officer's Cap", "rarity": "mythical", "price": 130.00, "weight": 10, "image": "images/items/tddh.png" }
       ]
     },
+      {
+      "id": "hunter",
+      "name": "Hunters",
+      "price": 45.00,
+      "image": "images/cases/hunter.png",
+      "items": [
+        { "name": "Genuine Tartan Shade", "rarity": "genuine", "price": 0.93, "weight": 15249, "image": "images/items/gts.png" },
+        { "name": "Fear Monger", "rarity": "legendary", "price": 1.43, "weight": 13999, "image": "images/items/fearm.png" },
+        { "name": "Guano", "rarity": "legendary", "price": 5.03, "weight": 12999, "image": "images/items/guano.png" },
+        { "name": "Haunted Voodoo-Cursed Spy Soul", "rarity": "haunted", "price": 7.94, "weight": 4999, "image": "images/items/voospy.png" },
+        { "name": "Strange Fashionable Megalomaniac", "rarity": "strange", "price": 9.34, "weight": 2999, "image": "images/items/sfmeg.png" },
+        { "name": "Beast From Below", "rarity": "f", "price": f.00, "weight": 4999, "image": "images/items/befb.png" },
+        { "name": "Hollowhead", "rarity": "f", "price": f.00, "weight": 4999, "image": "images/items/hollowh.png" },
+        { "name": "Strange Australium Axtiguisher", "rarity": "strange", "price": 19.48, "weight": 1999, "image": "images/items/aussieaxt.png" },
+        { "name": "Unusual Stormy Storm Headhunter's Brim", "rarity": "mythical", "price": 30.78, "weight": 2999, "image": "images/items/huhb.png" },
+        { "name": "Unusual Terror-Watt Spirit of the Bombing Past", "rarity": "mythical", "price": 32.27, "weight": 4999, "image": "images/items/usobp.png" },
+        { "name": "Second Opinion", "rarity": "legendary", "price": 34.67, "weight": 4999, "image": "images/items/secop.png" },
+        { "name": "Strange A Brush with Death", "rarity": "strange", "price": 38.17, "weight": 7499 , "image": "images/items/abwd.png" },
+        { "name": "Strange Huntsman", "rarity": "strange", "price": 52.43, "weight": 6249, "image": "images/items/huntsman.png" },
+        { "name": "Unusual Severed Serration A Hat to Kill For", "rarity": "mythical", "price": 59.81, "weight": 4999, "image": "images/items/ahtkfss.png" },
+        { "name": "Unusual FLaming Lantern Ze Goggles", "rarity": "mythical", "price": 103.80, "weight": 4385, "image": "images/items/flzg.png" },
+        { "name": "Unusual Burning Flames Warhood", "rarity": "mythical", "price": 200.00, "weight": 759, "image": "images/items/bfwh.png" },
+        { "name": "Unusual Scorching Flames Glasgow Great Helm", "rarity": "mythical", "price": 450.00, "weight": 549, "image": "images/items/sfggh.png" },
+        { "name": "Unusual Stare From Beyond Brim-Full of Bullets", "rarity": "mythical", "price": 846.00, "weight": 149, "image": "images/items/bfobsfb.png" },
+        { "name": "Unusual Pumpkin Moon Wandering Wraith", "rarity": "mythical", "price": 900.00, "weight": 78, "image": "images/items/wwpm.png" },
+        { "name": "Unusual Misty Skull Grimm Hatte", "rarity": "collector", "price": 1350.00, "weight": 74, "image": "images/items/ghms.png" }
+      ]
+    },
+
     {
       "id": "sanctuary",
       "name": "Silent Sanctuary (Low)",
