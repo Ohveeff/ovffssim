@@ -15,22 +15,16 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCases();
   populateCoinflipDropdown();
 
-  // Buttons
   document.getElementById("sell-all-btn").onclick = sellAllItems;
-  document.getElementById("add-coins-btn").onclick = () => {
-    coins += 50.00;
-    updateCoins();
-  };
-  document.getElementById("remove-coins-btn").onclick = () => {
-    coins = Math.max(0, coins - 5.00);
-    updateCoins();
-  };
+  document.getElementById("add-coins-btn").onclick = () => { coins += 50; updateCoins(); };
+  document.getElementById("remove-coins-btn").onclick = () => { coins = Math.max(0, coins-5); updateCoins(); };
   document.getElementById("coinflip-btn").onclick = () => {
     const select = document.getElementById("coinflip-select");
     const index = parseInt(select.value);
     if (!isNaN(index)) coinflipItem(index);
   };
   document.getElementById("open-btn").onclick = openCase;
+  document.getElementById("show-case-items-btn").onclick = toggleCaseItems;
 });
 
 // ===================== COINS =====================
@@ -48,14 +42,13 @@ function saveInventory() {
 function renderInventory() {
   const container = document.getElementById("inventory");
   container.innerHTML = "";
-
   inventory.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = `inv-item ${item.rarity.toLowerCase()}`;
     div.innerHTML = `
       <img src="${item.image}">
       <p>${item.name}</p>
-      <small>${item.price} coins</small>
+      <small>${item.price.toFixed(2)} coins</small>
       <button class="sell-btn theme-btn">Sell</button>
     `;
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
@@ -84,117 +77,6 @@ function sellAllItems() {
   alert(`Sold everything for ${total.toFixed(2)} coins.`);
 }
 
-/// ===================== SHOW / HIDE CASE ITEMS =====================
-document.getElementById("show-case-items-btn").onclick = () => {
-  const list = document.getElementById("case-items-list");
-  if (!currentCase) return;
-
-  // Toggle visibility
-  if (list.style.display === "block") {
-    list.style.display = "none";
-    return;
-  }
-
-  // Show the list
-  list.style.display = "block";
-  list.innerHTML = "";
-
-  // Sort items by price descending
-  const sortedItems = [...currentCase.items].sort((a, b) => b.price - a.price);
-
-  sortedItems.forEach(item => {
-    const div = document.createElement("div");
-    div.className = `inv-item ${item.rarity.toLowerCase()}`;
-    div.innerHTML = `
-      <img src="${item.image}">
-      <p>${item.name}</p>
-      <small>${item.price} coins</small>
-    `;
-    list.appendChild(div);
-  });
-};
-// ===================== TOP DROPS =====================
-function renderTopDrops() {
-  const container = document.getElementById("top-drops");
-  container.innerHTML = "";
-
-  [...recentDrops]
-    .sort((a, b) => b.price - a.price)
-    .slice(0, 8)
-    .forEach(item => {
-      const div = document.createElement("div");
-      div.className = `top-drop ${item.rarity.toLowerCase()}`;
-      div.innerHTML = `
-        <img src="${item.image}">
-        <p>${item.name}</p>
-        <strong>${item.price} coins</strong>
-      `;
-      container.appendChild(div);
-    });
-}
-
-// ===================== COINFLIP =====================
-function populateCoinflipDropdown() {
-  const select = document.getElementById("coinflip-select");
-  select.innerHTML = "";
-
-  if (inventory.length === 0) {
-    select.innerHTML = `<option>No items available</option>`;
-    select.disabled = true;
-    return;
-  }
-
-  select.disabled = false;
-
-  inventory.forEach((item, index) => {
-    const option = document.createElement("option");
-    option.value = index;
-    option.textContent = `${item.name} (${item.price} coins)`;
-    select.appendChild(option);
-  });
-}
-
-function coinflipItem(index) {
-  const item = inventory[index];
-  const coin = document.getElementById("coin");
-  const flipBtn = document.getElementById("coinflip-btn");
-  flipBtn.disabled = true;
-
-  // 50/50 chance
-  const win = Math.random() < 0.5; // true = win, false = lose
-  const finalClass = win ? "head" : "tail"; // head = red, tail = black
-
-  let flips = 0;
-  const totalFlips = 10; // alternating flips before landing
-
-  const flipInterval = setInterval(() => {
-    // alternate visual flip
-    coin.classList.toggle("head");
-    coin.classList.toggle("tail");
-    flips++;
-
-    if (flips > totalFlips) {
-      clearInterval(flipInterval);
-      // remove both and set final
-      coin.classList.remove("head", "tail");
-      coin.classList.add(finalClass);
-
-      if (win) {
-        inventory.push({ ...item });
-        alert(`You won another ${item.name} 🎉!`);
-      } else {
-        inventory.splice(index, 1);
-        alert(`You lost, your ${item.name} was evicerated.`);
-      }
-
-      saveInventory();
-      renderInventory();
-      populateCoinflipDropdown();
-      flipBtn.disabled = false;
-    }
-  }, 150);
-}
-
 // ===================== CASE SYSTEM =====================
 function loadCases() {
   fetch("data/cases.json")
@@ -206,7 +88,7 @@ function loadCases() {
       cases.forEach(c => {
         const option = document.createElement("option");
         option.value = c.id;
-        option.textContent = `${c.name} (${c.price} coins)`;
+        option.textContent = `${c.name} (${c.price.toFixed(2)} coins)`;
         select.appendChild(option);
       });
       select.onchange = () => selectCase(select.value);
@@ -220,9 +102,30 @@ function selectCase(id) {
 
   document.getElementById("case-image").src = currentCase.image;
   document.getElementById("case-name").textContent = currentCase.name;
-  document.getElementById("open-btn").textContent = ` ${currentCase.price} Coins`;
+  document.getElementById("open-btn").textContent = `Open (${currentCase.price.toFixed(2)} Coins)`;
+
+  renderCaseItems(currentCase.items);
 }
 
+function toggleCaseItems() {
+  const list = document.getElementById("case-items-list");
+  if (!currentCase) return;
+  if (list.style.display === "block") {
+    list.style.display = "none";
+    return;
+  }
+  list.style.display = "block";
+  list.innerHTML = "";
+  const sortedItems = [...currentCase.items].sort((a,b)=>b.price-a.price);
+  sortedItems.forEach(item => {
+    const div = document.createElement("div");
+    div.className = `inv-item ${item.rarity.toLowerCase()}`;
+    div.innerHTML = `<img src="${item.image}"><p>${item.name}</p><small>${item.price.toFixed(2)} coins</small>`;
+    list.appendChild(div);
+  });
+}
+
+// ===================== CASE SPINNER =====================
 function openCase() {
   if (!currentCase) return;
   if (coins < currentCase.price) return alert("Not enough coins.");
@@ -235,8 +138,8 @@ function openCase() {
 }
 
 function getRandomItem(items) {
-  const total = items.reduce((sum, i) => sum + i.weight, 0);
-  let roll = Math.random() * total;
+  const total = items.reduce((sum,i)=>sum+i.weight,0);
+  let roll = Math.random()*total;
   for (let item of items) {
     if (roll < item.weight) return item;
     roll -= item.weight;
@@ -244,18 +147,15 @@ function getRandomItem(items) {
   return items[0];
 }
 
-// ===================== SPINNER =====================
 function spinToItem(winningItem) {
   const strip = document.getElementById("spinner-strip");
   strip.innerHTML = "";
-
   const slots = 50;
   const winnerIndex = 38;
 
-  for (let i = 0; i < slots; i++) {
-    let item = currentCase.items[Math.floor(Math.random() * currentCase.items.length)];
-    if (i === winnerIndex) item = winningItem;
-
+  for (let i=0;i<slots;i++) {
+    let item = currentCase.items[Math.floor(Math.random()*currentCase.items.length)];
+    if (i===winnerIndex) item=winningItem;
     const div = document.createElement("div");
     div.className = `spinner-item ${item.rarity.toLowerCase()}`;
     div.innerHTML = `<img src="${item.image}">`;
@@ -264,7 +164,7 @@ function spinToItem(winningItem) {
 
   const itemWidth = strip.children[0].offsetWidth + 30;
   const containerWidth = document.getElementById("spinner-container").offsetWidth;
-  const offset = -(winnerIndex * itemWidth - containerWidth / 2 + itemWidth / 2);
+  const offset = -(winnerIndex*itemWidth - containerWidth/2 + itemWidth/2);
 
   strip.style.transition = "none";
   strip.style.transform = "translateX(0)";
@@ -273,16 +173,13 @@ function spinToItem(winningItem) {
   strip.style.transition = "transform 3.2s cubic-bezier(.25,.85,.35,1)";
   strip.style.transform = `translateX(${offset}px)`;
 
-  setTimeout(() => {
-    showWinner(winningItem);
-  }, 3200);
+  setTimeout(()=>showWinner(winningItem), 3200);
 }
 
 function showWinner(item) {
   inventory.push(item);
   recentDrops.push(item);
-  if (recentDrops.length > 20) recentDrops.shift();
-
+  if (recentDrops.length>20) recentDrops.shift();
   saveInventory();
   renderInventory();
   renderTopDrops();
@@ -293,4 +190,68 @@ function showWinner(item) {
     winnerBox.textContent = item.name;
     winnerBox.className = item.rarity.toLowerCase();
   }
+}
+
+// ===================== TOP DROPS =====================
+function renderTopDrops() {
+  const container = document.getElementById("top-drops");
+  container.innerHTML = "";
+  [...recentDrops].sort((a,b)=>b.price-a.price).slice(0,8).forEach(item=>{
+    const div = document.createElement("div");
+    div.className = `top-drop ${item.rarity.toLowerCase()}`;
+    div.innerHTML = `<img src="${item.image}"><p>${item.name}</p><strong>${item.price.toFixed(2)}</strong>`;
+    container.appendChild(div);
+  });
+}
+
+// ===================== COINFLIP =====================
+function populateCoinflipDropdown() {
+  const select = document.getElementById("coinflip-select");
+  select.innerHTML = "";
+  if (inventory.length===0) {
+    select.innerHTML = `<option>No items available</option>`;
+    select.disabled = true;
+    return;
+  }
+  select.disabled = false;
+  inventory.forEach((item,index)=>{
+    const option = document.createElement("option");
+    option.value=index;
+    option.textContent=`${item.name} (${item.price.toFixed(2)} coins)`;
+    select.appendChild(option);
+  });
+}
+
+function coinflipItem(index) {
+  const item = inventory[index];
+  const coin = document.getElementById("coin");
+  const flipBtn = document.getElementById("coinflip-btn");
+  flipBtn.disabled=true;
+
+  const win = Math.random() < 0.5;
+  const finalClass = win ? "head" : "tail";
+  let flips=0; const totalFlips=10;
+
+  const flipInterval = setInterval(()=>{
+    coin.classList.toggle("head");
+    coin.classList.toggle("tail");
+    flips++;
+    if (flips>totalFlips){
+      clearInterval(flipInterval);
+      coin.classList.remove("head","tail");
+      coin.classList.add(finalClass);
+
+      if (win) {
+        inventory.push({...item});
+        alert(`You won another ${item.name} 🎉!`);
+      } else {
+        inventory.splice(index,1);
+        alert(`You lost, your ${item.name} was evicerated.`);
+      }
+      saveInventory();
+      renderInventory();
+      populateCoinflipDropdown();
+      flipBtn.disabled=false;
+    }
+  },150);
 }
