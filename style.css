@@ -33,7 +33,7 @@ h1 { margin-bottom: 10px; font-weight: 600; }
 
 /* ================= BUTTON THEME ================= */
 .theme-btn {
-  background: linear-gradient(135deg, #ff9500, #ffb347);
+  background: linear-gradient(135deg, #00c6ff, #0072ff); /* changed to teal gradient */
   border: none;
   padding: 10px 22px;
   font-size: 16px;
@@ -45,7 +45,7 @@ h1 { margin-bottom: 10px; font-weight: 600; }
 }
 .theme-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px orange;
+  box-shadow: 0 0 15px #00c6ff;
 }
 
 /* ================= CASE SECTION ================= */
@@ -68,11 +68,35 @@ h1 { margin-bottom: 10px; font-weight: 600; }
 
 #case-items-list { margin-top: 10px; max-height: 300px; overflow-y: auto; }
 
-/* ================= OPEN BUTTON ================= */
-#open-btn { margin-top: 10px; display: inline-block; }
+/* ================= CASE CARDS ================= */
+.case-card {
+  display: inline-block;
+  width: 150px;
+  background: rgba(20,20,25,0.85);
+  border-radius: 15px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.case-card img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 5px; }
+.case-card:hover { transform: translateY(-6px); box-shadow: 0 0 15px #00c6ff; }
+.case-card.selected { border: 2px solid #00c6ff; box-shadow: 0 0 20px #00c6ff; }
 
-/* ================= WINNER NAME ================= */
-#winner-name { font-size: 22px; font-weight: bold; margin: 20px 0; }
+.best-value {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: gold;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 5px;
+  z-index: 10;
+  box-shadow: 0 0 5px gold;
+}
 
 /* ================= SPINNER ================= */
 #spinner-wrapper { width: 1000px; max-width: 95%; margin: 20px auto; }
