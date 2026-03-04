@@ -144,15 +144,7 @@
         { "name": "Chicken Kiev", "rarity": "legendary", "price": 60.43, "weight": 9999, "image": "images/items/kiev.png" },
         { "name": "Spine-Tingling Skull", "rarity": "legendary", "price": 83.54, "weight": 999, "image": "images/items/spineskull.png" },
         { "name": "Collector's Boston Basher", "rarity": "collector", "price": 117.50, "weight": 999 "image": "images/items/bostonbasher.png" },
-        { "name": "Spine-Chilling Skull", "rarity": "legendary", "price": 158.32, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" }
+        { "name": "Spine-Chilling Skull", "rarity": "legendary", "price": 158.32, "weight": 999, "image": "images/items/f.png" }
       ]
     },
     {
