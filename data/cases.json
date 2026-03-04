@@ -29,7 +29,7 @@
     },
       {
       "id": "hunter",
-      "name": "Hunters",
+      "name": "Hunters (Medium)",
       "price": 45.00,
       "image": "images/cases/hunter.png",
       "items": [
