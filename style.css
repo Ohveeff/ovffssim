@@ -313,3 +313,4 @@ h1 { margin-bottom: 10px; font-weight: 600; }
 #coin.head { background: red; transform: rotateY(0deg); box-shadow: 0 0 15px red, 0 0 25px #ff4d4d; }
 #coin.tail { background: #00bfa5; transform: rotateY(180deg); box-shadow: 0 0 15px #00bfa5, 0 0 25px #1de9b6; }
 
+
