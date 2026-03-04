@@ -22,22 +22,22 @@
 <!-- Coinflip Section -->
 <div id="coinflip-section">
   <h2>Coinflip</h2>
-  <select id="coinflip-select">
-    <option value="head">Heads</option>
-    <option value="tail">Tails</option>
-  </select>
+  <select id="coinflip-select"></select>
   <button id="coinflip-btn" class="theme-btn">Flip Coin</button>
   <div id="coin-container">
     <div id="coin">
-      <div class="head"></div>
-      <div class="tail"></div>
+      <div class="head">
+      </div>
+      <div class="tail">
+      </div>
     </div>
   </div>
 </div>
 
+
 <!-- Coins Display -->
 <div id="coins"></div>
-
+  
 <!-- Case selection (Custom dropdown) -->
 <div class="custom-dropdown">
   <div id="case-select-display"></div>
@@ -51,7 +51,7 @@
   </div>
   <div class="case-right">
     <h2 id="case-name"></h2>
-    <button class="theme-btn" id="open-btn">Open Case</button>
+    <button class="theme-btn" id="open-btn"></button>
     <button class="theme-btn" id="show-case-items-btn">Show Potential Items</button>
     <div id="case-items-list"></div>
   </div>
@@ -78,7 +78,9 @@
 <h2 class="top-title">• Last TOP Drops</h2>
 <div id="top-drops"></div>
 
-<script src="cases.json"></script>
+<!-- JS -->
 <script src="script.js"></script>
 </body>
 </html>
+
+
