@@ -7,56 +7,6 @@ let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 let cases = [];
 let currentCase = null;
 
-// ===================== CASE SELECTION =====================
-function loadCases() {
-  fetch("data/cases.json")
-    .then(res => res.json())
-    .then(data => {
-      cases = data.cases;
-      const display = document.getElementById("case-select-display");
-      const options = document.getElementById("case-select-options");
-      options.innerHTML = "";
-
-      cases.forEach(c => {
-        const div = document.createElement("div");
-        div.innerHTML = `<img src="${c.image}"><span>${c.name} (${c.price} coins)</span>`;
-        div.onclick = () => {
-          selectCase(c.id);
-          options.style.display = "none";
-        };
-        options.appendChild(div);
-      });
-
-      // Initial selection
-      selectCase(cases[0].id);
-
-      // Toggle dropdown
-      display.onclick = () => {
-        options.style.display = options.style.display === "block" ? "none" : "block";
-      };
-
-      // Close dropdown if clicked outside
-      document.addEventListener("click", (e) => {
-        if (!display.contains(e.target) && !options.contains(e.target)) {
-          options.style.display = "none";
-        }
-      });
-    });
-}
-
-function selectCase(id) {
-  currentCase = cases.find(c => c.id === id);
-  if (!currentCase) return;
-
-  document.getElementById("case-image").src = currentCase.image;
-  document.getElementById("case-name").textContent = currentCase.name;
-  document.getElementById("open-btn").textContent = ` ${currentCase.price} Coins`;
-
-  // Update display in dropdown
-  const display = document.getElementById("case-select-display");
-  display.innerHTML = `<img src="${currentCase.image}"><span>${currentCase.name} (${currentCase.price} coins)</span>`;
-}
-
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
   updateCoins();
@@ -67,22 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Buttons
   document.getElementById("sell-all-btn").onclick = sellAllItems;
-  document.getElementById("add-coins-btn").onclick = () => {
-    coins += 50.00;
-    updateCoins();
-  };
-  document.getElementById("remove-coins-btn").onclick = () => {
-    coins = Math.max(0, coins - 5.00);
-    updateCoins();
-  };
+  document.getElementById("add-coins-btn").onclick = () => { coins += 50.00; updateCoins(); };
+  document.getElementById("remove-coins-btn").onclick = () => { coins = Math.max(0, coins - 5.00); updateCoins(); };
   document.getElementById("coinflip-btn").onclick = () => {
     const select = document.getElementById("coinflip-select");
     const index = parseInt(select.value);
     if (!isNaN(index)) coinflipItem(index);
   };
   document.getElementById("open-btn").onclick = openCase;
-
-  // Show/hide case items
   document.getElementById("show-case-items-btn").onclick = toggleCaseItems;
 });
 
@@ -137,7 +79,7 @@ function sellAllItems() {
   alert(`Sold everything for ${total.toFixed(2)} coins.`);
 }
 
-// ===================== CASE ITEMS =====================
+// ===================== SHOW CASE ITEMS =====================
 function toggleCaseItems() {
   const list = document.getElementById("case-items-list");
   if (!currentCase) return;
@@ -214,16 +156,20 @@ function coinflipItem(index) {
   flipBtn.disabled = true;
 
   const win = Math.random() < 0.5;
+  const finalClass = win ? "head" : "tail";
 
-  // Flip animation
   let flips = 0;
-  const totalFlips = 12;
+  const totalFlips = 10;
+
   const flipInterval = setInterval(() => {
-    coin.style.transform = `rotateY(${flips * 180}deg)`;
+    coin.classList.toggle("head");
+    coin.classList.toggle("tail");
     flips++;
+
     if (flips > totalFlips) {
       clearInterval(flipInterval);
-      coin.style.transform = win ? "rotateY(0deg)" : "rotateY(180deg)";
+      coin.classList.remove("head", "tail");
+      coin.classList.add(finalClass);
 
       if (win) {
         inventory.push({ ...item });
@@ -242,6 +188,55 @@ function coinflipItem(index) {
 }
 
 // ===================== CASE SYSTEM =====================
+function loadCases() {
+  fetch("data/cases.json")
+    .then(res => res.json())
+    .then(data => {
+      cases = data.cases;
+      const display = document.getElementById("case-select-display");
+      const options = document.getElementById("case-select-options");
+      options.innerHTML = "";
+
+      cases.forEach(c => {
+        const div = document.createElement("div");
+        div.innerHTML = `<img src="${c.image}"><span>${c.name} (${c.price} coins)</span>`;
+        div.onclick = () => {
+          selectCase(c.id);
+          options.style.display = "none";
+        };
+        options.appendChild(div);
+      });
+
+      // Initial selection
+      selectCase(cases[0].id);
+
+      // Toggle dropdown
+      display.onclick = () => {
+        options.style.display = options.style.display === "block" ? "none" : "block";
+      };
+
+      // Close dropdown if clicked outside
+      document.addEventListener("click", (e) => {
+        if (!display.contains(e.target) && !options.contains(e.target)) {
+          options.style.display = "none";
+        }
+      });
+    });
+}
+
+function selectCase(id) {
+  currentCase = cases.find(c => c.id === id);
+  if (!currentCase) return;
+
+  document.getElementById("case-image").src = currentCase.image;
+  document.getElementById("case-name").textContent = currentCase.name;
+  document.getElementById("open-btn").textContent = ` ${currentCase.price} Coins`;
+
+  // Update dropdown display
+  const display = document.getElementById("case-select-display");
+  display.innerHTML = `<img src="${currentCase.image}"><span>${currentCase.name} (${currentCase.price} coins)</span>`;
+}
+
 function openCase() {
   if (!currentCase) return;
   if (coins < currentCase.price) return alert("Not enough coins.");
@@ -292,7 +287,9 @@ function spinToItem(winningItem) {
   strip.style.transition = "transform 3.2s cubic-bezier(.25,.85,.35,1)";
   strip.style.transform = `translateX(${offset}px)`;
 
-  setTimeout(() => showWinner(winningItem), 3200);
+  setTimeout(() => {
+    showWinner(winningItem);
+  }, 3200);
 }
 
 function showWinner(item) {
