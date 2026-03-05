@@ -266,7 +266,7 @@
         { "name": "Knifestorm Mask of the Shaman", "rarity": "mythical", "price": 4500.00, "weight": f, "image": "images/items/kmots.png" },
         { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
         { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
-        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" },
+        { "name": "f", "rarity": "f", "price": f.00, "weight": f, "image": "images/items/f.png" }
       ]
     },
 
