@@ -7,6 +7,12 @@ let recentDrops = JSON.parse(localStorage.getItem("recentDrops")) || [];
 let cases = [];
 let currentCase = null;
 
+// ===================== PROMO CODES =====================
+const promoCodes = {
+  "powers": 50
+};
+
+let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
 // ===================== INIT =====================
 document.addEventListener("DOMContentLoaded", () => {
   updateCoins();
