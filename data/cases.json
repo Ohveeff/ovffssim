@@ -241,7 +241,7 @@
     },
         {
       "id": "stakes",
-      "name": "Grand Stakes (Unfinished) (Big)",
+      "name": "Grand Stakes (Big)",
       "price": 300.00,
       "image": "images/cases/stakes.png",
       "items": [
