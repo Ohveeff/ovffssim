@@ -39,7 +39,7 @@
         { "name": "Strange Sandvich", "rarity": "strange", "price": 21.93, "weight": 1000, "image": "images/items/sandvich.png" },
         { "name": "Chicken Kiev", "rarity": "legendary", "price": 63.72, "weight": 400, "image": "images/items/kiev.png" },
         { "name": "Sophisticated Smoker ", "rarity": "legendary", "price": 0.65, "weight": 2000, "image": "images/items/sophs.png" },
-        { "name": "Brute's Braces", "rarity": "legendary", "price": 0.27, "weight": 2500, "image": "images/items/bb3.png" },
+        { "name": "Brute's Braces", "rarity": "legendary", "price": 0.27, "weight": 4500, "image": "images/items/bb3.png" },
         { "name": "Full Metal Helmet", "rarity": "legendary", "price": 12.40, "weight": 1500, "image": "images/items/fmh.png" },
         { "name": "Red Army Robin", "rarity": "legendary", "price": 0.05, "weight": 7750, "image": "images/items/rar3.png" },
         { "name": "Carl", "rarity": "legendary", "price": 0.19, "weight": 1000, "image": "images/items/carl.png" },
@@ -149,7 +149,7 @@
         { "name": "Collector's Mantreads", "rarity": "collector", "price": 251.09, "weight": 1100, "image": "images/items/mantreads.png" },
         { "name": "Genuine Robo-Sandvich", "rarity": "genuine", "price": 550.00, "weight": 1060, "image": "images/items/robos.png" },
         { "name": "Strange Gunslinger", "rarity": "strange", "price": 331.44, "weight": 1060, "image": "images/items/gunslinger.png" },
-        { "name": "Collector's Sticky Jumper", "rarity": "collector", "price": 582.54, "weight": 1030, "image": "images/items/stickyjumper.png" },
+        { "name": "Collector's Sticky Bomb Jumper", "rarity": "collector", "price": 582.54, "weight": 1030, "image": "images/items/stickyjumper.png" },
         { "name": "Collector's Rocket Jumper", "rarity": "collector", "price": 1050.00, "weight": 1000, "image": "images/items/rocketjumper.png" }
       ]
     },
@@ -217,7 +217,7 @@
      },
        {
       "id": "lev",
-      "name": "LEV1A1HN (unfinished) (Medium)",
+      "name": "LEV1A1HN (Medium)",
       "price": 85.00,
       "image": "images/cases/lev.png",
       "items": [
