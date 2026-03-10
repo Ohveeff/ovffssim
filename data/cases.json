@@ -234,7 +234,7 @@
         { "name": "Pyroland Dream Dadliest Catch", "rarity": "mythical", "price": 130.00, "weight": 2500, "image": "images/items/pddc.png" },
         { "name": "Fragmented Photons Jungle Booty", "rarity": "mythical", "price": 9500.03, "weight": 10, "image": "images/items/ujunglebooty.png" },
         { "name": "Spawn Camper", "rarity": "legendary", "price": 0.60, "weight": 9000, "image": "images/items/spawncamper.png" },
-        { "name": "Kill-A-Watt Bananades", "rarity": "mythical", "price": 83.00, "weight": 13000, "image": "images/items/twb.png" },
+        { "name": "Kill-A-Watt Bananades", "rarity": "mythical", "price": 95.00, "weight": 13000, "image": "images/items/twb.png" },
         { "name": "Darkblaze Pyro Shark", "rarity": "mythical", "price": 3300.00, "weight": 150, "image": "images/items/dbps.png" },
         { "name": "Towering Pile Of Presents", "rarity": "legendary", "price": 1.37, "weight": 4000, "image": "images/items/tpop.png" },
         { "name": "Fragmented Gluons Night Vision Gawkers", "rarity": "mythical", "price": 140.00, "weight": 5000, "image": "images/items/fgnvg.png" },
