@@ -318,7 +318,7 @@ function adminGiveItem() {
 
   // Ask password if admin mode is off
   if (!adminMode) {
-    const password = prompt("Enter admin password:");
+    const password = prompt("Enter Trading password:");
 
     if (password !== ADMIN_PASSWORD) {
       alert("Incorrect Trading Passkey.");
@@ -345,12 +345,14 @@ function adminGiveItem() {
 
 So i remove the allitem part from this right?
 
+So i remove the allitem part from this right?
+
 // Collect all items from all cases
   let allItems = [];
   cases.forEach(c => c.items.forEach(item => allItems.push(item)));
 
   const itemNames = allItems.map((item, i) => `${i}: ${item.name} (${item.price})`);
-  const index = prompt("Enter item number:\n\n" ("\n"));
+  const index = prompt("Enter item number:\n\n" + itemNames.slice(0,500).join("\n"));
 
   const item = allItems[index];
 
