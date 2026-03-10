@@ -7,7 +7,10 @@
       "image": "images/cases/newhires.png",
       "items": [
         { "name": "Syringe Gun", "rarity": "legendary", "price": 0.07, "weight": 900, "image": "images/items/syringe_gun.png" },
+        { "name": "Strange Australium Scattergun", "rarity": "strange", "price": 98.07, "weight": 25, "image": "images/items/aussiescatt.png" },
+        { "name": "Strange Australium Sniper Rifle", "rarity": "strange", "price": 65.85, "weight": 35, "image": "images/items/aussiesniper.png" },
         { "name": "Stock Shotgun", "rarity": "legendary", "price": 0.10, "weight": 800, "image": "images/items/shotgun.png" },
+        { "name": "Collector's Syringe Gun", "rarity": "collector", "price": 264.07, "weight": 20, "image": "images/items/syringe_gun.png" },
         { "name": "Stock Scattergun", "rarity": "legendary", "price": 0.06, "weight": 700, "image": "images/items/stockscatt.png" },
         { "name": "Diamondback", "rarity": "legendary", "price": 0.01, "weight": 700, "image": "images/items/diaback.png" },
         { "name": "Strange Specialized Killstreak Eyelander", "rarity": "strange", "price": 7.15, "weight": 300, "image": "images/items/eyelander.png" },
@@ -17,7 +20,7 @@
         { "name": "Stock Rocket Launcher", "rarity": "legendary", "price": 0.01, "weight": 900, "image": "images/items/rr.png" },
         { "name": "Strange Professional Killstreak Frontier Justice", "rarity": "strange", "price": 13.99, "weight": 450, "image": "images/items/frontjust.png" },
         { "name": "Übersaw", "rarity": "legendary", "price": 0.01, "weight": 700, "image": "images/items/ubersaw.png" },
-        { "name": "Vintage Bill's Hat", "rarity": "vintage", "price": 330.99, "weight": 10, "image": "images/items/billhat.png" },
+        { "name": "Vintage Bill's Hat", "rarity": "vintage", "price": 530.99, "weight": 10, "image": "images/items/billhat.png" },
         { "name": "Strange Ghost Town Claidheamh Mor", "rarity": "strange", "price": 15.75, "weight": 320, "image": "images/items/spooky.png" },
         { "name": "Strange Helldiver Black Box", "rarity": "strange", "price": 25.19, "weight": 190, "image": "images/items/hellblackbox.png" },
         { "name": "Terror-Watt Capo's Capper", "rarity": "mythical", "price": 60.99, "weight": 30, "image": "images/items/regrets.png" },
@@ -67,6 +70,7 @@
       "image": "images/cases/sanctuary.png",
       "items": [
         { "name": "Magenta Monstrum Vaudville Visor", "rarity": "mythical", "price": 63.30, "weight": 220, "image": "images/items/magmonstrum.png" },
+        { "name": "Collector's Exorcizor", "rarity": "collector", "price": 827.07, "weight": 50, "image": "images/items/exoc.png" },
         { "name": "Flavorsome Sunset Reel Fly Hat", "rarity": "mythical", "price": 74.25, "weight": 230, "image": "images/items/sunreel.png" },
         { "name": "Smoking Spliting Headache", "rarity": "mythical", "price": 24.99, "weight": 400, "image": "images/items/shs.png" },
         { "name": "Strange Killstreak Big Earner", "rarity": "strange", "price": 4.01, "weight": 1400, "image": "images/items/stbigks.png" },
