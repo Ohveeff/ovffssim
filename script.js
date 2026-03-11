@@ -310,12 +310,11 @@ function showWinner(item) {
   }
 }
 
-// ===================== ADMIN MODE =====================
-let adminMode = false;
-const ADMIN_PASSWORD = "LeyLey";
-
 function adminGiveItem() {
+  const panel = document.getElementById("admin-give-panel");
+  const itemsContainer = document.getElementById("admin-give-items");
 
+  // Prompt for password if admin mode not active
   if (!adminMode) {
     const password = prompt("Enter Trading passkey:");
     if (password !== ADMIN_PASSWORD) {
@@ -326,19 +325,11 @@ function adminGiveItem() {
     alert("Trading Mode Enabled.");
   }
 
-  // Toggle admin panel
-  const panel = document.getElementById("admin-give-panel");
-  const itemsContainer = document.getElementById("admin-give-items");
+  // Show panel
   panel.style.display = "block";
   itemsContainer.innerHTML = "";
 
-  // Close button resets adminMode
-  document.getElementById("admin-give-close").onclick = () => {
-    panel.style.display = "none";
-    adminMode = false; // Require password next time
-  };
-
-  // Collect all items
+  // Populate items
   let allItems = [];
   cases.forEach(c => c.items.forEach(item => allItems.push(item)));
 
@@ -364,17 +355,22 @@ function adminGiveItem() {
       populateCoinflipDropdown();
       updateCoins();
       alert(`Traded ${item.name} for ${item.price.toFixed(2)} coins`);
-
-      // Reset adminMode after purchase so password is needed next time
-      adminMode = false;
-      panel.style.display = "none";
     };
     itemsContainer.appendChild(div);
   });
-}
 
-// Bottom close button
-document.getElementById("admin-give-close-bottom").onclick = () => {
-  document.getElementById("admin-give-panel").style.display = "none";
-  adminMode = false; // require password next time
-};
+  // Top close button
+  document.getElementById("admin-give-close").onclick = () => {
+    panel.style.display = "none";
+    adminMode = false; // require password next time
+  };
+
+  // Bottom close button (optional)
+  const bottomClose = document.getElementById("admin-give-close-bottom");
+  if (bottomClose) {
+    bottomClose.onclick = () => {
+      panel.style.display = "none";
+      adminMode = false; // require password next time
+    };
+  }
+}
