@@ -131,6 +131,19 @@
       ]
     },
        {
+      "id": "leyley",
+      "name": "Leyley (unfinished) (Medium)",
+      "price": 37.00,
+      "image": "images/cases/leyley.png",
+      "items": [
+        { "name": "Leyleys Favorite Item", "rarity": "mythical", "price": 330.00, "weight": 50, "image": "images/items/umadmilk.png" },
+        { "name": "Strange Mad Milk", "rarity": "strange", "price": 4.52, "weight": 1000, "image": "images/items/madmilk.png" },
+        { "name": "Enchanted Battle Boonie", "rarity": "mythical", "price": 230.00, "weight": 100, "image": "images/items/ebb.png" },
+        { "name": "Strange Heat Of Winter", "rarity": "strange", "price": 0.75, "weight": 2300, "image": "images/items/how.png" }
+      ]
+    },
+
+       {
       "id": "subclass",
       "name": "Subclasses (Big)",
       "price": 50.00,
