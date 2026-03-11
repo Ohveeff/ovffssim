@@ -347,7 +347,7 @@ function adminGiveItem() {
         <span class="name">${item.name}</span>
         <span class="price">${item.price.toFixed(2)} coins</span>
       </div>
-      <button>Give</button>
+      <button>Trade</button>
     `;
     div.querySelector("button").onclick = () => {
       if (coins < item.price) return alert("Not enough coins.");
