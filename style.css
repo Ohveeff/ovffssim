@@ -314,3 +314,90 @@ h1 { margin-bottom: 10px; font-weight: 600; }
 #coin.head { background: red; transform: rotateY(0deg); box-shadow: 0 0 15px red, 0 0 25px #ff4d4d; }
 #coin.tail { background: #00bfa5; transform: rotateY(180deg); box-shadow: 0 0 15px #00bfa5, 0 0 25px #1de9b6; }
 
+#admin-give-panel {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  max-height: 600px;
+  overflow-y: auto;
+  background: rgba(20, 20, 20, 0.95);
+  border: 2px solid #ff4d4d;
+  border-radius: 12px;
+  padding: 15px;
+  z-index: 9999;
+  box-shadow: 0 0 25px rgba(255, 77, 77, 0.5);
+}
+
+#admin-give-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 18px;
+}
+
+#admin-give-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-give-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(50, 50, 50, 0.9);
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.admin-give-item:hover {
+  transform: scale(1.02);
+  background: rgba(70, 70, 70, 0.95);
+}
+
+.admin-give-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  margin-right: 10px;
+  object-fit: cover;
+  border: 1px solid #ff4d4d;
+}
+
+.admin-give-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.admin-give-info .name {
+  font-weight: bold;
+}
+
+.admin-give-info .price {
+  color: #ffcc00;
+  font-size: 13px;
+}
+
+.admin-give-item button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  background: #ff4d4d;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-give-item button:hover {
+  background: #ff1a1a;
+}
+
