@@ -183,7 +183,7 @@
         { "name": "Femscout", "rarity": "legendary", "price": 100.75, "weight": 2000, "image": "images/items/fems.png" },
         { "name": "Circling Heart Field Practice", "rarity": "mythical", "price": 91.63, "weight": 4000, "image": "images/items/chfp.png" },
         { "name": "Mad Milk", "rarity": "legendary", "price": 0.01, "weight": 7000, "image": "images/items/madmilk.png" },
-        { "name": "Strange Heat Of Winter", "rarity": "strange", "price": 0.75, "weight": 2300, "image": "images/items/how.png" },
+        { "name": "Collector's Mad Milk", "rarity": "collector", "price": 170.00, "weight": 350, "image": "images/items/madmilk.png" }
       ]
     },
 
