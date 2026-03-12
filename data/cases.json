@@ -189,7 +189,7 @@
     {
       "id": "rouletter",
       "name": "Double Red (Medium)",
-      "price": 100.00,
+      "price": 50.00,
       "image": "images/cases/roulette.png",
       "items": [
         { "name": "Black", "rarity": "common", "price": 0.00, "weight": 50, "image": "images/items/black.png" },
@@ -199,7 +199,7 @@
         {
       "id": "rouletteb",
       "name": "Double Black",
-      "price": 100.00,
+      "price": 50.00,
       "image": "images/cases/roulette.png",
       "items": [
         { "name": "Black", "rarity": "common", "price": 100.00, "weight": 50, "image": "images/items/black.png" },
