@@ -56,7 +56,7 @@ function renderInventory() {
       <img src="${item.image}">
       <p>${item.name}</p>
       <small>${item.price.toFixed(2)} coins</small>
-      <button class="sell-btn theme-btn">Sell</button>
+      <button class="sell-btn theme-btn">Scrap</button>
     `;
     div.querySelector(".sell-btn").onclick = () => sellItem(index);
     container.appendChild(div);
@@ -81,7 +81,7 @@ function sellAllItems() {
   updateCoins();
   renderInventory();
   populateCoinflipDropdown();
-  alert(`Sold everything for ${total.toFixed(2)} coins.`);
+  alert(`Scrapped Backpack for ${total.toFixed(2)} coins.`);
 }
 
 // ===================== SHOW CASE ITEMS =====================
