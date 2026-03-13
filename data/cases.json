@@ -410,6 +410,37 @@
         { "name": "Unusual Strange Australium Professional Killstreak Eyelander ", "rarity": "unusual", "price": 630.00, "weight": 200, "image": "images/items/aussieeye.png" }
       ]
     },
+       {
+      "id": "maskman",
+      "name": "Maskman (unfinished) (Big)",
+      "price": 150.00,
+      "image": "images/cases/maskman.png",
+      "items": [
+        { "name": "Brigade Helm", "rarity": "legendary", "price": 0.01, "weight": 9000, "image": "images/items/brighelm.png" },
+        { "name": "Pilotka", "rarity": "legendary", "price": 0.12, "weight": 8000, "image": "images/items/pilot.png" },
+        { "name": "Scorching Flames Bird-Man Of Aberdeen", "rarity": "mythical", "price": 6239.00, "weight": 100, "image": "images/items/ubmoa.png" },
+        { "name": "Bubbling Belgian Detective", "rarity": "mythical", "price": 173.00, "weight": 2000, "image": "images/items/bbd.png" },
+        { "name": "Circling Peace Sign Level Three Chin", "rarity": "mythical", "price": 3313.00, "weight": 200, "image": "images/items/cpsltc.png" },
+        { "name": "Chiroptera Venenata Quizzical Quetzal", "rarity": "mythical", "price": 4202.00, "weight": 170, "image": "images/items/cvqq.png" },
+        { "name": "Sir Pumpkinton", "rarity": "legendary", "price": 0.32, "weight": 10000, "image": "images/items/sirp.png" },
+        { "name": "Lumbercap", "rarity": "legendary", "price": 0.09, "weight": 5000, "image": "images/items/lumbercap.png" },
+        { "name": "The Ooze Corpse Carrier", "rarity": "mythical", "price": 237.00, "weight": 1300, "image": "images/items/tocc.png" },
+        { "name": "Clairvoyance Poopy Doe", "rarity": "mythical", "price": 423.00, "weight": 900, "image": "images/items/cpd.png" },
+        { "name": "Professor's Peculiarity", "rarity": "legendary", "price": 0.06, "weight": 10000, "image": "images/items/profpec.png" },
+        { "name": "El Jefe", "rarity": "legendary", "price": 0.20, "weight": 8000, "image": "images/items/jefe.png" },
+        { "name": "First American", "rarity": "legendary", "price": 0.03, "weight": 1000, "image": "images/items/firstamer.png" },
+        { "name": "Make Orge", "rarity": "legendary", "price": 0.21, "weight": 5000, "image": "images/items/orge.png" },
+        { "name": "Rainbow Reverie Snow Merc", "rarity": "mythical", "price": 100.00, "weight": 1000, "image": "images/items/rrsm.png" },
+        { "name": "Pyromantic Plumage", "rarity": "legendary", "price": 0.45, "weight": 6000, "image": "images/items/pyrobird.png" },
+        { "name": "Strigoi Stare", "rarity": "legendary", "price": 0.27, "weight": 6000, "image": "images/items/strigoi.png" },
+        { "name": "Condescending Embrace Dapper Noel", "rarity": "mythical", "price": 83.00, "weight": 8000, "image": "images/items/cebn.png" },
+        { "name": "Gravely Ghoul Battle Baclava", "rarity": "mythical", "price": 270.00, "weight": 10000, "image": "images/items/ggbb.png" },
+        { "name": "Free Mann's Fashion", "rarity": "legendary", "price": 14.22, "weight": 3000, "image": "images/items/freeman.png" },
+        { "name": "Frozen Fractals Clowns Cover-Up", "rarity": "mythical", "price": 8123.00, "weight": 100, "image": "images/items/ffccu.png" },
+        { "name": "Atomic Elf Defense", "rarity": "mythical", "price": 1203.00, "weight": 2000, "image": "images/items/aed.png" }
+      ]
+    },
+
         {
       "id": "stakes",
       "name": "Grand Stakes (Big)",
