@@ -162,7 +162,7 @@
     },
        {
       "id": "leyley",
-      "name": "Leyley (Medium)",
+      "name": "Leyley (unfinished) (Medium)",
       "price": 45.00,
       "image": "images/cases/leyley.png",
       "items": [
@@ -188,7 +188,7 @@
     },
     {
       "id": "rouletter",
-      "name": "Double Red (Medium)",
+      "name": "Double Red (unfinished) (Medium)",
       "price": 50.00,
       "image": "images/cases/roulette.png",
       "items": [
@@ -198,7 +198,7 @@
     },
         {
       "id": "rouletteb",
-      "name": "Double Black",
+      "name": "Double Black (unfinished) (Medium)",
       "price": 50.00,
       "image": "images/cases/roulette.png",
       "items": [
